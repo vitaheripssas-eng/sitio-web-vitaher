@@ -6,7 +6,7 @@ import './Navbar.css'
 function Logo() {
   return (
     <a className="logo" href="#inicio" aria-label="VITAHER IPS S.A.S. — inicio">
-      <img className="logo-img" src="/logo.png" alt="Logo VITAHER IPS S.A.S." />
+      <img className="logo-img" src={`${import.meta.env.BASE_URL}logo.png`} alt="Logo VITAHER IPS S.A.S." />
       <span className="logo-text">
         <strong>VITAHER</strong>
         <small>IPS S.A.S.</small>

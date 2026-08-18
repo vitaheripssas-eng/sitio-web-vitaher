@@ -2,6 +2,8 @@ export const WHATSAPP_NUMBER = '573142318040'
 export const PHONE_DISPLAY = '+57 314 231 8040'
 export const EMAIL = 'info@ipsvitaher.com'
 
+const BASE = import.meta.env.BASE_URL
+
 export const NAV_LINKS = [
   { label: 'Nosotros', href: '#nosotros' },
   { label: 'Servicios', href: '#servicios' },
@@ -19,7 +21,7 @@ export const STATS = [
 export const DESTACADOS = [
   {
     icon: 'heartPulse',
-    img: '/img/cuidado-avanzado.jpg',
+    img: `${BASE}img/cuidado-avanzado.jpg`,
     alt: 'Equipo de salud cuidando a un paciente en casa',
     title: 'Cuidado avanzado del paciente',
     text: 'Modelo interdisciplinario que optimiza la recuperación en casa con logística de suministros de alta respuesta.',
@@ -28,7 +30,7 @@ export const DESTACADOS = [
   },
   {
     icon: 'stethoscope',
-    img: '/img/medicina-domiciliaria.jpg',
+    img: `${BASE}img/medicina-domiciliaria.jpg`,
     alt: 'Médico realizando valoración a un paciente',
     title: 'Medicina domiciliaria',
     text: 'Valoración, diagnóstico, tratamiento y seguimiento médico sin salir del hogar.',
@@ -37,7 +39,7 @@ export const DESTACADOS = [
   },
   {
     icon: 'user-check',
-    img: '/img/enfermeria.jpg',
+    img: `${BASE}img/enfermeria.jpg`,
     alt: 'Profesional de enfermería atendiendo a un paciente',
     title: 'Enfermería y cuidado diario',
     text: 'Profesionales y auxiliares que garantizan el cuidado experto de su familiar todos los días.',
@@ -46,7 +48,7 @@ export const DESTACADOS = [
   },
   {
     icon: 'activity',
-    img: '/img/cronico.jpg',
+    img: `${BASE}img/cronico.jpg`,
     alt: 'Acompañamiento a un paciente con enfermedad crónica',
     title: 'Atención integral al crónico',
     text: 'Seguimiento continuo a pacientes con enfermedades de larga duración para prevenir complicaciones.',
@@ -55,7 +57,7 @@ export const DESTACADOS = [
   },
   {
     icon: 'pill',
-    img: '/img/farmaceutico.jpg',
+    img: `${BASE}img/farmaceutico.jpg`,
     alt: 'Medicamentos e insumos del servicio farmacéutico',
     title: 'Servicio farmacéutico',
     text: 'Acceso seguro y oportuno a medicamentos e insumos, con educación sobre su uso adecuado.',

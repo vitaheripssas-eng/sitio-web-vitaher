@@ -34,7 +34,7 @@ export default function Footer({ onOpenLegal }) {
             <a className="logo" href="#inicio" aria-label="VITAHER IPS S.A.S. — inicio">
               <img
                 className="logo-img footer-logo-img"
-                src="/logo.png"
+                src={`${import.meta.env.BASE_URL}logo.png`}
                 alt="Logo VITAHER IPS S.A.S."
               />
               <span className="logo-text footer-logo-text">
