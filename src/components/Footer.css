@@ -182,6 +182,12 @@
   box-shadow: 0 16px 34px -10px rgba(0, 0, 0, 0.45);
 }
 
+.footer-map-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
 .footer-map iframe {
   position: absolute;
   inset: 0;
@@ -190,6 +196,29 @@
   border: 0;
   filter: grayscale(25%);
   pointer-events: none;
+}
+
+.map-directions {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.map-directions:hover {
+  background: #1e5f24;
+  transform: translateY(-2px);
 }
 
 .footer-bottom {
