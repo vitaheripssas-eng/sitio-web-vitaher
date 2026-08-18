@@ -2,7 +2,7 @@ import { EMAIL, PHONE_DISPLAY, WHATSAPP_NUMBER } from '../data.js'
 import { Icon } from './Icons.jsx'
 import './Footer.css'
 
-const MAPS_QUERY = encodeURIComponent('Calle 7 Sur 24-66, B. Olimpico, Arauca, Colombia')
+const MAPS_QUERY = encodeURIComponent('Calle 7 Sur 24-66, Barrio El Olimpico, Arauca, Colombia')
 
 const MAPS_EMBED = `https://maps.google.com/maps?q=${MAPS_QUERY}&t=&z=16&ie=UTF8&iwloc=&output=embed&hl=es`
 
@@ -22,7 +22,7 @@ const INSTITUCION = [
   { label: 'Trabaja Con Nosotros', href: '#trabaja' },
 ]
 
-const DIRECCION = 'Calle 7 Sur #24-66, B. Olimpico, Arauca, Colombia'
+const DIRECCION = 'Calle 7 Sur #24-66 (Lote), Barrio El Olímpico, Arauca, Colombia'
 const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${MAPS_QUERY}`
 
 export default function Footer({ onOpenLegal }) {

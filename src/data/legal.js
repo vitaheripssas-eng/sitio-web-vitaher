@@ -134,7 +134,7 @@ export const LEGAL_PAGES = [
       {
         h: '1. Responsable del tratamiento',
         paragraphs: [
-          'El responsable del tratamiento de los datos personales es IPS VITAHER S.A.S., con domicilio en Calle 7 Sur #24-66, B. Olimpico, Arauca, Colombia. Contacto: info@ipsvitaher.com.',
+          'El responsable del tratamiento de los datos personales es IPS VITAHER S.A.S., con domicilio en Calle 7 Sur #24-66 (Lote), Barrio El Olímpico, Arauca, Colombia. Contacto: info@ipsvitaher.com.',
         ],
       },
       {

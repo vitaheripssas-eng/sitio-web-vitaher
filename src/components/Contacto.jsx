@@ -11,8 +11,8 @@ const INFO = [
   {
     icon: 'mapPin',
     title: 'Dirección',
-    value: 'Calle 7 Sur #24-66, B. Olimpico — Arauca, Colombia',
-    href: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Calle 7 Sur 24-66, B. Olimpico, Arauca, Colombia'),
+    value: 'Calle 7 Sur #24-66 (Lote), Barrio El Olímpico — Arauca, Colombia',
+    href: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Calle 7 Sur 24-66, Barrio El Olimpico, Arauca, Colombia'),
   },
   { icon: 'phone', title: 'Teléfono', value: PHONE_DISPLAY, href: 'tel:+573142318040' },
   { icon: 'whatsapp', title: 'WhatsApp', value: PHONE_DISPLAY, href: waLink('Hola, me comunico desde el sitio web de IPS VITAHER S.A.S.') },
