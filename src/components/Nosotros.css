@@ -1,0 +1,149 @@
+.nosotros {
+  background: var(--bg);
+}
+
+.nosotros-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 56px;
+}
+
+.card-mv {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-mv::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+.card-mv .card-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 14px;
+}
+
+.card-mv p {
+  font-size: 0.98rem;
+}
+
+.valores-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-bottom: 72px;
+}
+
+.valor {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.valor:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.valor .num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary-light);
+  letter-spacing: -0.03em;
+}
+
+.valor h3 {
+  font-size: 1.05rem;
+  margin: 8px 0;
+}
+
+.valor p {
+  font-size: 0.9rem;
+}
+
+.porque {
+  background: var(--ink);
+  border-radius: 28px;
+  padding: 56px;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 48px;
+  align-items: center;
+  color: #cbd5e1;
+}
+
+.porque h2 {
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.porque .porque-note {
+  font-style: italic;
+  color: #94a3b8;
+  border-left: 3px solid var(--primary-light);
+  padding-left: 16px;
+}
+
+.porque-badges {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 13px 16px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #e2e8f0;
+}
+
+.badge svg {
+  color: var(--primary-light);
+  flex-shrink: 0;
+}
+
+@media (max-width: 960px) {
+  .nosotros-grid,
+  .porque {
+    grid-template-columns: 1fr;
+  }
+
+  .valores-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .valores-grid,
+  .porque-badges {
+    grid-template-columns: 1fr;
+  }
+
+  .porque {
+    padding: 36px 24px;
+  }
+}

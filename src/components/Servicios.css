@@ -1,0 +1,136 @@
+.servicios {
+  background: var(--bg-soft);
+}
+
+.servicios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+.servicio {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 28px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.servicio:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.servicio:hover .servicio-icon {
+  transform: scale(1.12) rotate(-5deg);
+  color: var(--white);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-color: transparent;
+}
+
+.servicio-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--primary-tint);
+  color: var(--primary);
+  border: 1px solid #b8dcf0;
+  margin-bottom: 18px;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.servicio h3 {
+  font-size: 1.12rem;
+  margin-bottom: 6px;
+}
+
+.servicio > p {
+  font-size: 0.92rem;
+  margin-bottom: 14px;
+}
+
+.servicio ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.servicio li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.87rem;
+  color: var(--ink-soft);
+}
+
+.servicio li svg {
+  color: var(--primary-light);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.pacientes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.paciente {
+  border-radius: var(--radius);
+  padding: 34px 32px;
+}
+
+.paciente-cronico {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.paciente-agudo {
+  background: linear-gradient(135deg, var(--accent), #1b5e20);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.paciente h3 {
+  color: var(--white);
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.paciente p {
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.paciente-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.paciente-tag {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .servicios-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .servicios-grid,
+  .pacientes-grid {
+    grid-template-columns: 1fr;
+  }
+}
