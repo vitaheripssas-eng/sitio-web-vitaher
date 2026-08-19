@@ -64,20 +64,6 @@
   color: var(--primary);
 }
 
-.contacto-directions {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 6px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--primary) !important;
-}
-
-.contacto-directions:hover {
-  text-decoration: underline;
-}
-
 .contacto-form {
   background: var(--white);
   border: 1px solid var(--border);

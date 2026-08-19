@@ -6,8 +6,6 @@ const MAPS_QUERY = encodeURIComponent('Calle 7 Sur 24-66, Barrio El Olimpico, Ar
 
 const MAPS_EMBED = `https://maps.google.com/maps?q=${MAPS_QUERY}&t=&z=16&ie=UTF8&iwloc=&output=embed&hl=es`
 
-const MAPS_DIRECTIONS = `https://www.google.com/maps/dir/?api=1&destination=${MAPS_QUERY}`
-
 const LEGAL = [
   { label: 'Términos y Condiciones', slug: 'terminos' },
   { label: 'Políticas de Privacidad', slug: 'privacidad' },
@@ -68,34 +66,22 @@ export default function Footer({ onOpenLegal }) {
             </div>
           </div>
 
-          <div className="footer-map">
-            <a
-              className="footer-map-link"
-              href={MAPS_LINK}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Ver la ubicación de IPS VITAHER S.A.S. en Google Maps"
-              title="Ver en Google Maps"
-            >
-              <iframe
-                src={MAPS_EMBED}
-                title="Ubicación de IPS VITAHER S.A.S. en Arauca, Colombia"
-                loading="lazy"
-                allowFullScreen
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </a>
-            <a
-              className="map-directions"
-              href={MAPS_DIRECTIONS}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Cómo llegar a IPS VITAHER S.A.S. en Google Maps"
-            >
-              <Icon name="chevronRight" size={16} />
-              Cómo llegar
-            </a>
-          </div>
+          <a
+            className="footer-map"
+            href={MAPS_LINK}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Abrir la ubicación de IPS VITAHER S.A.S. en Google Maps"
+            title="Abrir en Google Maps"
+          >
+            <iframe
+              src={MAPS_EMBED}
+              title="Ubicación de IPS VITAHER S.A.S. en Arauca, Colombia"
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </a>
         </div>
 
         <div className="footer-grid">

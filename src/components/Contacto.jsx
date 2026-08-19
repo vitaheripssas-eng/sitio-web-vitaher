@@ -13,7 +13,6 @@ const INFO = [
     title: 'Dirección',
     value: 'Calle 7 Sur #24-66 (Lote), Barrio El Olímpico — Arauca, Colombia',
     href: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Calle 7 Sur 24-66, Barrio El Olimpico, Arauca, Colombia'),
-    directions: 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent('Calle 7 Sur 24-66, Barrio El Olimpico, Arauca, Colombia'),
   },
   { icon: 'phone', title: 'Teléfono', value: PHONE_DISPLAY, href: 'tel:+573142318040' },
   { icon: 'whatsapp', title: 'WhatsApp', value: PHONE_DISPLAY, href: waLink('Hola, me comunico desde el sitio web de IPS VITAHER S.A.S.') },
@@ -69,11 +68,6 @@ export default function Contacto() {
                     </a>
                   ) : (
                     <p>{item.value}</p>
-                  )}
-                  {item.directions && (
-                    <a className="contacto-directions" href={item.directions} target="_blank" rel="noreferrer">
-                      Cómo llegar <Icon name="chevronRight" size={14} />
-                    </a>
                   )}
                 </div>
               </div>
