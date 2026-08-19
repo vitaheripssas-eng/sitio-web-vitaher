@@ -136,7 +136,14 @@ export default function Footer({ onOpenLegal }) {
 
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} VITAHER. Todos los derechos reservados.</span>
-          <span>Arauca · Colombia</span>
+          <button
+            className="back-top"
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            aria-label="Volver arriba"
+          >
+            <Icon name="arrowDown" size={16} />
+          </button>
         </div>
       </div>
     </footer>
