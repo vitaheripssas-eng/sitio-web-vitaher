@@ -4,7 +4,7 @@ import { waLink } from '../utils.js'
 import { Icon } from './Icons.jsx'
 import './WhatsAppPreview.css'
 
-export default function WhatsAppPreview({ title, message, msg, mailSubject, onClose }) {
+export default function WhatsAppPreview({ title, message, msg, mailSubject, onClose, onSent }) {
   const [text, setText] = useState(msg)
   const taRef = useRef(null)
 
@@ -22,6 +22,8 @@ export default function WhatsAppPreview({ title, message, msg, mailSubject, onCl
 
   function send() {
     window.open(waLink(text.trim()), '_blank', 'noopener,noreferrer')
+    onSent?.()
+    onClose()
   }
 
   return (

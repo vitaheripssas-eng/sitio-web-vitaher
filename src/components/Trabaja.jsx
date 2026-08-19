@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { PERFILES, FORMACION_OPCIONES } from '../data.js'
 import WhatsAppPreview from './WhatsAppPreview.jsx'
 import { Icon } from './Icons.jsx'
@@ -9,6 +9,7 @@ import './form.css'
 export default function Trabaja() {
   const [sent, setSent] = useState(null)
   const [cv, setCv] = useState('')
+  const formRef = useRef(null)
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -60,7 +61,7 @@ export default function Trabaja() {
           </Reveal>
 
           <Reveal delay={140}>
-            <form className="trabaja-form" onSubmit={handleSubmit}>
+            <form className="trabaja-form" onSubmit={handleSubmit} ref={formRef}>
             <h3>Envía tu hoja de vida</h3>
             <div className="form-grid">
               <div className="form-field">
@@ -133,6 +134,10 @@ export default function Trabaja() {
           message="Revisa y edita tu postulación antes de enviarla. La hoja de vida la adjuntas en la conversación de WhatsApp."
           msg={sent}
           onClose={() => setSent(null)}
+          onSent={() => {
+            formRef.current?.reset()
+            setCv('')
+          }}
         />
       )}
     </section>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { PHONE_DISPLAY, EMAIL, SERVICIOS_SELECCION } from '../data.js'
 import { waLink } from '../utils.js'
 import WhatsAppPreview from './WhatsAppPreview.jsx'
@@ -23,6 +23,7 @@ const INFO = [
 export default function Contacto() {
   const [sent, setSent] = useState(null)
   const [soportes, setSoportes] = useState('')
+  const formRef = useRef(null)
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -75,7 +76,7 @@ export default function Contacto() {
           </Reveal>
 
           <Reveal delay={140}>
-            <form className="contacto-form" id="agendar" onSubmit={handleSubmit}>
+            <form className="contacto-form" id="agendar" onSubmit={handleSubmit} ref={formRef}>
             <h3>Agendar cita / enviar mensaje</h3>
             <div className="form-grid">
               <div className="form-field">
@@ -133,6 +134,10 @@ export default function Contacto() {
           message="Revisa y edita el mensaje si lo necesitas, luego envíalo por WhatsApp."
           msg={sent}
           onClose={() => setSent(null)}
+          onSent={() => {
+            formRef.current?.reset()
+            setSoportes('')
+          }}
         />
       )}
     </section>

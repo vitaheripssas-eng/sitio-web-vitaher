@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { PQRS_TIPOS, SERVICIOS_SELECCION } from '../data.js'
 import WhatsAppPreview from './WhatsAppPreview.jsx'
 import { Icon } from './Icons.jsx'
@@ -19,6 +19,7 @@ const TIPOS_DOC = ['Cédula de ciudadanía', 'Cédula de extranjería', 'Tarjeta
 export default function PQRS() {
   const [sent, setSent] = useState(null)
   const [files, setFiles] = useState([])
+  const formRef = useRef(null)
 
   const input = (key) => ({
     name: key,
@@ -75,7 +76,7 @@ export default function PQRS() {
           </Reveal>
 
           <Reveal delay={140}>
-            <form className="pqrs-form-card" onSubmit={handleSubmit}>
+            <form className="pqrs-form-card" onSubmit={handleSubmit} ref={formRef}>
             <h3>Presenta tu PQRS</h3>
             <p>Todos los campos marcados con * son obligatorios.</p>
 
@@ -183,6 +184,10 @@ export default function PQRS() {
           msg={sent.msg}
           mailSubject={`PQRS - ${sent.tipo}`}
           onClose={() => setSent(null)}
+          onSent={() => {
+            formRef.current?.reset()
+            setFiles([])
+          }}
         />
       )}
     </section>
