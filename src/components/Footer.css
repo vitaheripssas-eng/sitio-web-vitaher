@@ -162,18 +162,7 @@
   color: #cbd5e1;
 }
 
-.footer-contact a:hover {
-  color: var(--primary-light);
-}
 
-.social-item.tiktok {
-  color: var(--primary);
-}
-
-.social-item.tiktok:hover {
-  color: var(--primary-light);
-  transform: scale(1.1);
-}
 
 .footer-map {
   position: relative;
