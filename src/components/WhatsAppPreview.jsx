@@ -68,8 +68,21 @@ export default function WhatsAppPreview({ title, message, msg, mailSubject, onCl
             Enviar por WhatsApp
           </button>
           {mailSubject && (
-            <a className="btn btn-ghost" href={`mailto:${EMAIL}?subject=${encodeURIComponent(mailSubject)}`}>
-              Enviar por correo
+            <a
+              className="btn btn-ghost"
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(text)}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Abrir en Gmail
+            </a>
+          )}
+          {mailSubject && (
+            <a
+              className="btn btn-ghost"
+              href={`mailto:${EMAIL}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(text)}`}
+            >
+              Otra aplicación
             </a>
           )}
           <button className="btn btn-ghost" type="button" onClick={onClose}>

@@ -114,8 +114,14 @@
 
 .wap-footer {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   padding: 0 18px 18px;
+}
+
+.wap-footer .btn-ghost {
+  font-size: 0.85rem;
+  padding: 10px 14px;
 }
 
 .btn-whatsapp {
