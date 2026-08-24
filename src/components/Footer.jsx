@@ -54,7 +54,7 @@ export default function Footer({ onOpenLegal }) {
                 <span className="social-label">Instagram</span>
               </a>
 <a
-                className="social-item"
+                className="social-item tiktok"
                 href="https://www.tiktok.com/@vitaherips"
                 target="_blank"
                 rel="noreferrer"
