@@ -119,7 +119,7 @@ export const LEGAL_PAGES = [
       {
         h: '7. Contacto',
         paragraphs: [
-          'Para ejercer tus derechos o consultar esta política, contáctanos a través del formulario PQRS o al correo info@ipsvitaher.com.',
+          'Para ejercer tus derechos o consultar esta política, contáctanos a través del formulario PQRS o al correo coordinacionarauca2026@gmail.com.',
         ],
       },
     ],
@@ -134,7 +134,7 @@ export const LEGAL_PAGES = [
       {
         h: '1. Responsable del tratamiento',
         paragraphs: [
-          'El responsable del tratamiento de los datos personales es IPS VITAHER S.A.S., con domicilio en Calle 7 Sur #24-66 (Lote), Barrio El Olímpico, Arauca, Colombia. Contacto: info@ipsvitaher.com.',
+          'El responsable del tratamiento de los datos personales es IPS VITAHER S.A.S., con domicilio en Calle 7 Sur #24-66 (Lote), Barrio El Olímpico, Arauca, Colombia. Contacto: coordinacionarauca2026@gmail.com.',
         ],
       },
       {
@@ -168,7 +168,7 @@ export const LEGAL_PAGES = [
       {
         h: '5. Canales para ejercer los derechos',
         paragraphs: [
-          'Los titulares pueden ejercer sus derechos mediante el formulario PQRS del sitio web, al correo info@ipsvitaher.com o en nuestras instalaciones, anexando copia del documento de identidad.',
+          'Los titulares pueden ejercer sus derechos mediante el formulario PQRS del sitio web, al correo coordinacionarauca2026@gmail.com o en nuestras instalaciones, anexando copia del documento de identidad.',
         ],
       },
       {

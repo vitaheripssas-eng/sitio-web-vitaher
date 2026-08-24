@@ -54,7 +54,7 @@ export default function Modal({ doc, onClose }) {
 
           <p className="modal-footnote">
             Para consultas sobre este documento, contáctanos por PQRS o al correo{' '}
-            <a href="mailto:info@ipsvitaher.com">info@ipsvitaher.com</a>.
+            <a href="mailto:coordinacionarauca2026@gmail.com">coordinacionarauca2026@gmail.com</a>.
           </p>
         </div>
       </div>

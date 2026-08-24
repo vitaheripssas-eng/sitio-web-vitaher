@@ -1,6 +1,6 @@
 export const WHATSAPP_NUMBER = '573142318040'
 export const PHONE_DISPLAY = '+57 314 231 8040'
-export const EMAIL = 'info@ipsvitaher.com'
+export const EMAIL = 'coordinacionarauca2026@gmail.com'
 
 const BASE = import.meta.env.BASE_URL
 
