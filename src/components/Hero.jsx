@@ -47,7 +47,7 @@ export default function Hero() {
         <div className="hero-grid">
           <div className="hero-copy">
             <Reveal delay={0}>
-              <span className="hero-badge">Salud domiciliaria · Arauca, Colombia</span>
+              
             </Reveal>
             <Reveal delay={120}>
               <h1>

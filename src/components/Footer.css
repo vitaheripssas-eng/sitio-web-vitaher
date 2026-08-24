@@ -167,7 +167,10 @@
 }
 
 .social-item.tiktok {
-  color: var(--primary);
+  color: #fff;
+  background: none;
+  padding: 0;
+  border-radius: 0;
 }
 
 .social-item.tiktok:hover {
