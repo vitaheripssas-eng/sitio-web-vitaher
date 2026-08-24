@@ -16,7 +16,7 @@ const INFO = [
   },
   { icon: 'phone', title: 'Teléfono', value: PHONE_DISPLAY, href: 'tel:+573142318040' },
   { icon: 'whatsapp', title: 'WhatsApp', value: PHONE_DISPLAY, href: waLink('Hola, me comunico desde el sitio web de IPS VITAHER S.A.S.') },
-  { icon: 'mail', title: 'Correo electrónico', value: EMAIL, href: `mailto:${EMAIL}` },
+  { icon: 'mail', title: 'Correo electrónico', value: EMAIL, href: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}` },
   { icon: 'clock', title: 'Horario de atención', value: 'Lunes a viernes · 8:00 a.m.–12:00 p.m. y 2:00 p.m.–6:00 p.m.' },
 ]
 

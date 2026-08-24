@@ -141,7 +141,13 @@ export default function Footer({ onOpenLegal }) {
               </li>
               <li>
                 <Icon name="mail" size={16} />
-                <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+                <a
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {EMAIL}
+                </a>
               </li>
               <li>
                 <Icon name="phone" size={16} />
