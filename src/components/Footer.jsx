@@ -23,7 +23,7 @@ const INSTITUCION = [
 ]
 
 const DIRECCION = 'Calle 7 Sur #24-66 (Lote), Barrio El Olímpico, Arauca, Colombia'
-const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${MAPS_QUERY}`
+const MAPS_LINK = 'https://www.google.com/maps/search/?api=1&query=7.063694,-70.759028'
 
 export default function Footer({ onOpenLegal }) {
   return (
