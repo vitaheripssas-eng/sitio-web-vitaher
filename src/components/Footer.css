@@ -162,7 +162,15 @@
   color: #cbd5e1;
 }
 
+.tiktok-icon {
+  display: block;
+  filter: brightness(0) invert(1);
+  transition: filter 0.2s ease;
+}
 
+.social-item:hover .tiktok-icon {
+  filter: brightness(0) invert(0.72);
+}
 
 .footer-map {
   position: relative;

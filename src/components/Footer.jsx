@@ -54,18 +54,19 @@ export default function Footer({ onOpenLegal }) {
                 <span className="social-label">Instagram</span>
               </a>
 <a
-                className="social-item"
+                className="social-item tiktok"
                 href="https://www.tiktok.com/@vitaherips"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="TikTok de VITAHER IPS S.A.S."
               >
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/1946/1946552.png"
+                  className="tiktok-icon"
+                  src={`${import.meta.env.BASE_URL}tiktok.png`}
                   width={20}
                   height={20}
-                  alt="TikTok"
-                  style={{ display: 'block', margin: '0 auto' }}
+                  alt=""
+                  aria-hidden="true"
                 />
                 <span className="social-label">TikTok</span>
               </a>
