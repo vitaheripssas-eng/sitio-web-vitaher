@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
 import { PHONE_DISPLAY, EMAIL, SERVICIOS_SELECCION } from '../data.js'
-import { waLink } from '../utils.js'
+import { waLink, enviarConArchivo } from '../utils.js'
 import WhatsAppPreview from './WhatsAppPreview.jsx'
+import ExitoServidor from './ExitoServidor.jsx'
 import { Icon } from './Icons.jsx'
 import Reveal from './Reveal.jsx'
 import './Contacto.css'
@@ -23,11 +24,38 @@ const INFO = [
 export default function Contacto() {
   const [sent, setSent] = useState(null)
   const [soportes, setSoportes] = useState('')
+  const [servidorOk, setServidorOk] = useState(false)
+  const [errorEnvio, setErrorEnvio] = useState('')
   const formRef = useRef(null)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    const data = Object.fromEntries(new FormData(e.target))
+    const form = e.target
+    const data = Object.fromEntries(new FormData(form))
+    const fileInput = form.querySelector('input[type="file"]')
+    const tieneArchivo = fileInput && fileInput.files.length > 0
+
+    if (tieneArchivo) {
+      try {
+        const fd = new FormData()
+        fd.append('tipo', 'Solicitud de cita')
+        fd.append('nombre', data.nombre ?? '')
+        fd.append('telefono', data.telefono ?? '')
+        fd.append('correo', data.correo ?? '')
+        fd.append('mensaje', `Servicio de interés: ${data.servicio}\n\n${data.mensaje}`)
+        fd.append('website', '')
+        for (const f of fileInput.files) fd.append('archivo[]', f)
+        await enviarConArchivo(fd)
+        setServidorOk(true)
+        setErrorEnvio('')
+        form.reset()
+        setSoportes('')
+        return
+      } catch {
+        setErrorEnvio('No pudimos enviar los archivos. Escríbenos por WhatsApp y adjúntalos en el chat.')
+      }
+    }
+
     const msg = [
       '*Solicitud de cita / mensaje — IPS VITAHER S.A.S.*',
       '',
@@ -120,6 +148,7 @@ export default function Contacto() {
                 </div>
               </div>
             </div>
+            {errorEnvio && <p className="form-error">{errorEnvio}</p>}
             <button className="btn btn-primary form-submit" type="submit">
               Enviar solicitud
             </button>
@@ -140,6 +169,8 @@ export default function Contacto() {
           }}
         />
       )}
+
+      {servidorOk && <ExitoServidor onClose={() => setServidorOk(false)} />}
     </section>
   )
 }

@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react'
 import { PERFILES, FORMACION_OPCIONES } from '../data.js'
+import { enviarConArchivo } from '../utils.js'
 import WhatsAppPreview from './WhatsAppPreview.jsx'
+import ExitoServidor from './ExitoServidor.jsx'
 import { Icon } from './Icons.jsx'
 import Reveal from './Reveal.jsx'
 import './Trabaja.css'
@@ -9,11 +11,39 @@ import './form.css'
 export default function Trabaja() {
   const [sent, setSent] = useState(null)
   const [cv, setCv] = useState('')
+  const [servidorOk, setServidorOk] = useState(false)
+  const [errorEnvio, setErrorEnvio] = useState('')
   const formRef = useRef(null)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    const data = Object.fromEntries(new FormData(e.target))
+    const form = e.target
+    const data = Object.fromEntries(new FormData(form))
+    const fileInput = form.querySelector('input[type="file"]')
+    const tieneArchivo = fileInput && fileInput.files.length > 0
+
+    if (tieneArchivo) {
+      try {
+        const fd = new FormData()
+        fd.append('tipo', 'Postulación laboral')
+        fd.append('nombre', data.nombre ?? '')
+        fd.append('telefono', data.telefono ?? '')
+        fd.append('correo', data.correo ?? '')
+        fd.append('extra', `Cargo: ${data.cargo}\nNivel de formación: ${data.formacion}\nCiudad: ${data.ciudad || '—'}`)
+        fd.append('mensaje', data.experiencia || 'Sin descripción de experiencia.')
+        fd.append('website', '')
+        for (const f of fileInput.files) fd.append('archivo[]', f)
+        await enviarConArchivo(fd)
+        setServidorOk(true)
+        setErrorEnvio('')
+        form.reset()
+        setCv('')
+        return
+      } catch {
+        setErrorEnvio('No pudimos enviar tu hoja de vida. Escríbenos por WhatsApp y adjúntala en el chat.')
+      }
+    }
+
     const msg = [
       '*Postulación laboral — IPS VITAHER S.A.S.*',
       '',
@@ -120,6 +150,7 @@ export default function Trabaja() {
                 </div>
               </div>
             </div>
+            {errorEnvio && <p className="form-error">{errorEnvio}</p>}
             <button className="btn btn-primary form-submit" type="submit">
               Enviar postulación
             </button>
@@ -140,6 +171,8 @@ export default function Trabaja() {
           }}
         />
       )}
+
+      {servidorOk && <ExitoServidor onClose={() => setServidorOk(false)} />}
     </section>
   )
 }

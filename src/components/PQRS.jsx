@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { PQRS_TIPOS, SERVICIOS_SELECCION } from '../data.js'
 import WhatsAppPreview from './WhatsAppPreview.jsx'
+import ExitoServidor from './ExitoServidor.jsx'
 import { Icon } from './Icons.jsx'
 import Reveal from './Reveal.jsx'
 import './PQRS.css'
@@ -19,6 +20,8 @@ const TIPOS_DOC = ['Cédula de ciudadanía', 'Cédula de extranjería', 'Tarjeta
 export default function PQRS() {
   const [sent, setSent] = useState(null)
   const [files, setFiles] = useState([])
+  const [servidorOk, setServidorOk] = useState(false)
+  const [errorEnvio, setErrorEnvio] = useState('')
   const formRef = useRef(null)
 
   const input = (key) => ({
@@ -27,9 +30,45 @@ export default function PQRS() {
     required: ['nombre', 'tipoSolicitud', 'descripcion'].includes(key),
   })
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    const data = Object.fromEntries(new FormData(e.target))
+    const form = e.target
+    const data = Object.fromEntries(new FormData(form))
+    const fileInput = form.querySelector('input[type="file"]')
+    const tieneArchivo = fileInput && fileInput.files.length > 0
+
+    if (tieneArchivo) {
+      try {
+        const fd = new FormData()
+        fd.append('tipo', `PQRS - ${data.tipoSolicitud}`)
+        fd.append('nombre', data.nombre ?? 'Anónimo')
+        fd.append('telefono', data.telefono ?? '')
+        fd.append('correo', data.correo ?? '')
+        fd.append(
+          'extra',
+          [
+            `Tipo: ${data.tipoSolicitud}`,
+            `Servicio: ${data.servicio ?? 'No especificado'}`,
+            `Fecha del evento: ${data.fecha || 'No indicada'}`,
+            `Documento: ${data.tipoDoc} ${data.numDoc || ''}`.trim(),
+            `Municipio: ${data.municipio || '—'}`,
+            `Dirección: ${data.direccion || '—'}`,
+          ].join('\n'),
+        )
+        fd.append('mensaje', data.descripcion)
+        fd.append('website', '')
+        for (const f of fileInput.files) fd.append('archivo[]', f)
+        await enviarConArchivo(fd)
+        setServidorOk(true)
+        setErrorEnvio('')
+        form.reset()
+        setFiles([])
+        return
+      } catch {
+        setErrorEnvio('No pudimos enviar los archivos. Presenta tu PQRS por WhatsApp y adjúntalos en el chat.')
+      }
+    }
+
     const msg = [
       '*PQRS — IPS VITAHER S.A.S.*',
       '',
@@ -169,6 +208,7 @@ export default function PQRS() {
               </div>
             </div>
 
+            {errorEnvio && <p className="form-error">{errorEnvio}</p>}
             <button className="btn btn-primary form-submit" type="submit">
               Enviar PQRS
             </button>
@@ -190,6 +230,8 @@ export default function PQRS() {
           }}
         />
       )}
+
+      {servidorOk && <ExitoServidor onClose={() => setServidorOk(false)} />}
     </section>
   )
 }
