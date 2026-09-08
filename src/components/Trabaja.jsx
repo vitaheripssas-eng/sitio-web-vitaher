@@ -9,10 +9,26 @@ import './Trabaja.css'
 import './form.css'
 
 const FORMATOS = [
-  { label: 'Lista de Chequeo - Cuidador', href '/formatos/FORMATO_LISTA_DE_CHEQUEO_CUIDADOR.pdf', icon: 'user-check' },
-  { label: 'Lista de Chequeo - Profesional', href '/formatos/FORMATO_LISTA_DE_CHEQUEO_PROFESIONAL.pdf', icon: 'brain' },
-  { label: 'Lista de Chequeo - Aux. Enfermería', href '/formatos/FORMATO_LISTA_DE_CHEQUEO_AUX_ENFERMERIA.pdf', icon: 'user' },
-  { label: 'Lista de Chequeo - Administrativo', href '/formatos/FORMATO_LISTA_DE_CHEQUO_ADMINISTRATIVO.pdf', icon: 'home' },
+  {
+    label: 'Lista de Chequeo - Cuidador',
+    href: '/formatos/FORMATO_LISTA_DE_CHEQUEO_CUIDADOR.pdf',
+    icon: 'user-check',
+  },
+  {
+    label: 'Lista de Chequeo - Profesional',
+    href: '/formatos/FORMATO_LISTA_DE_CHEQUEO_PROFESIONAL.pdf',
+    icon: 'brain',
+  },
+  {
+    label: 'Lista de Chequeo - Aux. Enfermería',
+    href: '/formatos/FORMATO_LISTA_DE_CHEQUEO_AUX_ENFERMERIA.pdf',
+    icon: 'user',
+  },
+  {
+    label: 'Lista de Chequeo - Administrativo',
+    href: '/formatos/FORMATO_LISTA_DE_CHEQUO_ADMINISTRATIVO.pdf',
+    icon: 'home',
+  },
 ]
 
 export default function Trabaja() {
