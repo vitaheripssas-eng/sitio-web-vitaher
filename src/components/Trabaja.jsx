@@ -8,6 +8,13 @@ import Reveal from './Reveal.jsx'
 import './Trabaja.css'
 import './form.css'
 
+const FORMATOS = [
+  { label: 'Lista de Chequeo - Cuidador', href '/formatos/FORMATO_LISTA_DE_CHEQUEO_CUIDADOR.pdf', icon: 'user-check' },
+  { label: 'Lista de Chequeo - Profesional', href '/formatos/FORMATO_LISTA_DE_CHEQUEO_PROFESIONAL.pdf', icon: 'brain' },
+  { label: 'Lista de Chequeo - Aux. Enfermería', href '/formatos/FORMATO_LISTA_DE_CHEQUEO_AUX_ENFERMERIA.pdf', icon: 'user' },
+  { label: 'Lista de Chequeo - Administrativo', href '/formatos/FORMATO_LISTA_DE_CHEQUO_ADMINISTRATIVO.pdf', icon: 'home' },
+]
+
 export default function Trabaja() {
   const [sent, setSent] = useState(null)
   const [cv, setCv] = useState('')
@@ -86,6 +93,26 @@ export default function Trabaja() {
                   <Icon name="check" size={14} />
                   {perfil}
                 </span>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal as="div" className="formatos-download" delay={200}>
+            <h3>Formatos descargables</h3>
+            <p>Descarga los formatos de listas de chequeo según el cargo al que postules:</p>
+            <div className="formatos-grid">
+              {FORMATOS.map((formato) => (
+                <a
+                  className="formato-link"
+                  href={formato.href}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={formato.label}
+                >
+                  <Icon name={formato.icon} size={20} />
+                  <span>{formato.label}</span>
+                </a>
               ))}
             </div>
           </Reveal>
