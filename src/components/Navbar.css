@@ -9,7 +9,7 @@
 
 .navbar-inner {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 24px;
   height: 76px;
@@ -21,6 +21,7 @@
 
 .nav-links {
   justify-self: end;
+  justify-content: flex-end;
 }
 
 .nav-cta,
