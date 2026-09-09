@@ -19,9 +19,9 @@ function Hamburger({ open, onClick }) {
     <button className={`toggle ${open ? 'is-open' : ''}`} aria-label={open ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={open} type="button" onClick={onClick}>
       <svg className="hamburger-svg" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
         <g className="hamburger-dots">
-          <line className="dot dot-1" x1="4" y1="5" x2="20" y2="5" />
-          <line className="dot dot-2" x1="4" y1="12" x2="20" y2="12" />
-          <line className="dot dot-3" x1="4" y1="19" x2="20" y2="19" />
+          <line className="dot dot-1" x1="7" y1="5" x2="17" y2="5" />
+          <line className="dot dot-2" x1="7" y1="12" x2="17" y2="12" />
+          <line className="dot dot-3" x1="7" y1="19" x2="17" y2="19" />
         </g>
       </svg>
     </button>
