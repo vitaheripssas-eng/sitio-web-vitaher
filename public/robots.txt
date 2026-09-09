@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vitaheripssas-eng.github.io/sitio-web-vitaher/sitemap.xml

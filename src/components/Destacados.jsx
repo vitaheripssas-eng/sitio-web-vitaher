@@ -70,8 +70,11 @@ export default function Destacados() {
                     className="destacado-img"
                     src={slide.img}
                     alt={slide.alt}
+                    width="640"
+                    height="400"
                     loading={i === 0 ? 'eager' : 'lazy'}
                     decoding="async"
+                    fetchPriority={i === 0 ? 'high' : 'auto'}
                   />
                 </article>
               ))}
