@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sitio-web-vitaher/sw.js', { scope: '/sitio-web-vitaher/' })})}
