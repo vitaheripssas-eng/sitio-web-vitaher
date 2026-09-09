@@ -1,17 +1,18 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
-import Destacados from './components/Destacados.jsx'
-import RutaCuidado from './components/RutaCuidado.jsx'
-import Nosotros from './components/Nosotros.jsx'
-import Servicios from './components/Servicios.jsx'
-import PQRS from './components/PQRS.jsx'
-import Trabaja from './components/Trabaja.jsx'
-import Contacto from './components/Contacto.jsx'
 import Footer from './components/Footer.jsx'
 import Modal from './components/Modal.jsx'
 import { getLegalPage } from './data/legal.js'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
+
+const Destacados = lazy(() => import('./components/Destacados.jsx'))
+const RutaCuidado = lazy(() => import('./components/RutaCuidado.jsx'))
+const Nosotros = lazy(() => import('./components/Nosotros.jsx'))
+const Servicios = lazy(() => import('./components/Servicios.jsx'))
+const PQRS = lazy(() => import('./components/PQRS.jsx'))
+const Trabaja = lazy(() => import('./components/Trabaja.jsx'))
+const Contacto = lazy(() => import('./components/Contacto.jsx'))
 
 export default function App() {
   const [openDoc, setOpenDoc] = useState(null)
@@ -21,13 +22,15 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
-        <Destacados />
-        <RutaCuidado />
-        <Nosotros />
-        <Servicios />
-        <PQRS />
-        <Trabaja />
-        <Contacto />
+        <Suspense fallback={<div style={{ minHeight: 320 }} aria-hidden />}>
+          <Destacados />
+          <RutaCuidado />
+          <Nosotros />
+          <Servicios />
+          <PQRS />
+          <Trabaja />
+          <Contacto />
+        </Suspense>
       </main>
       <Footer onOpenLegal={(slug) => setOpenDoc(getLegalPage(slug))} />
       {openDoc && <Modal doc={openDoc} onClose={() => setOpenDoc(null)} />}
