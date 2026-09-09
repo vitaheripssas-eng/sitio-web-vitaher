@@ -115,6 +115,13 @@ export function Icon({ name, size = 24, ...props }) {
         <path d="M12 6v6l4 2" />
       </>
     ),
+    menu: (
+      <>
+        <circle cx="12" cy="5" r="1.8" fill="currentColor" stroke="none" />
+        <circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none" />
+        <circle cx="12" cy="19" r="1.8" fill="currentColor" stroke="none" />
+      </>
+    ),
     chevronLeft: <path d="m15 18-6-6 6-6" />,
     chevronRight: <path d="m9 18 6-6-6-6" />,
     x: (
