@@ -8,10 +8,10 @@
 }
 
 .navbar-inner {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 24px;
+  justify-content: space-between;
+  gap: 16px;
   height: 76px;
 }
 
@@ -50,7 +50,6 @@
 .nav-links {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 26px;
 }
 
@@ -89,103 +88,18 @@
   font-size: 0.88rem;
 }
 
-@media (max-width: 960px) {
-  .nav-links .nav-cta {
-    display: none;
-    margin-top: 14px;
-    padding: 14px 24px;
-    font-size: 1rem;
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-  }
-
-  .nav-links.is-open .nav-cta {
-    display: flex;
-  }
-}
-
-:root {
-  --dot-size: 6px;
-  --dot-gap: 8px;
-}
-
-.toggle {
+.nav-toggle {
   display: none;
   background: none;
   border: none;
+  color: var(--ink);
   cursor: pointer;
   padding: 6px;
-  border-radius: var(--radius);
-  transition: background 0.2s ease;
-  overflow: visible;
-}
-
-.toggle:hover {
-  background: var(--bg-soft);
-}
-
-.toggle:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-
-.hamburger-svg {
-  display: block;
-  overflow: visible !important;
-  width: 26px;
-  height: 26px;
-}
-
-.hamburger-dots {
-  overflow: visible !important;
-}
-
-.navbar,
-.navbar-inner,
-.toggle {
-  overflow: visible !important;
-}
-
-.dot-1, .dot-2, .dot-3 {
-  stroke: var(--ink);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  transform-origin: center;
-  transition: none;
-}
-
-.toggle.is-open .dot-1 {
-  transform: translate(0, 7px) rotate(45deg);
-}
-
-.toggle.is-open .dot-2 {
-  opacity: 0;
-  transform: scale(0);
-}
-
-.toggle.is-open .dot-3 {
-  transform: translate(0, -7px) rotate(-45deg);
-}
-
-.toggle.is-open .dot-1,
-.toggle.is-open .dot-2,
-.toggle.is-open .dot-3 {
-  stroke: var(--primary);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dot-1, .dot-2, .dot-3 {
-    transition: none;
-  }
 }
 
 @media (max-width: 960px) {
-  .toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    justify-self: end;
+  .nav-toggle {
+    display: block;
   }
 
   .nav-links {
