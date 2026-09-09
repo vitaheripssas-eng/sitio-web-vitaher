@@ -4,6 +4,8 @@ import WhatsAppPreview from './WhatsAppPreview.jsx'
 import ExitoServidor from './ExitoServidor.jsx'
 import { Icon } from './Icons.jsx'
 import Reveal from './Reveal.jsx'
+import { pqrsSchema, formatZodErrors } from '../schemas.js'
+import { enviarConArchivo } from '../utils.js'
 import './PQRS.css'
 import './form.css'
 
@@ -22,6 +24,8 @@ export default function PQRS() {
   const [files, setFiles] = useState([])
   const [servidorOk, setServidorOk] = useState(false)
   const [errorEnvio, setErrorEnvio] = useState('')
+  const [fieldErrors, setFieldErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const formRef = useRef(null)
 
   const input = (key) => ({
@@ -33,11 +37,19 @@ export default function PQRS() {
   async function handleSubmit(e) {
     e.preventDefault()
     const form = e.target
-    const data = Object.fromEntries(new FormData(form))
+    const raw = Object.fromEntries(new FormData(form))
+    const parsed = pqrsSchema.safeParse(raw)
+    if (!parsed.success) {
+      setFieldErrors(formatZodErrors(parsed.error))
+      return
+    }
+    setFieldErrors({})
+    const data = parsed.data
     const fileInput = form.querySelector('input[type="file"]')
     const tieneArchivo = fileInput && fileInput.files.length > 0
 
     if (tieneArchivo) {
+      setIsSubmitting(true)
       try {
         const fd = new FormData()
         fd.append('tipo', `PQRS - ${data.tipoSolicitud}`)
@@ -66,6 +78,8 @@ export default function PQRS() {
         return
       } catch {
         setErrorEnvio('No pudimos enviar los archivos. Presenta tu PQRS por WhatsApp y adjúntalos en el chat.')
+      } finally {
+        setIsSubmitting(false)
       }
     }
 
@@ -187,7 +201,9 @@ export default function PQRS() {
                     name="descripcion"
                     placeholder="Cuéntanos con detalle qué ocurrió..."
                     required
+                    aria-invalid={!!fieldErrors.descripcion}
                   />
+                  {fieldErrors.descripcion && <span className="form-field-error">{fieldErrors.descripcion}</span>}
                 </div>
                 <div className="form-field full">
                   <label>Adjuntar archivos</label>
@@ -208,9 +224,9 @@ export default function PQRS() {
                 </div>
               </div>
 
-              {errorEnvio && <p className="form-error">{errorEnvio}</p>}
-              <button className="btn btn-primary form-submit" type="submit">
-                Enviar PQRS
+              <p className="form-error" role="alert" aria-live="polite">{errorEnvio || '\u00A0'}</p>
+              <button className="btn btn-primary form-submit" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
+                {isSubmitting ? 'Enviando…' : 'Enviar PQRS'}
               </button>
             </form>
           </Reveal>

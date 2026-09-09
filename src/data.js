@@ -1,8 +1,8 @@
-export const WHATSAPP_NUMBER = '573142318040'
+export const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER ?? '573142318040'
 export const PHONE_DISPLAY = '+57 314 231 8040'
-export const EMAIL = 'coordinacionarauca2026@gmail.com'
+export const EMAIL = import.meta.env.VITE_EMAIL ?? 'coordinacionarauca2026@gmail.com'
 
-export const FORM_ENDPOINT = 'https://vitaherips.com/enviar.php'
+export const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT ?? 'https://vitaherips.com/enviar.php'
 
 const BASE = import.meta.env.BASE_URL
 

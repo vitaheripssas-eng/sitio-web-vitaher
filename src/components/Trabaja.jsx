@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { PERFILES, FORMACION_OPCIONES } from '../data.js'
 import { enviarConArchivo } from '../utils.js'
+import { trabajaSchema, formatZodErrors } from '../schemas.js'
 import WhatsAppPreview from './WhatsAppPreview.jsx'
 import ExitoServidor from './ExitoServidor.jsx'
 import { Icon } from './Icons.jsx'
@@ -38,16 +39,26 @@ export default function Trabaja() {
   const [cv, setCv] = useState('')
   const [servidorOk, setServidorOk] = useState(false)
   const [errorEnvio, setErrorEnvio] = useState('')
+  const [fieldErrors, setFieldErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const formRef = useRef(null)
 
   async function handleSubmit(e) {
     e.preventDefault()
     const form = e.target
-    const data = Object.fromEntries(new FormData(form))
+    const raw = Object.fromEntries(new FormData(form))
+    const parsed = trabajaSchema.safeParse(raw)
+    if (!parsed.success) {
+      setFieldErrors(formatZodErrors(parsed.error))
+      return
+    }
+    setFieldErrors({})
+    const data = parsed.data
     const fileInput = form.querySelector('input[type="file"]')
     const tieneArchivo = fileInput && fileInput.files.length > 0
 
     if (tieneArchivo) {
+      setIsSubmitting(true)
       try {
         const fd = new FormData()
         fd.append('tipo', 'Postulación laboral')
@@ -66,6 +77,8 @@ export default function Trabaja() {
         return
       } catch {
         setErrorEnvio('No pudimos enviar tu hoja de vida. Escríbenos por WhatsApp y adjúntala en el chat.')
+      } finally {
+        setIsSubmitting(false)
       }
     }
 
@@ -145,19 +158,22 @@ export default function Trabaja() {
                     <label htmlFor="trabaja-nombre">
                       Nombre completo <span className="req">*</span>
                     </label>
-                    <input className="form-input" type="text" id="trabaja-nombre" name="nombre" placeholder="Nombres y apellidos" required />
+                    <input className="form-input" type="text" id="trabaja-nombre" name="nombre" placeholder="Nombres y apellidos" required aria-invalid={!!fieldErrors.nombre} />
+                    {fieldErrors.nombre && <span className="form-field-error">{fieldErrors.nombre}</span>}
                   </div>
                   <div className="form-field">
                     <label htmlFor="trabaja-correo">
                       Correo electrónico <span className="req">*</span>
                     </label>
-                    <input className="form-input" type="email" id="trabaja-correo" name="correo" placeholder="correo@ejemplo.com" required />
+                    <input className="form-input" type="email" id="trabaja-correo" name="correo" placeholder="correo@ejemplo.com" required aria-invalid={!!fieldErrors.correo} />
+                    {fieldErrors.correo && <span className="form-field-error">{fieldErrors.correo}</span>}
                   </div>
                   <div className="form-field">
                     <label htmlFor="trabaja-telefono">
                       Teléfono <span className="req">*</span>
                     </label>
-                    <input className="form-input" type="tel" id="trabaja-telefono" name="telefono" placeholder="+57 ..." required />
+                    <input className="form-input" type="tel" id="trabaja-telefono" name="telefono" placeholder="+57 ..." required aria-invalid={!!fieldErrors.telefono} />
+                    {fieldErrors.telefono && <span className="form-field-error">{fieldErrors.telefono}</span>}
                   </div>
                   <div className="form-field">
                     <label htmlFor="trabaja-ciudad">Ciudad</label>
@@ -167,12 +183,13 @@ export default function Trabaja() {
                     <label htmlFor="trabaja-cargo">
                       Cargo al que aspira <span className="req">*</span>
                     </label>
-                    <select className="form-select" id="trabaja-cargo" name="cargo" required>
+                    <select className="form-select" id="trabaja-cargo" name="cargo" required aria-invalid={!!fieldErrors.cargo}>
                       <option value="">Seleccione un cargo...</option>
                       {PERFILES.map((p) => (
                         <option key={p}>{p}</option>
                       ))}
                     </select>
+                    {fieldErrors.cargo && <span className="form-field-error">{fieldErrors.cargo}</span>}
                   </div>
                   <div className="form-field">
                     <label htmlFor="trabaja-formacion">Nivel de formación</label>
@@ -197,9 +214,9 @@ export default function Trabaja() {
                     </div>
                   </div>
 </div>
-            {errorEnvio && <p className="form-error">{errorEnvio}</p>}
-                <button className="btn btn-primary form-submit" type="submit">
-                  Enviar postulación
+            <p className="form-error" role="alert" aria-live="polite">{errorEnvio || '\u00A0'}</p>
+                <button className="btn btn-primary form-submit" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
+                  {isSubmitting ? 'Enviando…' : 'Enviar postulación'}
                 </button>
               </form>
             </Reveal>

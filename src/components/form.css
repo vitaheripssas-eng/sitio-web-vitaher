@@ -135,10 +135,23 @@
     grid-column: auto;
   }
 }
+.form-field-error {
+  color: #b91c1c;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
 .form-error {
   margin-top: 12px;
   color: #b91c1c;
   font-size: 0.88rem;
   font-weight: 600;
+  min-height: 1.2em;
+}
+
+.form-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 

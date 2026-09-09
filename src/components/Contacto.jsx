@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { PHONE_DISPLAY, EMAIL, SERVICIOS_SELECCION } from '../data.js'
 import { waLink, enviarConArchivo } from '../utils.js'
+import { contactoSchema, formatZodErrors } from '../schemas.js'
 import WhatsAppPreview from './WhatsAppPreview.jsx'
 import ExitoServidor from './ExitoServidor.jsx'
 import { Icon } from './Icons.jsx'
@@ -26,16 +27,26 @@ export default function Contacto() {
   const [soportes, setSoportes] = useState('')
   const [servidorOk, setServidorOk] = useState(false)
   const [errorEnvio, setErrorEnvio] = useState('')
+  const [fieldErrors, setFieldErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const formRef = useRef(null)
 
   async function handleSubmit(e) {
     e.preventDefault()
     const form = e.target
-    const data = Object.fromEntries(new FormData(form))
+    const raw = Object.fromEntries(new FormData(form))
+    const parsed = contactoSchema.safeParse(raw)
+    if (!parsed.success) {
+      setFieldErrors(formatZodErrors(parsed.error))
+      return
+    }
+    setFieldErrors({})
+    const data = parsed.data
     const fileInput = form.querySelector('input[type="file"]')
     const tieneArchivo = fileInput && fileInput.files.length > 0
 
     if (tieneArchivo) {
+      setIsSubmitting(true)
       try {
         const fd = new FormData()
         fd.append('tipo', 'Solicitud de cita')
@@ -53,6 +64,8 @@ export default function Contacto() {
         return
       } catch {
         setErrorEnvio('No pudimos enviar los archivos. Escríbenos por WhatsApp y adjúntalos en el chat.')
+      } finally {
+        setIsSubmitting(false)
       }
     }
 
@@ -111,13 +124,15 @@ export default function Contacto() {
                   <label htmlFor="contacto-nombre">
                     Nombre completo <span className="req">*</span>
                   </label>
-                  <input className="form-input" type="text" id="contacto-nombre" name="nombre" placeholder="Nombres y apellidos" required />
+                  <input className="form-input" type="text" id="contacto-nombre" name="nombre" placeholder="Nombres y apellidos" required aria-invalid={!!fieldErrors.nombre} />
+                  {fieldErrors.nombre && <span className="form-field-error">{fieldErrors.nombre}</span>}
                 </div>
                 <div className="form-field">
                   <label htmlFor="contacto-telefono">
                     Teléfono <span className="req">*</span>
                   </label>
-                  <input className="form-input" type="tel" id="contacto-telefono" name="telefono" placeholder="+57 ..." required />
+                  <input className="form-input" type="tel" id="contacto-telefono" name="telefono" placeholder="+57 ..." required aria-invalid={!!fieldErrors.telefono} />
+                  {fieldErrors.telefono && <span className="form-field-error">{fieldErrors.telefono}</span>}
                 </div>
                 <div className="form-field full">
                   <label htmlFor="contacto-correo">Correo electrónico</label>
@@ -135,7 +150,8 @@ export default function Contacto() {
                   <label htmlFor="contacto-mensaje">
                     Mensaje <span className="req">*</span>
                   </label>
-                  <textarea className="form-textarea" id="contacto-mensaje" name="mensaje" placeholder="Cuéntanos cómo podemos ayudarte..." required />
+                  <textarea className="form-textarea" id="contacto-mensaje" name="mensaje" placeholder="Cuéntanos cómo podemos ayudarte..." required aria-invalid={!!fieldErrors.mensaje} />
+                  {fieldErrors.mensaje && <span className="form-field-error">{fieldErrors.mensaje}</span>}
                 </div>
                 <div className="form-field full">
                   <label>Adjuntar Orden/Autorización</label>
@@ -148,9 +164,9 @@ export default function Contacto() {
                   </div>
                 </div>
               </div>
-              {errorEnvio && <p className="form-error">{errorEnvio}</p>}
-              <button className="btn btn-primary form-submit" type="submit">
-                Enviar solicitud
+              <p className="form-error" role="alert" aria-live="polite">{errorEnvio || '\u00A0'}</p>
+              <button className="btn btn-primary form-submit" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
+                {isSubmitting ? 'Enviando…' : 'Enviar solicitud'}
               </button>
             </form>
           </Reveal>

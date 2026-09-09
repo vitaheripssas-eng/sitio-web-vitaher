@@ -11,12 +11,13 @@ import Contacto from './components/Contacto.jsx'
 import Footer from './components/Footer.jsx'
 import Modal from './components/Modal.jsx'
 import { getLegalPage } from './data/legal.js'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 export default function App() {
   const [openDoc, setOpenDoc] = useState(null)
 
   return (
-    <>
+    <ErrorBoundary>
       <Navbar />
       <main>
         <Hero />
@@ -30,6 +31,6 @@ export default function App() {
       </main>
       <Footer onOpenLegal={(slug) => setOpenDoc(getLegalPage(slug))} />
       {openDoc && <Modal doc={openDoc} onClose={() => setOpenDoc(null)} />}
-    </>
+    </ErrorBoundary>
   )
 }
