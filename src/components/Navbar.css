@@ -8,10 +8,10 @@
 }
 
 .navbar-inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 24px;
   height: 76px;
 }
 
@@ -50,6 +50,7 @@
 .nav-links {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 26px;
 }
 
