@@ -118,6 +118,7 @@
   padding: 6px;
   border-radius: var(--radius);
   transition: background 0.2s ease;
+  overflow: visible;
 }
 
 .toggle:hover {
@@ -132,9 +133,16 @@
 .hamburger-svg {
   display: block;
   overflow: visible;
+  width: 26px;
+  height: 26px;
 }
 
 .hamburger-dots {
+  overflow: visible;
+}
+
+.navbar,
+.navbar-inner {
   overflow: visible;
 }
 

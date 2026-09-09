@@ -17,7 +17,7 @@ function Logo() {
 function Hamburger({ open, onClick }) {
   return (
     <button className={`toggle ${open ? 'is-open' : ''}`} aria-label={open ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={open} type="button" onClick={onClick}>
-      <svg className="hamburger-svg" viewBox="-4 -4 32 32" width="26" height="26" aria-hidden="true">
+      <svg className="hamburger-svg" viewBox="-8 -8 40 40" width="26" height="26" aria-hidden="true">
         <g className="hamburger-dots">
           <line className="dot dot-1" x1="7" y1="5" x2="17" y2="5" />
           <line className="dot dot-2" x1="7" y1="12" x2="17" y2="12" />
