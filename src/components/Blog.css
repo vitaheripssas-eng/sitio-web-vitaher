@@ -1,0 +1,29 @@
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.blog-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.blog-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+.blog-card p {
+  font-size: 0.92rem;
+  margin-bottom: 10px;
+}
+.blog-date {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+@media (max-width: 900px) {
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}

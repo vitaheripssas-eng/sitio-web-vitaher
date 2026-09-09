@@ -9,6 +9,9 @@ const BASE = import.meta.env.BASE_URL
 export const NAV_LINKS = [
   { label: 'Nosotros', href: '#nosotros' },
   { label: 'Servicios', href: '#servicios' },
+  { label: 'Testimonios', href: '#testimonios' },
+  { label: 'FAQ', href: '#faq' },
+  { label: 'Blog', href: '#blog' },
   { label: 'PQRS', href: '#pqrs' },
   { label: 'Trabaja Con Nosotros', href: '#trabaja' },
   { label: 'Contáctanos', href: '#contacto' },
@@ -272,4 +275,62 @@ export const FORMACION_OPCIONES = [
   'Profesional',
   'Especialista',
   'Posgrado',
+]
+
+export const TESTIMONIOS = [
+  {
+    nombre: 'María G. — Arauca',
+    texto: 'La atención en casa fue excelente, el equipo muy humano y puntual. Mi padre se recuperó con tranquilidad.',
+    servicio: 'Medicina Domiciliaria',
+  },
+  {
+    nombre: 'Carlos P. — Arauca',
+    texto: 'Enfermería muy profesional, curaciones y seguimiento sin tener que desplazarnos. Total confianza.',
+    servicio: 'Enfermería',
+  },
+  {
+    nombre: 'Familia R. — Arauca',
+    texto: 'Psicología y trabajo social nos acompañaron en un momento difícil. Gracias por la calidez.',
+    servicio: 'Psicología',
+  },
+]
+
+export const FAQ = [
+  {
+    q: '¿Atienden solo en Arauca?',
+    a: 'Sí, nuestra sede está en Arauca y la atención domiciliaria se presta en el municipio y alrededores según cobertura.',
+  },
+  {
+    q: '¿Cómo agendo una cita?',
+    a: 'Puedes agendar por el formulario de contacto, por WhatsApp al +57 314 231 8040 o por teléfono. Te orientamos sobre requisitos.',
+  },
+  {
+    q: '¿Qué incluye la medicina domiciliaria?',
+    a: 'Valoración médica, formulación, seguimiento y remisiones cuando sean necesarias, sin salir de casa.',
+  },
+  {
+    q: '¿Cómo presento una PQRS?',
+    a: 'Usa el formulario PQRS del sitio, indica tipo y descripción; también puedes escribirnos por WhatsApp o correo.',
+  },
+]
+
+export const BLOG_POSTS = [
+  {
+    slug: 'cuidado-heridas-en-casa',
+    title: '5 claves para el cuidado de heridas en casa',
+    excerpt: 'Recomendaciones de enfermería para curaciones seguras y cuándo consultar.',
+    date: '2026-08-15',
+  },
+  {
+    slug: 'hipertension-control',
+    title: 'Hipertensión: control y prevención',
+    excerpt: 'Hábitos, seguimiento y señales de alerta para pacientes crónicos.',
+    date: '2026-08-02',
+  },
+  {
+    slug: 'salud-mental-familia',
+    title: 'Salud mental y familia durante la recuperación',
+    excerpt: 'El rol de la psicología y el acompañamiento familiar en casa.',
+    date: '2026-07-20',
+  },
 ]

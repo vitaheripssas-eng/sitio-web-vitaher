@@ -1,0 +1,31 @@
+.testimonios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.testimonio {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.testimonio-texto {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+.testimonio-nombre {
+  display: block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+.testimonio-servicio {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+@media (max-width: 900px) {
+  .testimonios-grid {
+    grid-template-columns: 1fr;
+  }
+}
