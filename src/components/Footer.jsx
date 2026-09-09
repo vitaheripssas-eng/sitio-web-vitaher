@@ -141,6 +141,18 @@ export default function Footer({ onOpenLegal }) {
               </li>
               <li>
                 <Icon name="mail" size={16} />
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info%40vitaherips.com" target="_blank" rel="noreferrer">
+                  info@vitaherips.com
+                </a>
+              </li>
+              <li>
+                <Icon name="mail" size={16} />
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=talentohumanovitaher%40gmail.com" target="_blank" rel="noreferrer">
+                  talentohumanovitaher@gmail.com
+                </a>
+              </li>
+              <li>
+                <Icon name="mail" size={16} />
                 <a
                   href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL)}`}
                   target="_blank"
