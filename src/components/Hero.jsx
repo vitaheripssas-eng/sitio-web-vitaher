@@ -46,9 +46,6 @@ export default function Hero() {
       <div className="container">
         <div className="hero-grid">
           <div className="hero-copy">
-            <Reveal delay={0}>
-              
-            </Reveal>
             <Reveal delay={120}>
               <h1>
                 Llevamos la atención médica hasta la comodidad de{' '}

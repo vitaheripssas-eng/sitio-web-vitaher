@@ -3,9 +3,70 @@
 }
 
 .trabaja-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Fila 1: Listas de chequeo - ancho completo */
+.checklist-row {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 36px;
+}
+
+.checklist-row h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.checklist-row > p {
+  font-size: 0.92rem;
+  margin-bottom: 22px;
+}
+
+.formatos-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 56px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.formato-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.formato-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary-light);
+  background: var(--primary-tint);
+  box-shadow: var(--shadow-md);
+}
+
+.formato-card h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+/* Fila 2: Dos columnas */
+.trabaja-cols {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 40px;
   align-items: start;
 }
 
@@ -58,6 +119,7 @@
   flex-shrink: 0;
 }
 
+/* Formulario */
 .trabaja-form {
   background: var(--white);
   border: 1px solid var(--border);
@@ -71,9 +133,32 @@
   margin-bottom: 26px;
 }
 
+/* Responsive */
+@media (max-width: 1100px) {
+  .formatos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 960px) {
-  .trabaja-layout {
+  .trabaja-cols {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .formatos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .perfiles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .checklist-row,
+  .perfiles,
+  .trabaja-form {
+    padding: 24px 18px;
   }
 }
 
@@ -82,41 +167,9 @@
     grid-template-columns: 1fr;
   }
 
-  .trabaja-form,
-  .perfiles {
+  .checklist-row,
+  .perfiles,
+  .trabaja-form {
     padding: 24px 18px;
   }
-}
-
-.formatos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-}
-
-.formato-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px 18px;
-  text-decoration: none;
-  color: var(--ink);
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-  font-size: 0.88rem;
-}
-
-.formato-link:hover {
-  transform: translateY(-2px);
-  border-color: var(--primary-light);
-  background: var(--primary-tint);
-}
-
-.formato-link svg {
-  color: var(--primary-light);
-  flex-shrink: 0;
-  width: 18px;
-  height: 18px;
 }

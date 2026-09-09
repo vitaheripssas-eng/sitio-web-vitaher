@@ -8,25 +8,27 @@ import Reveal from './Reveal.jsx'
 import './Trabaja.css'
 import './form.css'
 
+const BASE = import.meta.env.BASE_URL
+
 const FORMATOS = [
   {
     label: 'Lista de Chequeo - Cuidador',
-    href: '/formatos/FORMATO_LISTA_DE_CHEQUEO_CUIDADOR.pdf',
+    href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_CUIDADOR.pdf`,
     icon: 'user-check',
   },
   {
     label: 'Lista de Chequeo - Profesional',
-    href: '/formatos/FORMATO_LISTA_DE_CHEQUEO_PROFESIONAL.pdf',
+    href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_PROFESIONAL.pdf`,
     icon: 'brain',
   },
   {
     label: 'Lista de Chequeo - Aux. Enfermería',
-    href: '/formatos/FORMATO_LISTA_DE_CHEQUEO_AUX_ENFERMERIA.pdf',
+    href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_AUX_ENFERMERIA.pdf`,
     icon: 'user',
   },
   {
     label: 'Lista de Chequeo - Administrativo',
-    href: '/formatos/FORMATO_LISTA_DE_CHEQUO_ADMINISTRATIVO.pdf',
+    href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUO_ADMINISTRATIVO.pdf`,
     icon: 'home',
   },
 ]
@@ -100,105 +102,108 @@ export default function Trabaja() {
         </div>
 
         <div className="trabaja-layout">
-          <Reveal as="div" className="perfiles">
-            <h3>Perfiles que buscamos</h3>
-            <p>Si tu perfil está en la lista, te invitamos a postularte:</p>
-            <div className="perfiles-grid">
-              {PERFILES.map((perfil) => (
-                <span className="perfil" key={perfil}>
-                  <Icon name="check" size={14} />
-                  {perfil}
-                </span>
-              ))}
-            </div>
-          </Reveal>
-
-          <Reveal as="div" className="formatos-download" delay={200}>
-            <h3>Formatos descargables</h3>
-            <p>Descarga los formatos de listas de chequeo según el cargo al que postules:</p>
+          {/* Fila 1: Listas de chequeo - ancho completo */}
+          <Reveal as="div" className="checklist-row">
+            <h3>Listas de chequeo por cargo</h3>
+            <p>En base a su profesión, seleccione la lista de chequeo correspondiente al cargo al que desea aplicar, descárguela, fírmela y adjúntela a su hoja de vida para el respectivo envío por medio del formulario.</p>
             <div className="formatos-grid">
               {FORMATOS.map((formato) => (
                 <a
-                  className="formato-link"
+                  className="formato-card"
                   href={formato.href}
                   download
                   target="_blank"
                   rel="noopener noreferrer"
                   key={formato.label}
                 >
-                  <Icon name={formato.icon} size={20} />
-                  <span>{formato.label}</span>
+                  <h4>{formato.label}</h4>
                 </a>
               ))}
             </div>
           </Reveal>
 
-          <Reveal delay={140}>
-            <form className="trabaja-form" onSubmit={handleSubmit} ref={formRef}>
-            <h3>Envía tu hoja de vida</h3>
-            <div className="form-grid">
-              <div className="form-field">
-                <label htmlFor="trabaja-nombre">
-                  Nombre completo <span className="req">*</span>
-                </label>
-                <input className="form-input" type="text" id="trabaja-nombre" name="nombre" placeholder="Nombres y apellidos" required />
-              </div>
-              <div className="form-field">
-                <label htmlFor="trabaja-correo">
-                  Correo electrónico <span className="req">*</span>
-                </label>
-                <input className="form-input" type="email" id="trabaja-correo" name="correo" placeholder="correo@ejemplo.com" required />
-              </div>
-              <div className="form-field">
-                <label htmlFor="trabaja-telefono">
-                  Teléfono <span className="req">*</span>
-                </label>
-                <input className="form-input" type="tel" id="trabaja-telefono" name="telefono" placeholder="+57 ..." required />
-              </div>
-              <div className="form-field">
-                <label htmlFor="trabaja-ciudad">Ciudad</label>
-                <input className="form-input" type="text" id="trabaja-ciudad" name="ciudad" placeholder="Ej: Arauca" />
-              </div>
-              <div className="form-field">
-                <label htmlFor="trabaja-cargo">
-                  Cargo al que aspira <span className="req">*</span>
-                </label>
-                <select className="form-select" id="trabaja-cargo" name="cargo" required>
-                  <option value="">Seleccione un cargo...</option>
-                  {PERFILES.map((p) => (
-                    <option key={p}>{p}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-field">
-                <label htmlFor="trabaja-formacion">Nivel de formación</label>
-                <select className="form-select" id="trabaja-formacion" name="formacion" defaultValue="Profesional">
-                  {FORMACION_OPCIONES.map((f) => (
-                    <option key={f}>{f}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-field full">
-                <label htmlFor="trabaja-experiencia">Experiencia laboral</label>
-                <textarea className="form-textarea" id="trabaja-experiencia" name="experiencia" placeholder="Describe tu experiencia relacionada con el cargo..." />
-              </div>
-              <div className="form-field full">
-                <label>Adjuntar hoja de vida (PDF)</label>
-                <div className="form-file">
-                  <input type="file" accept=".pdf" onChange={(e) => setCv(e.target.files[0]?.name ?? '')} />
-                  <span className="form-file-label">
-                    <Icon name="upload" size={18} />
-                    {cv || 'Subir PDF'}
+          {/* Fila 2: Dos columnas - Izquierda: Perfiles, Derecha: Formulario */}
+          <div className="trabaja-cols">
+            <Reveal as="div" className="perfiles" delay={80}>
+              <h3>Perfiles que buscamos</h3>
+              <p>Si tu perfil está en la lista, te invitamos a postularte:</p>
+              <div className="perfiles-grid">
+                {PERFILES.map((perfil) => (
+                  <span className="perfil" key={perfil}>
+                    <Icon name="check" size={14} />
+                    {perfil}
                   </span>
-                </div>
+                ))}
               </div>
-            </div>
+            </Reveal>
+
+            <Reveal delay={140}>
+              <form className="trabaja-form" onSubmit={handleSubmit} ref={formRef}>
+                <h3>Envía tu hoja de vida</h3>
+                <div className="form-grid">
+                  <div className="form-field">
+                    <label htmlFor="trabaja-nombre">
+                      Nombre completo <span className="req">*</span>
+                    </label>
+                    <input className="form-input" type="text" id="trabaja-nombre" name="nombre" placeholder="Nombres y apellidos" required />
+                  </div>
+                  <div className="form-field">
+                    <label htmlFor="trabaja-correo">
+                      Correo electrónico <span className="req">*</span>
+                    </label>
+                    <input className="form-input" type="email" id="trabaja-correo" name="correo" placeholder="correo@ejemplo.com" required />
+                  </div>
+                  <div className="form-field">
+                    <label htmlFor="trabaja-telefono">
+                      Teléfono <span className="req">*</span>
+                    </label>
+                    <input className="form-input" type="tel" id="trabaja-telefono" name="telefono" placeholder="+57 ..." required />
+                  </div>
+                  <div className="form-field">
+                    <label htmlFor="trabaja-ciudad">Ciudad</label>
+                    <input className="form-input" type="text" id="trabaja-ciudad" name="ciudad" placeholder="Ej: Arauca" />
+                  </div>
+                  <div className="form-field">
+                    <label htmlFor="trabaja-cargo">
+                      Cargo al que aspira <span className="req">*</span>
+                    </label>
+                    <select className="form-select" id="trabaja-cargo" name="cargo" required>
+                      <option value="">Seleccione un cargo...</option>
+                      {PERFILES.map((p) => (
+                        <option key={p}>{p}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-field">
+                    <label htmlFor="trabaja-formacion">Nivel de formación</label>
+                    <select className="form-select" id="trabaja-formacion" name="formacion" defaultValue="Profesional">
+                      {FORMACION_OPCIONES.map((f) => (
+                        <option key={f}>{f}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="form-field full">
+                    <label htmlFor="trabaja-experiencia">Experiencia laboral</label>
+                    <textarea className="form-textarea" id="trabaja-experiencia" name="experiencia" placeholder="Describe tu experiencia relacionada con el cargo..." />
+                  </div>
+                  <div className="form-field full">
+                    <label>Adjuntar hoja de vida (PDF)</label>
+                    <div className="form-file">
+                      <input type="file" accept=".pdf" onChange={(e) => setCv(e.target.files[0]?.name ?? '')} />
+                      <span className="form-file-label">
+                        <Icon name="upload" size={18} />
+                        {cv || 'Subir PDF'}
+                      </span>
+                    </div>
+                  </div>
+</div>
             {errorEnvio && <p className="form-error">{errorEnvio}</p>}
-            <button className="btn btn-primary form-submit" type="submit">
-              Enviar postulación
-            </button>
-            </form>
-          </Reveal>
+                <button className="btn btn-primary form-submit" type="submit">
+                  Enviar postulación
+                </button>
+              </form>
+            </Reveal>
+          </div>
         </div>
       </div>
 

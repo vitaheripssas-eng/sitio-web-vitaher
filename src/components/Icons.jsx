@@ -115,31 +115,30 @@ export function Icon({ name, size = 24, ...props }) {
         <path d="M12 6v6l4 2" />
       </>
     ),
-    menu: (
-      <>
-        <path d="M4 6h16" />
-        <path d="M4 12h16" />
-        <path d="M4 18h16" />
-      </>
-    ),
+    chevronLeft: <path d="m15 18-6-6 6-6" />,
+    chevronRight: <path d="m9 18 6-6-6-6" />,
     x: (
       <>
         <path d="M18 6 6 18" />
         <path d="m6 6 12 12" />
       </>
     ),
-    arrowDown: (
-      <>
-        <path d="M12 5v14" />
-        <path d="m19 12-7 7-7-7" />
-      </>
-    ),
-    chevronLeft: <path d="m15 18-6-6 6-6" />,
-    chevronRight: <path d="m9 18 6-6-6-6" />,
     file: (
       <>
         <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
         <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+      </>
+    ),
+    briefcase: (
+      <>
+        <path d="M21 20V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14" />
+        <path d="M16 4h2" />
+        <path d="M22 12v-2" />
+      </>
+    ),
+    paperclip: (
+      <>
+        <path d="M18.5 12c0 2.5-2 5-4.5 5-1.8 0-3.5-.8-4.7-2.2l-1.9 1.9a4 4 0 0 0 5.7 5.7l2.3-2.3a6 6 0 0 0 0-8.5l-1.9-1.9a4 4 0 0 0-5.7 5.7l1.5 1.5" />
       </>
     ),
     upload: (

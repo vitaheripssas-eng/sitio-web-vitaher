@@ -105,53 +105,53 @@ export default function Contacto() {
 
           <Reveal delay={140}>
             <form className="contacto-form" id="agendar" onSubmit={handleSubmit} ref={formRef}>
-            <h3>Agendar cita / enviar mensaje</h3>
-            <div className="form-grid">
-              <div className="form-field">
-                <label htmlFor="contacto-nombre">
-                  Nombre completo <span className="req">*</span>
-                </label>
-                <input className="form-input" type="text" id="contacto-nombre" name="nombre" placeholder="Nombres y apellidos" required />
-              </div>
-              <div className="form-field">
-                <label htmlFor="contacto-telefono">
-                  Teléfono <span className="req">*</span>
-                </label>
-                <input className="form-input" type="tel" id="contacto-telefono" name="telefono" placeholder="+57 ..." required />
-              </div>
-              <div className="form-field full">
-                <label htmlFor="contacto-correo">Correo electrónico</label>
-                <input className="form-input" type="email" id="contacto-correo" name="correo" placeholder="correo@ejemplo.com" />
-              </div>
-              <div className="form-field full">
-                <label htmlFor="contacto-servicio">Servicio de interés</label>
-                <select className="form-select" id="contacto-servicio" name="servicio" defaultValue="Medicina Domiciliaria">
-                  {SERVICIOS_SELECCION.map((s) => (
-                    <option key={s}>{s}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-field full">
-                <label htmlFor="contacto-mensaje">
-                  Mensaje <span className="req">*</span>
-                </label>
-                <textarea className="form-textarea" id="contacto-mensaje" name="mensaje" placeholder="Cuéntanos cómo podemos ayudarte..." required />
-              </div>
-              <div className="form-field full">
-                <label>Adjuntar Orden/Autorización</label>
-                <div className="form-file">
-                  <input type="file" multiple onChange={(e) => setSoportes([...e.target.files].map((f) => f.name).join(', '))} />
-                  <span className="form-file-label">
-                    <Icon name="upload" size={18} />
-                    {soportes || 'Subir Orden/Autorización'}
-                  </span>
+              <h3>Agendar cita / enviar mensaje</h3>
+              <div className="form-grid">
+                <div className="form-field">
+                  <label htmlFor="contacto-nombre">
+                    Nombre completo <span className="req">*</span>
+                  </label>
+                  <input className="form-input" type="text" id="contacto-nombre" name="nombre" placeholder="Nombres y apellidos" required />
+                </div>
+                <div className="form-field">
+                  <label htmlFor="contacto-telefono">
+                    Teléfono <span className="req">*</span>
+                  </label>
+                  <input className="form-input" type="tel" id="contacto-telefono" name="telefono" placeholder="+57 ..." required />
+                </div>
+                <div className="form-field full">
+                  <label htmlFor="contacto-correo">Correo electrónico</label>
+                  <input className="form-input" type="email" id="contacto-correo" name="correo" placeholder="correo@ejemplo.com" />
+                </div>
+                <div className="form-field full">
+                  <label htmlFor="contacto-servicio">Servicio de interés</label>
+                  <select className="form-select" id="contacto-servicio" name="servicio" defaultValue="Medicina Domiciliaria">
+                    {SERVICIOS_SELECCION.map((s) => (
+                      <option key={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-field full">
+                  <label htmlFor="contacto-mensaje">
+                    Mensaje <span className="req">*</span>
+                  </label>
+                  <textarea className="form-textarea" id="contacto-mensaje" name="mensaje" placeholder="Cuéntanos cómo podemos ayudarte..." required />
+                </div>
+                <div className="form-field full">
+                  <label>Adjuntar Orden/Autorización</label>
+                  <div className="form-file">
+                    <input type="file" multiple onChange={(e) => setSoportes([...e.target.files].map((f) => f.name).join(', '))} />
+                    <span className="form-file-label">
+                      <Icon name="upload" size={18} />
+                      {soportes || 'Subir Orden/Autorización'}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            {errorEnvio && <p className="form-error">{errorEnvio}</p>}
-            <button className="btn btn-primary form-submit" type="submit">
-              Enviar solicitud
-            </button>
+              {errorEnvio && <p className="form-error">{errorEnvio}</p>}
+              <button className="btn btn-primary form-submit" type="submit">
+                Enviar solicitud
+              </button>
             </form>
           </Reveal>
         </div>

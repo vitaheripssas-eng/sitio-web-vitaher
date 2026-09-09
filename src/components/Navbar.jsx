@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NAV_LINKS } from '../data.js'
-import { Icon } from './Icons.jsx'
 import './Navbar.css'
 
 function Logo() {
@@ -15,31 +14,64 @@ function Logo() {
   )
 }
 
+function Hamburger({ open, onClick }) {
+  return (
+    <button className={`toggle ${open ? 'is-open' : ''}`} aria-label={open ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={open} type="button" onClick={onClick}>
+      <svg className="hamburger-svg" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+        <g className="hamburger-dots">
+          <line className="dot dot-1" x1="4" y1="5" x2="20" y2="5" />
+          <line className="dot dot-2" x1="4" y1="12" x2="20" y2="12" />
+          <line className="dot dot-3" x1="4" y1="19" x2="20" y2="19" />
+        </g>
+      </svg>
+    </button>
+  )
+}
+
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const [menuVisible, setMenuVisible] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 960)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 960)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const toggleMenu = () => {
+    if (!open) {
+      setOpen(true);
+      setMenuVisible(true);
+    } else {
+      setMenuVisible(false);
+      setTimeout(() => setOpen(false), 250);
+    }
+  }
 
   return (
     <header className="navbar">
       <div className="container navbar-inner">
         <Logo />
-        <nav className={`nav-links ${open ? 'is-open' : ''}`} aria-label="Principal">
+        <nav className={`nav-links ${menuVisible ? 'is-open' : ''}`} aria-label="Principal">
           {NAV_LINKS.map((link) => (
             <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
               {link.label}
             </a>
           ))}
-          <a className="btn btn-primary nav-cta" href="#contacto" onClick={() => setOpen(false)}>
+          {isMobile && open && (
+            <a className="btn btn-primary nav-cta" href="#contacto" onClick={() => setOpen(false)}>
+              Agendar Cita
+            </a>
+          )}
+        </nav>
+        {isMobile ? (
+          <Hamburger open={open} onClick={toggleMenu} />
+        ) : (
+          <a className="btn btn-primary nav-cta" href="#contacto">
             Agendar Cita
           </a>
-        </nav>
-        <button
-          className="nav-toggle"
-          aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
-          aria-expanded={open}
-          onClick={() => setOpen(!open)}
-        >
-          <Icon name={open ? 'x' : 'menu'} size={26} />
-        </button>
+        )}
       </div>
     </header>
   )
