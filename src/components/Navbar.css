@@ -135,7 +135,6 @@
 }
 
 .hamburger-dots {
-  transform-box: view-box;
   overflow: visible;
 }
 
@@ -143,13 +142,13 @@
   stroke: var(--ink);
   stroke-width: 2.5;
   stroke-linecap: round;
-  transform-box: view-box;
+  transform-origin: center;
+  will-change: transform, opacity;
   transition: transform 0.4s ease-out, opacity 0.22s ease, stroke 0.3s ease;
 }
 
 .toggle.is-open .dot-1 {
   transform: translate(0, 7px) rotate(45deg);
-  transform-origin: 12px 5px;
 }
 
 .toggle.is-open .dot-2 {
@@ -159,7 +158,6 @@
 
 .toggle.is-open .dot-3 {
   transform: translate(0, -7px) rotate(-45deg);
-  transform-origin: 12px 19px;
 }
 
 .toggle.is-open .dot-1,
