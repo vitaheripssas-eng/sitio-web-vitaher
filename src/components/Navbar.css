@@ -132,18 +132,19 @@
 
 .hamburger-svg {
   display: block;
-  overflow: visible;
+  overflow: visible !important;
   width: 26px;
   height: 26px;
 }
 
 .hamburger-dots {
-  overflow: visible;
+  overflow: visible !important;
 }
 
 .navbar,
-.navbar-inner {
-  overflow: visible;
+.navbar-inner,
+.toggle {
+  overflow: visible !important;
 }
 
 .dot-1, .dot-2, .dot-3 {
