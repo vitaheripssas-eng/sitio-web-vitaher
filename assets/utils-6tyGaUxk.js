@@ -1,0 +1,1 @@
+import{b as e,f as t}from"./index-BbxCJohM.js";function n(t){return`https://wa.me/${e}?text=${encodeURIComponent(t)}`}async function r(e){let n=await fetch(t,{method:`POST`,body:e}),r=await n.json().catch(()=>null);if(!n.ok||!r?.ok)throw Error(r?.error??`No fue posible enviar el formulario`)}export{n,r as t};

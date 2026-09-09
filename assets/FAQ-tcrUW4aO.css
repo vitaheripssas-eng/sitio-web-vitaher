@@ -1,0 +1,1 @@
+.faq-list{gap:12px;max-width:760px;display:grid}.faq-item{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px 18px}.faq-item summary{cursor:pointer;color:var(--ink);font-weight:700;list-style:none}.faq-item summary::-webkit-details-marker{display:none}.faq-item p{margin-top:10px;font-size:.95rem}
