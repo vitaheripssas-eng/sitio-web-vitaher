@@ -143,8 +143,7 @@
   stroke-width: 2.5;
   stroke-linecap: round;
   transform-origin: center;
-  will-change: transform, opacity;
-  transition: transform 0.4s ease-out, opacity 0.22s ease, stroke 0.3s ease;
+  transition: none;
 }
 
 .toggle.is-open .dot-1 {
@@ -173,10 +172,6 @@
 }
 
 @media (max-width: 960px) {
-  .dot-1, .dot-2, .dot-3 {
-    transition: transform 0.6s ease-out, opacity 0.32s ease, stroke 0.4s ease;
-  }
-
   .toggle {
     display: flex;
     align-items: center;
