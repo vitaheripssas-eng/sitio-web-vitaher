@@ -62,6 +62,8 @@ export default function Trabaja() {
       try {
         const fd = new FormData()
         fd.append('tipo', 'Postulación laboral')
+        fd.append('destinatario', 'talentohumanovitaher@gmail.com')
+        fd.append('para', 'talentohumanovitaher@gmail.com')
         fd.append('nombre', data.nombre ?? '')
         fd.append('telefono', data.telefono ?? '')
         fd.append('correo', data.correo ?? '')
