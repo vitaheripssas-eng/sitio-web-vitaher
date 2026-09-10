@@ -140,6 +140,16 @@ export default function Footer({ onOpenLegal }) {
                 </a>
               </li>
               <li>
+                <Icon name="phone" size={16} />
+                <a href="tel:+573142318040">{PHONE_DISPLAY}</a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Correos</h4>
+            <ul className="footer-links footer-contact">
+              <li>
                 <Icon name="mail" size={16} />
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info%40vitaherips.com" target="_blank" rel="noreferrer">
                   info@vitaherips.com
@@ -160,10 +170,6 @@ export default function Footer({ onOpenLegal }) {
                 >
                   {EMAIL}
                 </a>
-              </li>
-              <li>
-                <Icon name="phone" size={16} />
-                <a href="tel:+573142318040">{PHONE_DISPLAY}</a>
               </li>
             </ul>
           </div>
