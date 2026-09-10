@@ -13,7 +13,6 @@ const Servicios = lazy(() => import('./components/Servicios.jsx'))
 const PQRS = lazy(() => import('./components/PQRS.jsx'))
 const Trabaja = lazy(() => import('./components/Trabaja.jsx'))
 const Contacto = lazy(() => import('./components/Contacto.jsx'))
-const WhatsAppFloat = lazy(() => import('./components/WhatsAppFloat.jsx'))
 
 export default function App() {
   const [openDoc, setOpenDoc] = useState(null)
@@ -31,9 +30,6 @@ export default function App() {
           <PQRS />
           <Trabaja />
           <Contacto />
-        </Suspense>
-        <Suspense fallback={null}>
-          <WhatsAppFloat />
         </Suspense>
       </main>
       <Footer onOpenLegal={(slug) => setOpenDoc(getLegalPage(slug))} />
