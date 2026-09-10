@@ -9,7 +9,6 @@ const BASE = import.meta.env.BASE_URL
 export const NAV_LINKS = [
   { label: 'Nosotros', href: '#nosotros' },
   { label: 'Servicios', href: '#servicios' },
-  { label: 'Blog', href: '#blog' },
   { label: 'PQRS', href: '#pqrs' },
   { label: 'Trabaja Con Nosotros', href: '#trabaja' },
   { label: 'Contáctanos', href: '#contacto' },

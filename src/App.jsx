@@ -10,7 +10,6 @@ const Destacados = lazy(() => import('./components/Destacados.jsx'))
 const RutaCuidado = lazy(() => import('./components/RutaCuidado.jsx'))
 const Nosotros = lazy(() => import('./components/Nosotros.jsx'))
 const Servicios = lazy(() => import('./components/Servicios.jsx'))
-const Blog = lazy(() => import('./components/Blog.jsx'))
 const PQRS = lazy(() => import('./components/PQRS.jsx'))
 const Trabaja = lazy(() => import('./components/Trabaja.jsx'))
 const Contacto = lazy(() => import('./components/Contacto.jsx'))
@@ -29,7 +28,6 @@ export default function App() {
           <RutaCuidado />
           <Nosotros />
           <Servicios />
-          <Blog />
           <PQRS />
           <Trabaja />
           <Contacto />
