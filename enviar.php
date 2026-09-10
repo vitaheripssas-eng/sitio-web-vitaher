@@ -43,6 +43,51 @@ if ($nombre === '' || $mensaje === '') {
     exit;
 }
 
+/* ========= GUARDADO LOCAL PARA TRATAMIENTO DE DATOS (Ley 1581) ========= */
+$storageDir = __DIR__ . '/storage';
+$uploadsDir = $storageDir . '/uploads/' . date('Y-m');
+if (!is_dir($uploadsDir) && !mkdir($uploadsDir, 0755, true) && !is_dir($uploadsDir)) {
+    // si no se puede crear, seguimos solo con el envío de correo
+    $uploadsDir = null;
+}
+$registro = [
+    'fecha' => date('c'),
+    'ip' => $_SERVER['REMOTE_ADDR'] ?? '',
+    'ua' => $_SERVER['HTTP_USER_AGENT'] ?? '',
+    'tipo' => $tipo,
+    'para' => $PARA,
+    'nombre' => $nombre,
+    'telefono' => $telefono,
+    'correo' => $correo,
+    'extra' => $extra,
+    'mensaje' => $mensaje,
+    'archivos' => array_column($adjuntos, 'nombre'),
+];
+$savedFiles = [];
+if ($uploadsDir) {
+    foreach ($adjuntos as $idx => $a) {
+        $ext = strtolower(pathinfo($a['nombre'], PATHINFO_EXTENSION));
+        $safe = preg_replace('/[^a-zA-Z0-9._-]/', '_', pathinfo($a['nombre'], PATHINFO_FILENAME));
+        $destName = date('Ymd_His') . '_' . bin2hex(random_bytes(4)) . '_' . $safe . '.' . $ext;
+        $destPath = $uploadsDir . '/' . $destName;
+        if (@copy($a['ruta'], $destPath)) {
+            $savedFiles[] = 'uploads/' . date('Y-m') . '/' . $destName;
+        }
+    }
+    $registro['archivos_guardados'] = $savedFiles;
+    $logLine = json_encode($registro, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL;
+    @file_put_contents($storageDir . '/submissions.log', $logLine, FILE_APPEND | LOCK_EX);
+    // también CSV para fácil apertura en Excel
+    $csvFile = $storageDir . '/submissions.csv';
+    $isNew = !file_exists($csvFile);
+    $fp = @fopen($csvFile, 'a');
+    if ($fp) {
+        if ($isNew) fputcsv($fp, ['fecha','tipo','para','nombre','telefono','correo','extra','mensaje','archivos']);
+        fputcsv($fp, [$registro['fecha'],$tipo,$PARA,$nombre,$telefono,$correo,$extra,$mensaje, implode('; ', $registro['archivos'])]);
+        fclose($fp);
+    }
+}
+
 /* ========= VALIDACION DE ARCHIVOS ========= */
 $permitidos = ['pdf', 'jpg', 'jpeg', 'png', 'webp', 'doc', 'docx', 'xls', 'xlsx'];
 $limite     = $MAX_MB * 1024 * 1024;
@@ -114,9 +159,12 @@ if (!$adjuntos) {
 
 $enviado = @mail($PARA, $asunto, $cuerpo, $cabeceras);
 
-if ($enviado) {
-    echo json_encode(['ok' => true]);
+// Si se guardó localmente, consideramos éxito aunque falle el mail (para no perder el dato)
+$guardado = !empty($registro) && file_exists($storageDir . '/submissions.log');
+
+if ($enviado || $guardado) {
+    echo json_encode(['ok' => true, 'guardado' => $guardado, 'enviado' => $enviado]);
 } else {
     http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'No se pudo enviar el correo. Intenta por WhatsApp.']);
+    echo json_encode(['ok' => false, 'error' => 'No se pudo enviar el correo ni guardar el registro. Intenta por WhatsApp.']);
 }
