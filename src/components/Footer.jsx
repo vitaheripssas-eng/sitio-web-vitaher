@@ -144,10 +144,7 @@ export default function Footer({ onOpenLegal }) {
                 <a href="tel:+573142318040">{PHONE_DISPLAY}</a>
               </li>
             </ul>
-          </div>
-
-          <div>
-            <h4>Correos</h4>
+            <h4 style={{ marginTop: 20 }}>Correos</h4>
             <ul className="footer-links footer-contact">
               <li>
                 <Icon name="mail" size={16} />
