@@ -13,7 +13,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
 }
 
 /* ========= CONFIGURACION ========= */
-$PARA   = 'coordinacionarauca2026@gmail.com'; // Correo que recibe las solicitudes
+$PARA_DEFAULT = 'coordinacionarauca2026@gmail.com'; // Correo por defecto
+$PARA_TALENTO = 'talentohumanovitaher@gmail.com';   // Talento Humano (Trabaja con nosotros)
 $DE     = 'info@vitaherips.com';              // Cuenta de correo creada en Hostinger
 $MAX_MB = 10;
 
@@ -26,6 +27,15 @@ $telefono = trim((string)($_POST['telefono'] ?? ''));
 $correo   = trim((string)($_POST['correo'] ?? ''));
 $mensaje  = trim((string)($_POST['mensaje'] ?? ''));
 $extra    = trim((string)($_POST['extra'] ?? ''));
+
+$dest = trim((string)($_POST['destinatario'] ?? $_POST['para'] ?? ''));
+if ($dest !== '' && filter_var($dest, FILTER_VALIDATE_EMAIL)) {
+    $PARA = $dest;
+} elseif (stripos($tipo, 'Postulación') !== false) {
+    $PARA = $PARA_TALENTO;
+} else {
+    $PARA = $PARA_DEFAULT;
+}
 
 if ($nombre === '' || $mensaje === '') {
     http_response_code(422);
