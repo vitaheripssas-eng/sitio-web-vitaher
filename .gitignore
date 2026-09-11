@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 .env
+public/storage/submissions.log
+public/storage/submissions.csv
+public/storage/smtp_pass.txt
+public/storage/uploads/
 
 # Editor directories and files
 .vscode/*

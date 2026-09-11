@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Content-Type: application/json; charset=utf-8');
@@ -13,12 +16,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
 }
 
 /* ========= CONFIGURACION ========= */
-$PARA_DEFAULT = 'coordinacionarauca2026@gmail.com'; // Correo por defecto
-$PARA_TALENTO = 'talentohumanovitaher@gmail.com';   // Talento Humano (Trabaja con nosotros)
-$DE     = 'info@vitaherips.com';              // Cuenta de correo creada en Hostinger
+$PARA_DEFAULT = 'coordinacionarauca2026@gmail.com';
+$PARA_TALENTO = 'talentohumanovitaher@gmail.com';
+$DE     = 'info@vitaherips.com';
 $MAX_MB = 10;
 
-/* Honeypot anti-spam: los bots llenan este campo oculto */
+/* Honeypot */
 if (!empty($_POST['website'])) { echo json_encode(['ok' => true]); exit; }
 
 $tipo     = trim((string)($_POST['tipo'] ?? 'Consulta web'));
@@ -43,11 +46,39 @@ if ($nombre === '' || $mensaje === '') {
     exit;
 }
 
-/* ========= GUARDADO LOCAL PARA TRATAMIENTO DE DATOS (Ley 1581) ========= */
+/* ========= VALIDACION DE ARCHIVOS ========= */
+$permitidos = ['pdf', 'jpg', 'jpeg', 'png', 'webp', 'doc', 'docx', 'xls', 'xlsx'];
+$limite     = $MAX_MB * 1024 * 1024;
+$adjuntos   = [];
+
+if (!empty($_FILES['archivo'])) {
+    $nombres = (array)$_FILES['archivo']['name'];
+    $tmps    = (array)$_FILES['archivo']['tmp_name'];
+    $errores = (array)$_FILES['archivo']['error'];
+    $tamanos = (array)$_FILES['archivo']['size'];
+
+    foreach ($nombres as $i => $nom) {
+        if (($errores[$i] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) continue;
+        if (!is_uploaded_file($tmps[$i])) continue;
+        $ext = strtolower(pathinfo((string)$nom, PATHINFO_EXTENSION));
+        if (!in_array($ext, $permitidos, true)) {
+            http_response_code(415);
+            echo json_encode(['ok' => false, 'error' => "Tipo de archivo no permitido: .$ext"]);
+            exit;
+        }
+        if (($tamanos[$i] ?? 0) > $limite) {
+            http_response_code(413);
+            echo json_encode(['ok' => false, 'error' => "El archivo $nom supera {$MAX_MB}MB."]);
+            exit;
+        }
+        $adjuntos[] = ['nombre' => (string)$nom, 'ruta' => (string)$tmps[$i]];
+    }
+}
+
+/* ========= GUARDADO LOCAL Ley 1581 ========= */
 $storageDir = __DIR__ . '/storage';
 $uploadsDir = $storageDir . '/uploads/' . date('Y-m');
 if (!is_dir($uploadsDir) && !mkdir($uploadsDir, 0755, true) && !is_dir($uploadsDir)) {
-    // si no se puede crear, seguimos solo con el envío de correo
     $uploadsDir = null;
 }
 $registro = [
@@ -65,7 +96,7 @@ $registro = [
 ];
 $savedFiles = [];
 if ($uploadsDir) {
-    foreach ($adjuntos as $idx => $a) {
+    foreach ($adjuntos as $a) {
         $ext = strtolower(pathinfo($a['nombre'], PATHINFO_EXTENSION));
         $safe = preg_replace('/[^a-zA-Z0-9._-]/', '_', pathinfo($a['nombre'], PATHINFO_FILENAME));
         $destName = date('Ymd_His') . '_' . bin2hex(random_bytes(4)) . '_' . $safe . '.' . $ext;
@@ -77,7 +108,6 @@ if ($uploadsDir) {
     $registro['archivos_guardados'] = $savedFiles;
     $logLine = json_encode($registro, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL;
     @file_put_contents($storageDir . '/submissions.log', $logLine, FILE_APPEND | LOCK_EX);
-    // también CSV para fácil apertura en Excel
     $csvFile = $storageDir . '/submissions.csv';
     $isNew = !file_exists($csvFile);
     $fp = @fopen($csvFile, 'a');
@@ -88,37 +118,7 @@ if ($uploadsDir) {
     }
 }
 
-/* ========= VALIDACION DE ARCHIVOS ========= */
-$permitidos = ['pdf', 'jpg', 'jpeg', 'png', 'webp', 'doc', 'docx', 'xls', 'xlsx'];
-$limite     = $MAX_MB * 1024 * 1024;
-$adjuntos   = [];
-
-if (!empty($_FILES['archivo'])) {
-    $nombres = (array)$_FILES['archivo']['name'];
-    $tmps    = (array)$_FILES['archivo']['tmp_name'];
-    $errores = (array)$_FILES['archivo']['error'];
-    $tamanos = (array)$_FILES['archivo']['size'];
-
-    foreach ($nombres as $i => $nom) {
-        if (($errores[$i] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) continue;
-        if (!is_uploaded_file($tmps[$i])) continue;
-
-        $ext = strtolower(pathinfo((string)$nom, PATHINFO_EXTENSION));
-        if (!in_array($ext, $permitidos, true)) {
-            http_response_code(415);
-            echo json_encode(['ok' => false, 'error' => "Tipo de archivo no permitido: .$ext"]);
-            exit;
-        }
-        if (($tamanos[$i] ?? 0) > $limite) {
-            http_response_code(413);
-            echo json_encode(['ok' => false, 'error' => "El archivo $nom supera {$MAX_MB}MB."]);
-            exit;
-        }
-        $adjuntos[] = ['nombre' => (string)$nom, 'ruta' => (string)$tmps[$i]];
-    }
-}
-
-/* ========= ARMADO DEL CORREO ========= */
+/* ========= ENVIO POR SMTP (PHPMailer) ========= */
 $cuerpoTexto = "Nueva solicitud enviada desde vitaherips.com\r\n"
     . str_repeat('=', 46) . "\r\n"
     . "Tipo de formulario: $tipo\r\n"
@@ -130,36 +130,45 @@ $cuerpoTexto = "Nueva solicitud enviada desde vitaherips.com\r\n"
     . "Fecha: " . date('d/m/Y H:i') . "\r\n\r\n"
     . "Mensaje:\r\n$mensaje\r\n";
 
-$asunto    = mb_encode_mimeheader("Sitio web VITAHER - $tipo - $nombre", 'UTF-8', 'B');
-$separador = md5(uniqid((string)mt_rand(), true));
+$smtpPass = trim((string)@file_get_contents(__DIR__ . '/storage/smtp_pass.txt'));
+if ($smtpPass === '') $smtpPass = (string)getenv('SMTP_PASS');
 
-$cabeceras = "From: VITAHER Web <$DE>\r\n"
-    . ($correo !== '' ? "Reply-To: $correo\r\n" : '')
-    . "MIME-Version: 1.0\r\n";
-
-if (!$adjuntos) {
-    $cabeceras .= "Content-Type: text/plain; charset=UTF-8\r\n";
-    $cuerpo = $cuerpoTexto;
-} else {
-    $cabeceras .= "Content-Type: multipart/mixed; boundary=\"$separador\"\r\n";
-    $cuerpo = "--$separador\r\n"
-        . "Content-Type: text/plain; charset=UTF-8\r\n\r\n"
-        . $cuerpoTexto . "\r\n";
-    foreach ($adjuntos as $a) {
-        $contenido    = chunk_split(base64_encode((string)file_get_contents($a['ruta'])));
-        $nombreSeguro = mb_encode_mimeheader($a['nombre'], 'UTF-8', 'B');
-        $cuerpo .= "--$separador\r\n"
-            . "Content-Type: application/octet-stream; name=\"$nombreSeguro\"\r\n"
-            . "Content-Transfer-Encoding: base64\r\n"
-            . "Content-Disposition: attachment; filename=\"$nombreSeguro\"\r\n\r\n"
-            . $contenido . "\r\n";
+$enviado = false;
+if ($smtpPass !== '') {
+    require __DIR__ . '/PHPMailer/Exception.php';
+    require __DIR__ . '/PHPMailer/PHPMailer.php';
+    require __DIR__ . '/PHPMailer/SMTP.php';
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.hostinger.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = $DE;
+        $mail->Password = $smtpPass;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = 465;
+        $mail->setFrom($DE, 'VITAHER Web');
+        $mail->addAddress($PARA);
+        if ($correo !== '' && filter_var($correo, FILTER_VALIDATE_EMAIL)) $mail->addReplyTo($correo, $nombre);
+        $mail->Subject = "Sitio web VITAHER - $tipo - $nombre";
+        $mail->Body = $cuerpoTexto;
+        $mail->CharSet = 'UTF-8';
+        foreach ($adjuntos as $a) {
+            $mail->addAttachment($a['ruta'], $a['nombre']);
+        }
+        $mail->send();
+        $enviado = true;
+    } catch (Exception $e) {
+        error_log('PHPMailer error: ' . $e->getMessage());
+        $enviado = false;
     }
-    $cuerpo .= "--$separador--";
+} else {
+    // Fallback a mail() si no hay pass configurado
+    $asunto = mb_encode_mimeheader("Sitio web VITAHER - $tipo - $nombre", 'UTF-8', 'B');
+    $cabeceras = "From: VITAHER Web <$DE>\r\n" . ($correo !== '' ? "Reply-To: $correo\r\n" : '') . "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\n";
+    $enviado = @mail($PARA, $asunto, $cuerpoTexto, $cabeceras);
 }
 
-$enviado = @mail($PARA, $asunto, $cuerpo, $cabeceras);
-
-// Si se guardó localmente, consideramos éxito aunque falle el mail (para no perder el dato)
 $guardado = !empty($registro) && file_exists($storageDir . '/submissions.log');
 
 if ($enviado || $guardado) {
