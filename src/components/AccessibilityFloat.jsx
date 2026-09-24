@@ -189,7 +189,6 @@ export default function AccessibilityFloat() {
           <button type="button" className="a11y-reset" onClick={reset}>
             Restablecer todo
           </button>
-          <p className="a11y-note">Funciones del sistema (TalkBack/VoiceOver) se activan en el celular. Lo visual se guarda aquí. Ley 1581.</p>
         </div>
       )}
     </>
