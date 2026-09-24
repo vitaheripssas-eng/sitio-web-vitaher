@@ -15,22 +15,22 @@ const FORMATOS = [
   {
     label: 'Cuidador',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_CUIDADOR.pdf`,
-    icon: 'file',
+    icon: 'user-check',
   },
   {
     label: 'Profesional',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_PROFESIONAL.pdf`,
-    icon: 'file',
+    icon: 'brain',
   },
   {
     label: 'Aux. Enfermería',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_AUX_ENFERMERIA.pdf`,
-    icon: 'file',
+    icon: 'user',
   },
   {
     label: 'Administrativo',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUO_ADMINISTRATIVO.pdf`,
-    icon: 'file',
+    icon: 'home',
   },
 ]
 
