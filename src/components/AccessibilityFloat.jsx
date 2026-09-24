@@ -141,11 +141,6 @@ export default function AccessibilityFloat() {
           aria-modal="false"
           style={{ ...panelStyle, ...animStyle }}
         >
-          <div className="a11y-title-box">
-            <strong>Accesibilidad</strong>
-            <p>Personaliza tu experiencia</p>
-          </div>
-
           <div className="a11y-options">
             <button type="button" className={`a11y-option ${isSpeaking ? 'is-active' : ''}`} onClick={speakPage}>
               <span>{isSpeaking ? '⏹' : '🔊'}</span> {isSpeaking ? 'Detener' : 'Leer esta página en voz'}

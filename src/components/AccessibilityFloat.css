@@ -52,29 +52,6 @@
   overflow: hidden;
 }
 
-.a11y-panel--compact .a11y-title-box {
-  background: var(--primary-tint);
-  border-bottom: 1px solid #b8dcf0;
-  border-radius: 16px 16px 0 0;
-  padding: 14px 16px;
-  margin: -1px -1px 0 -1px;
-  width: calc(100% + 2px);
-  text-align: left;
-}
-
-.a11y-panel--compact .a11y-title-box strong {
-  font-size: 0.9rem;
-  color: var(--primary-dark);
-  display: block;
-  line-height: 1.2;
-}
-
-.a11y-panel--compact .a11y-title-box p {
-  font-size: 0.72rem;
-  color: var(--ink-soft);
-  margin: 2px 0 0;
-}
-
 .a11y-panel--compact .a11y-options {
   gap: 6px;
   margin-bottom: 8px;
