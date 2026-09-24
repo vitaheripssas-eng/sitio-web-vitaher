@@ -171,10 +171,7 @@ export default function AccessibilityFloat() {
           </div>
 
           <button type="button" className="a11y-option" onClick={reset}>
-            <span>
-              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg>
-            </span>
-            Restablecer
+            <span>🔄</span> Restablecer
           </button>
         </div>
       )}
