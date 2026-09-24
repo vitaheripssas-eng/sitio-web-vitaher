@@ -171,6 +171,19 @@
 .a11y-reduced-motion *,
 .a11y-reduced-motion *::before,
 .a11y-reduced-motion *::after {
-  animation-duration: 0.01ms !important;
-  transition-duration: 0.01ms !important;
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+.a11y-float.dragging {
+  cursor: grabbing !important;
+  transform: scale(1.06);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.a11y-float {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
 }
