@@ -181,9 +181,17 @@ export function Icon({ name, size = 24, ...props }) {
     ),
     accessibility: (
       <>
-        <circle cx="12" cy="12" r="11.2" fill="none" stroke="currentColor" strokeWidth="1.6" />
+        <circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="12" cy="7.8" r="2.2" fill="currentColor" stroke="none" />
         <path
-          d="M12 4.2a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8Zm0 6.3L7.9 11.9a1.1 1.1 0 1 0 .7 2L12 12.6l3.4 1.3a1.1 1.1 0 1 0 .7-2L12 10.5Zm-1 3.7-1.7 5.2a1.3 1.3 0 1 0 2.5.8L12 18.8l.2 1.2a1.3 1.3 0 1 0 2.5-.8L13 14.2h-2Z"
+          d="M12 11.2 7.9 12.6A1.6 1.6 0 0 0 8.5 15.7l.4-.2L12 13.2l3.1 2.3.4.2A1.6 1.6 0 0 0 16.1 12.6L12 11.2Z"
+          fill="currentColor"
+          stroke="none"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+        <path
+          d="M11.1 14.3 9.6 19.7a1.6 1.6 0 0 0 3.1.6l.3-1 .3 1a1.6 1.6 0 0 0 3.1-.6L14.9 14.3A1.2 1.2 0 0 0 13.8 13H11.2A1.2 1.2 0 0 0 11.1 14.3Z"
           fill="currentColor"
           stroke="none"
           strokeLinejoin="round"
