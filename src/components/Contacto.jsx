@@ -153,7 +153,7 @@ export default function Contacto() {
                 </div>
               </div>
               <button className="btn btn-primary form-submit" type="submit">
-                Enviar por WhatsApp
+                Enviar solicitud
               </button>
             </form>
           </Reveal>
