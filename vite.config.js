@@ -35,7 +35,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/',
+  base: process.env.GITHUB_PAGES === 'true' ? '/sitio-web-vitaher/' : '/',
   build: {
     rollupOptions: {
       output: {
