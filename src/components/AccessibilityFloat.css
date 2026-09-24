@@ -49,8 +49,7 @@
   width: 260px;
   padding: 0;
   gap: 0;
-  overflow-y: auto;
-  max-height: calc(100vh - 20px);
+  overflow: hidden;
 }
 
 .a11y-panel--compact .a11y-title-box {
@@ -97,13 +96,21 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.18s ease;
+  height: 42px;
+  box-sizing: border-box;
 }
 
 .a11y-panel--compact .a11y-option span {
+  display: grid;
+  place-items: center;
   width: 24px;
   height: 24px;
   font-size: 0.78rem;
   border-radius: 7px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .a11y-panel--compact .a11y-option.is-active {
