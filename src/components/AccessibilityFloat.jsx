@@ -141,7 +141,7 @@ export default function AccessibilityFloat() {
         onPointerUp={handlePointerUp}
         style={btnStyle}
       >
-        <Icon name="accessibility" size={24} />
+        <Icon name="accessibility" size={34} />
       </button>
 
       {open && (
