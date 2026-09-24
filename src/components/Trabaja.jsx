@@ -15,22 +15,22 @@ const FORMATOS = [
   {
     label: 'Cuidador',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_CUIDADOR.pdf`,
-    icon: 'user-check',
+    icon: 'file',
   },
   {
     label: 'Profesional',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_PROFESIONAL.pdf`,
-    icon: 'brain',
+    icon: 'file',
   },
   {
     label: 'Aux. Enfermería',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_AUX_ENFERMERIA.pdf`,
-    icon: 'user',
+    icon: 'file',
   },
   {
     label: 'Administrativo',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUO_ADMINISTRATIVO.pdf`,
-    icon: 'home',
+    icon: 'file',
   },
 ]
 
@@ -132,12 +132,9 @@ export default function Trabaja() {
                   key={formato.label}
                 >
                   <span className="formato-icon">
-                    <Icon name={formato.icon} size={28} />
+                    <Icon name={formato.icon} size={24} />
                   </span>
                   <h4>{formato.label}</h4>
-                  <small>
-                    <Icon name="download" size={14} /> Descargar lista
-                  </small>
                 </a>
               ))}
             </div>

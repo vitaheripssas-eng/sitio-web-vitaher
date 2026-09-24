@@ -29,60 +29,54 @@
 
 .formatos-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
 .formato-card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  gap: 10px;
+  gap: 12px;
   background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px 20px;
+  border: 1.5px solid #dbeafe;
+  border-radius: 16px;
+  padding: 32px 20px;
   text-decoration: none;
-  color: var(--ink);
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  color: var(--primary-dark);
+  transition: all 0.22s ease;
 }
 
 .formato-icon {
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: var(--primary-tint);
-  color: var(--primary);
-  border: 1px solid #b8dcf0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #ede9fe;
+  color: #7c3aed;
+  opacity: 0.9;
 }
 
-.formato-card small {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--ink-soft);
+.formato-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e3a5f;
+  letter-spacing: -0.01em;
 }
 
 .formato-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary-light);
-  background: var(--primary-tint);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: #93c5fd;
+  background: #f8fafc;
+  box-shadow: 0 12px 24px -8px rgba(30, 58, 95, 0.12);
 }
 
 .formato-card:hover .formato-icon {
-  background: var(--primary);
-  color: var(--white);
-  border-color: var(--primary);
-}
-
-.formato-card:hover small {
-  color: var(--primary);
+  background: #e0e7ff;
+  color: #4f46e5;
 }
 
 .formato-card h4 {
