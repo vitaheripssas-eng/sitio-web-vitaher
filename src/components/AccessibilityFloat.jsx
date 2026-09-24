@@ -108,9 +108,9 @@ export default function AccessibilityFloat() {
   const panelStyle = pos
     ? {
         left: Math.min(pos.x, window.innerWidth - 296),
-        top: Math.min(Math.max(pos.y > 140 ? pos.y - 360 : pos.y + 64, 8), window.innerHeight - 400),
+        bottom: Math.min(window.innerHeight - pos.y + 8, window.innerHeight - 200),
+        top: 'auto',
         right: 'auto',
-        bottom: 'auto',
       }
     : undefined
 
