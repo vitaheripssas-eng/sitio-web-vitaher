@@ -111,6 +111,8 @@
   border: 1px solid var(--border);
   flex-shrink: 0;
   white-space: nowrap;
+  overflow: hidden;
+  line-height: 1;
 }
 
 .a11y-panel--compact .a11y-option.is-active {
