@@ -49,8 +49,8 @@
   width: 260px;
   padding: 0;
   gap: 0;
-  overflow: visible;
-  max-height: none;
+  overflow-y: auto;
+  max-height: calc(100vh - 20px);
 }
 
 .a11y-panel--compact .a11y-title-box {
@@ -87,6 +87,16 @@
   font-size: 0.82rem;
   gap: 8px;
   border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
 }
 
 .a11y-panel--compact .a11y-option span {
