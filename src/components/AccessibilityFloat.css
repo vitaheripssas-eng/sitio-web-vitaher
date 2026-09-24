@@ -109,10 +109,12 @@
   border-radius: 7px;
   background: var(--white);
   border: 1px solid var(--border);
-  flex-shrink: 0;
   white-space: nowrap;
   overflow: hidden;
   line-height: 1;
+  max-width: 24px;
+  max-height: 24px;
+  box-sizing: border-box;
 }
 
 .a11y-panel--compact .a11y-option.is-active {
