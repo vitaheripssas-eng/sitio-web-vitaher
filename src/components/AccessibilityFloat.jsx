@@ -158,7 +158,6 @@ export default function AccessibilityFloat() {
             <button type="button" className="a11y-option" onClick={() => speakPage()}>
               <span>🔊</span> Leer esta página en voz
             </button>
-            <p className="a11y-help">Para TalkBack: Android Ajustes {'>'} Accesibilidad {'>'} TalkBack. iPhone: Ajustes {'>'} Accesibilidad {'>'} VoiceOver.</p>
           </div>
 
           <div className="a11y-section">
