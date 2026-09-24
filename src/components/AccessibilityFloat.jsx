@@ -170,7 +170,7 @@ export default function AccessibilityFloat() {
             </button>
           </div>
 
-          <button type="button" className="a11y-option" style={{ paddingLeft: '42px' }} onClick={reset}>Restablecer</button>
+          <p style={{ paddingLeft: '42px', margin: 0, fontSize: '0.82rem', fontWeight: 600, color: '#0f172a', cursor: 'pointer' }} onClick={reset}>Restablecer</p>
         </div>
       )}
     </>
