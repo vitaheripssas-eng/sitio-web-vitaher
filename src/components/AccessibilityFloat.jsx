@@ -143,7 +143,7 @@ export default function AccessibilityFloat() {
         onPointerUp={handlePointerUp}
         style={btnStyle}
       >
-        <FontAwesomeIcon icon={faUniversalAccess} style={{ fontSize: '28px', width: '28px', height: '28px' }} />
+        <FontAwesomeIcon icon={faUniversalAccess} style={{ fontSize: '52px', width: '52px', height: '52px' }} />
       </button>
 
       {open && (
