@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
-import { Accessibility } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUniversalAccess } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from './Icons.jsx'
 import './AccessibilityFloat.css'
 
@@ -142,7 +143,7 @@ export default function AccessibilityFloat() {
         onPointerUp={handlePointerUp}
         style={btnStyle}
       >
-        <Accessibility size={32} strokeWidth={2.1} />
+        <FontAwesomeIcon icon={faUniversalAccess} style={{ fontSize: '28px', width: '28px', height: '28px' }} />
       </button>
 
       {open && (
