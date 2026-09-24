@@ -180,16 +180,10 @@ export default function AccessibilityFloat() {
           </div>
 
           <div className="a11y-section">
-            <span className="a11y-section-title">Control por gestos</span>
-            <p className="a11y-help">Usa <kbd>Tab</kbd> para navegar, <kbd>Enter</kbd> para activar. En móvil, desliza con 2 dedos. El botón es arrastrable.</p>
-          </div>
-
-          <div className="a11y-section">
             <span className="a11y-section-title">Subtítulos y audio</span>
             <button type="button" className={`a11y-option ${prefs.subtitles ? 'is-active' : ''}`} onClick={() => toggle('subtitles')}>
               <span>CC</span> Subtítulos visibles
             </button>
-            <p className="a11y-help">Videos mostrarán subtítulos si están disponibles. Alertas de sonido: activa en Ajustes del sistema.</p>
           </div>
 
           <button type="button" className="a11y-reset" onClick={reset}>
