@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUniversalAccess } from '@fortawesome/free-solid-svg-icons'
-import { Icon } from './Icons.jsx'
 import './AccessibilityFloat.css'
 
 const STORAGE_KEY = 'vitaher-a11y'
@@ -172,8 +171,7 @@ export default function AccessibilityFloat() {
           </div>
 
           <button type="button" className="a11y-option" onClick={reset}>
-            <span><Icon name="reset" size={13} /></span>
-            Restablecer todo
+            <span>↺</span> Restablecer todo
           </button>
         </div>
       )}
