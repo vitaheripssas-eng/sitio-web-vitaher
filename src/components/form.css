@@ -154,4 +154,42 @@
   cursor: not-allowed;
   transform: none;
 }
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-top: 4px;
+}
+.form-check input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+  margin-top: 2px;
+  cursor: pointer;
+}
+.form-check a {
+  color: var(--primary);
+  text-decoration: underline;
+  font-weight: 600;
+}
+.form-check a:hover {
+  color: var(--primary-dark);
+}
+.form-check-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary);
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+  font: inherit;
+}
+.form-check-link:hover {
+  color: var(--primary-dark);
+}
 

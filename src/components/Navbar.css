@@ -11,8 +11,8 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 24px;
-  height: 76px;
+  gap: 28px;
+  height: 72px;
 }
 
 .logo {
@@ -120,7 +120,7 @@
 
   .nav-links {
     position: fixed;
-    inset: 76px 0 auto 0;
+    inset: 72px 0 auto 0;
     flex-direction: column;
     align-items: stretch;
     gap: 0;

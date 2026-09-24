@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react'
+import { useState, lazy, Suspense, useEffect } from 'react'
 import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
 import Footer from './components/Footer.jsx'
@@ -16,6 +16,15 @@ const Contacto = lazy(() => import('./components/Contacto.jsx'))
 
 export default function App() {
   const [openDoc, setOpenDoc] = useState(null)
+
+  useEffect(() => {
+    const handler = (e) => {
+      const page = getLegalPage(e.detail)
+      if (page) setOpenDoc(page)
+    }
+    window.addEventListener('open-legal', handler)
+    return () => window.removeEventListener('open-legal', handler)
+  }, [])
 
   return (
     <ErrorBoundary>

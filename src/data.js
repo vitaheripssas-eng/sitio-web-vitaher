@@ -254,6 +254,10 @@ export const PERFILES = [
   'Cuidadores',
   'Personal Administrativo',
   'Sistemas',
+  'Dermatología',
+  'Medicina Interna',
+  'Pediatría',
+  'Intensivista',
 ]
 
 export const SERVICIOS_SELECCION = [

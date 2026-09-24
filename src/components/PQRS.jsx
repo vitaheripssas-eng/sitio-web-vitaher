@@ -53,6 +53,8 @@ export default function PQRS() {
       try {
         const fd = new FormData()
         fd.append('tipo', `PQRS - ${data.tipoSolicitud}`)
+        fd.append('para', 'talentohumanovitaher@gmail.com')
+        fd.append('destinatario', 'talentohumanovitaher@gmail.com')
         fd.append('nombre', data.nombre ?? 'Anónimo')
         fd.append('telefono', data.telefono ?? '')
         fd.append('correo', data.correo ?? '')
@@ -221,6 +223,23 @@ export default function PQRS() {
                   {files.length > 0 && (
                     <span className="form-file-name">{files.join(', ')}</span>
                   )}
+                </div>
+                <div className="form-field full">
+                  <label className="form-check">
+                    <input type="checkbox" name="tratamientoDatos" value="on" required aria-invalid={!!fieldErrors.tratamientoDatos} />
+                    <span>
+                      Autorizo el tratamiento de mis datos personales por <strong>IPS VITAHER S.A.S.</strong> conforme a la{' '}
+                      <button
+                        type="button"
+                        className="form-check-link"
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-legal', { detail: 'datos' }))}
+                      >
+                        Política de Tratamiento de Datos
+                      </button>{' '}
+                      y la Ley 1581 de 2012 <span className="req">*</span>
+                    </span>
+                  </label>
+                  {fieldErrors.tratamientoDatos && <span className="form-field-error">{fieldErrors.tratamientoDatos}</span>}
                 </div>
               </div>
 

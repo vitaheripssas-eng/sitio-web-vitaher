@@ -1,9 +1,8 @@
 import { useRef, useState } from 'react'
 import { PHONE_DISPLAY, EMAIL, SERVICIOS_SELECCION } from '../data.js'
-import { waLink, enviarConArchivo } from '../utils.js'
+import { waLink } from '../utils.js'
 import { contactoSchema, formatZodErrors } from '../schemas.js'
 import WhatsAppPreview from './WhatsAppPreview.jsx'
-import ExitoServidor from './ExitoServidor.jsx'
 import { Icon } from './Icons.jsx'
 import Reveal from './Reveal.jsx'
 import './Contacto.css'
@@ -25,10 +24,7 @@ const INFO = [
 export default function Contacto() {
   const [sent, setSent] = useState(null)
   const [soportes, setSoportes] = useState('')
-  const [servidorOk, setServidorOk] = useState(false)
-  const [errorEnvio, setErrorEnvio] = useState('')
   const [fieldErrors, setFieldErrors] = useState({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const formRef = useRef(null)
 
   async function handleSubmit(e) {
@@ -42,33 +38,8 @@ export default function Contacto() {
     }
     setFieldErrors({})
     const data = parsed.data
-    const fileInput = form.querySelector('input[type="file"]')
-    const tieneArchivo = fileInput && fileInput.files.length > 0
 
-    if (tieneArchivo) {
-      setIsSubmitting(true)
-      try {
-        const fd = new FormData()
-        fd.append('tipo', 'Solicitud de cita')
-        fd.append('nombre', data.nombre ?? '')
-        fd.append('telefono', data.telefono ?? '')
-        fd.append('correo', data.correo ?? '')
-        fd.append('mensaje', `Servicio de interés: ${data.servicio}\n\n${data.mensaje}`)
-        fd.append('website', '')
-        for (const f of fileInput.files) fd.append('archivo[]', f)
-        await enviarConArchivo(fd)
-        setServidorOk(true)
-        setErrorEnvio('')
-        form.reset()
-        setSoportes('')
-        return
-      } catch {
-        setErrorEnvio('No pudimos enviar los archivos. Escríbenos por WhatsApp y adjúntalos en el chat.')
-      } finally {
-        setIsSubmitting(false)
-      }
-    }
-
+    // Solo WhatsApp - no envía a correo (coordinacionarauca2026@gmail.com)
     const msg = [
       '*Solicitud de cita / mensaje — IPS VITAHER S.A.S.*',
       '',
@@ -77,9 +48,9 @@ export default function Contacto() {
       '',
       `Nombre: ${data.nombre}`,
       `Teléfono: ${data.telefono}`,
-      `Correo: ${data.correo}`,
+      `Correo: ${data.correo || '—'}`,
       '',
-      soportes ? `Orden o autorización adjunta: ${soportes}` : '',
+      soportes ? `Orden o autorización adjunta: ${soportes} (adjuntar en WhatsApp)` : 'Sin archivos - adjuntar en WhatsApp si aplica',
     ]
       .filter(Boolean)
       .join('\n')
@@ -163,10 +134,26 @@ export default function Contacto() {
                     </span>
                   </div>
                 </div>
+                <div className="form-field full">
+                  <label className="form-check">
+                    <input type="checkbox" name="tratamientoDatos" value="on" required aria-invalid={!!fieldErrors.tratamientoDatos} />
+                    <span>
+                      Autorizo el tratamiento de mis datos personales por <strong>IPS VITAHER S.A.S.</strong> conforme a la{' '}
+                      <button
+                        type="button"
+                        className="form-check-link"
+                        onClick={() => window.dispatchEvent(new CustomEvent('open-legal', { detail: 'datos' }))}
+                      >
+                        Política de Tratamiento de Datos
+                      </button>{' '}
+                      y la Ley 1581 de 2012 <span className="req">*</span>
+                    </span>
+                  </label>
+                  {fieldErrors.tratamientoDatos && <span className="form-field-error">{fieldErrors.tratamientoDatos}</span>}
+                </div>
               </div>
-              <p className="form-error" role="alert" aria-live="polite">{errorEnvio || '\u00A0'}</p>
-              <button className="btn btn-primary form-submit" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
-                {isSubmitting ? 'Enviando…' : 'Enviar solicitud'}
+              <button className="btn btn-primary form-submit" type="submit">
+                Enviar por WhatsApp
               </button>
             </form>
           </Reveal>
@@ -176,7 +163,7 @@ export default function Contacto() {
       {sent && (
         <WhatsAppPreview
           title="Solicitud lista para enviar"
-          message="Revisa y edita el mensaje si lo necesitas, luego envíalo por WhatsApp."
+          message="Revisa y edita el mensaje si lo necesitas, luego envíalo por WhatsApp. Adjunta la orden/autorización en el chat."
           msg={sent}
           onClose={() => setSent(null)}
           onSent={() => {
@@ -185,8 +172,6 @@ export default function Contacto() {
           }}
         />
       )}
-
-      {servidorOk && <ExitoServidor onClose={() => setServidorOk(false)} />}
     </section>
   )
 }

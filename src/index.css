@@ -83,38 +83,40 @@ button {
 }
 
 .container {
-  width: min(1150px, 92%);
+  width: min(1180px, 92%);
   margin-inline: auto;
 }
 
 .section {
-  padding: 88px 0;
+  padding: 84px 0;
 }
 
 .section-label {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--primary);
   background: var(--primary-tint);
   border: 1px solid #b8dcf0;
   border-radius: 999px;
   padding: 6px 14px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .section-head {
-  max-width: 720px;
-  margin-bottom: 48px;
+  max-width: 680px;
+  margin-bottom: 42px;
 }
 
 .section-head p {
-  margin-top: 14px;
-  font-size: 1.05rem;
+  margin-top: 12px;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
 }
 
 .btn {

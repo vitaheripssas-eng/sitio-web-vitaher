@@ -66,16 +66,19 @@ export default function Destacados() {
                       <Icon name="arrowDown" size={18} />
                     </a>
                   </div>
-                  <img
-                    className="destacado-img"
-                    src={slide.img}
-                    alt={slide.alt}
-                    width="640"
-                    height="400"
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                    decoding="async"
-                    fetchPriority={i === 0 ? 'high' : 'auto'}
-                  />
+                  <picture>
+                    <source srcSet={slide.img.replace('.jpg', '.webp')} type="image/webp" />
+                    <img
+                      className="destacado-img"
+                      src={slide.img}
+                      alt={slide.alt}
+                      width="640"
+                      height="400"
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      fetchPriority={i === 0 ? 'high' : 'auto'}
+                    />
+                  </picture>
                 </article>
               ))}
             </div>

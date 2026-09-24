@@ -45,17 +45,17 @@ export default function Footer({ onOpenLegal }) {
             <p>Cuidamos con calidad, servimos con el corazón.</p>
             <span className="footer-tagline">Línea de atención SIAU: +57 314 231 8040</span>
             <div className="footer-social">
-              <a className="social-item" href="#" aria-label="Facebook de VITAHER IPS S.A.S.">
+              <a className="social-item" href="https://www.facebook.com/share/1GXGd3Wd2G/" target="_blank" rel="noreferrer" aria-label="Facebook de VITAHER IPS S.A.S.">
                 <Icon name="facebook" size={20} />
                 <span className="social-label">Facebook</span>
               </a>
-              <a className="social-item" href="#" aria-label="Instagram de VITAHER IPS S.A.S.">
+              <a className="social-item" href="https://www.instagram.com/ipsvitaher?stkn=ZGE2OWhzYTZobmIz" target="_blank" rel="noreferrer" aria-label="Instagram de VITAHER IPS S.A.S.">
                 <Icon name="instagram" size={20} />
                 <span className="social-label">Instagram</span>
               </a>
                <a
                  className="social-item tiktok"
-                 href="https://www.tiktok.com/@vitaherips"
+                 href="https://www.tiktok.com/@ipsvitaher"
                  target="_blank"
                  rel="noreferrer"
                  aria-label="TikTok de VITAHER IPS S.A.S."

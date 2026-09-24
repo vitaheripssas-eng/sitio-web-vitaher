@@ -5,6 +5,9 @@ const telefonoSchema = z.string().trim().min(7, 'Teléfono inválido').max(20, '
 const correoSchema = z.string().trim().email('Correo inválido').max(100, 'Máximo 100 caracteres')
 const correoOpcionalSchema = z.string().trim().max(100).optional().or(z.literal(''))
 const requerido = (msg = 'Campo requerido') => z.string().trim().min(1, msg)
+const aceptacionTratamiento = z.literal('on', {
+  errorMap: () => ({ message: 'Debes aceptar el tratamiento de datos personales' }),
+})
 
 export const trabajaSchema = z.object({
   nombre: nombreSchema,
@@ -14,6 +17,7 @@ export const trabajaSchema = z.object({
   cargo: requerido('Selecciona un cargo'),
   formacion: z.string().trim().min(1).optional().or(z.literal('')),
   experiencia: z.string().trim().max(2000).optional().or(z.literal('')),
+  tratamientoDatos: aceptacionTratamiento,
 })
 
 export const contactoSchema = z.object({
@@ -22,6 +26,7 @@ export const contactoSchema = z.object({
   correo: correoOpcionalSchema,
   servicio: z.string().trim().min(1).optional().or(z.literal('')),
   mensaje: z.string().trim().min(10, 'Mínimo 10 caracteres').max(2000, 'Máximo 2000 caracteres'),
+  tratamientoDatos: aceptacionTratamiento,
 })
 
 export const pqrsSchema = z.object({
@@ -36,6 +41,7 @@ export const pqrsSchema = z.object({
   servicio: z.string().trim().optional().or(z.literal('')),
   fecha: z.string().trim().optional().or(z.literal('')),
   descripcion: z.string().trim().min(10, 'Mínimo 10 caracteres').max(2000, 'Máximo 2000 caracteres'),
+  tratamientoDatos: aceptacionTratamiento,
 })
 
 export function formatZodErrors(error) {

@@ -5,16 +5,18 @@
 .servicios-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-bottom: 56px;
+  gap: 28px;
+  margin-bottom: 52px;
 }
 
 .servicio {
+  display: flex;
+  flex-direction: column;
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
-  padding: 28px;
+  padding: 26px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -78,7 +80,7 @@
 .pacientes-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 28px;
 }
 
 .paciente {

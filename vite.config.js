@@ -16,15 +16,15 @@ export default defineConfig({
         theme_color: '#004b87',
         background_color: '#ffffff',
         display: 'standalone',
-        start_url: '/sitio-web-vitaher/',
-        scope: '/sitio-web-vitaher/',
+        start_url: '/',
+        scope: '/',
         icons: [
           { src: 'logo.png', sizes: '192x192', type: 'image/png' },
           { src: 'logo.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,jpg,svg,pdf}'],
+        globPatterns: ['**/*.{js,css,html,png,jpg,webp,svg,pdf}'],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/maps\.google\.com\/.*/i,
@@ -35,7 +35,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: '/sitio-web-vitaher/',
+  base: '/',
   build: {
     rollupOptions: {
       output: {
