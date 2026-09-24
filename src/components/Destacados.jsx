@@ -113,6 +113,9 @@ export default function Destacados() {
                 />
               ))}
             </div>
+            <div className="destacados-progress" aria-hidden="true" key={index}>
+              <div className="destacados-progress-bar" style={{ animationDuration: `${AUTOPLAY_MS}ms`, animationPlayState: paused.current ? 'paused' : 'running' }} />
+            </div>
           </div>
         </Reveal>
       </div>

@@ -184,6 +184,34 @@
   outline-offset: 2px;
 }
 
+.destacados-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.18);
+  z-index: 3;
+  overflow: hidden;
+}
+
+.destacados-progress-bar {
+  height: 100%;
+  width: 100%;
+  background: var(--accent-bright);
+  transform-origin: left;
+  animation: destacados-progress linear forwards;
+}
+
+@keyframes destacados-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 @media (max-width: 1100px) {
   .destacado {
     padding: 44px 32px;

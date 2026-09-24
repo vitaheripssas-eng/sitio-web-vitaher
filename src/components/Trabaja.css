@@ -90,7 +90,7 @@
 
 .perfiles-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
@@ -136,6 +136,10 @@
 /* Responsive */
 @media (max-width: 1100px) {
   .formatos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .perfiles-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }

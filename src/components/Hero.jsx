@@ -41,8 +41,10 @@ function CountStat({ value }) {
 }
 
 export default function Hero() {
+  const bg = `${import.meta.env.BASE_URL}img/cuidado-avanzado.webp`
   return (
     <section className="hero" id="inicio">
+      <div className="hero-bg" aria-hidden="true" style={{ backgroundImage: `url(${bg})` }} />
       <div className="container">
         <div className="hero-grid">
           <div className="hero-copy">
