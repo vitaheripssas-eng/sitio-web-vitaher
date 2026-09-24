@@ -180,11 +180,19 @@ export function Icon({ name, size = 24, ...props }) {
       </>
     ),
     accessibility: (
-      <path
-        d="M12 3.2a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM7.2 9.4a1.6 1.6 0 0 0-1.1 2.8l1.1 1a1.6 1.6 0 0 0 2.2-.1l1-1 1.4 5.1a1.6 1.6 0 0 0 1.6 1.1 1.6 1.6 0 0 0 1.5-1.1l1-2.8 1 2.8a1.6 1.6 0 0 0 3-.8l-1.3-4.6 1.2 1.1a1.6 1.6 0 0 0 2.2.1l1.1-1a1.6 1.6 0 0 0-1.1-2.8h-3.6V9.6a1.4 1.4 0 0 0-1.4-1.4H9a1.4 1.4 0 0 0-1.4 1.4v3.7H7.2Z"
-        fill="currentColor"
-        stroke="none"
-      />
+      <>
+        <circle cx="12" cy="7" r="2.3" fill="currentColor" stroke="none" />
+        <path
+          d="M12 11.2a1 1 0 0 0-1 1v3.2l-1.7 3.6a1 1 0 1 0 1.8.8L12 17l.9 2.8a1 1 0 1 0 1.8-.8L13 15.4v-3.2a1 1 0 0 0-1-1Z"
+          fill="currentColor"
+          stroke="none"
+        />
+        <path
+          d="M7.2 11.3a1 1 0 0 0-1 1.5l1 1.1 2.2-2.2h7.2l2.2 2.2 1-1.1a1 1 0 0 0-1.4-1.4L12 12.2 7.2 11.3Z"
+          fill="currentColor"
+          stroke="none"
+        />
+      </>
     ),
   }
 
