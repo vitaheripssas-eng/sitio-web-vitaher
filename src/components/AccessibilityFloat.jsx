@@ -172,7 +172,7 @@ export default function AccessibilityFloat() {
           </div>
 
           <button type="button" className="a11y-option" onClick={reset}>
-            <span><Icon name="reset" size={18} /></span>
+            <span><Icon name="reset" size={13} /></span>
             Restablecer todo
           </button>
         </div>
