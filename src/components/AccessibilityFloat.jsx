@@ -5,7 +5,6 @@ import { Icon } from './Icons.jsx'
 import './AccessibilityFloat.css'
 
 const STORAGE_KEY = 'vitaher-a11y'
-const POS_KEY = 'vitaher-a11y-pos'
 
 function applyPrefs(prefs) {
   const html = document.documentElement
@@ -43,14 +42,7 @@ export default function AccessibilityFloat() {
       return {}
     }
   })
-  const [pos, setPos] = useState(() => {
-    try {
-      const raw = localStorage.getItem(POS_KEY)
-      return raw ? JSON.parse(raw) : null
-    } catch {
-      return null
-    }
-  })
+  const [pos, setPos] = useState(null)
   const [dragging, setDragging] = useState(false)
   const dragRef = useRef({ startX: 0, startY: 0, origX: 0, origY: 0, moved: false })
   const btnRef = useRef(null)
@@ -61,14 +53,6 @@ export default function AccessibilityFloat() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs))
     } catch {}
   }, [prefs])
-
-  useEffect(() => {
-    if (pos) {
-      try {
-        localStorage.setItem(POS_KEY, JSON.stringify(pos))
-      } catch {}
-    }
-  }, [pos])
 
   const toggle = (key) => setPrefs((p) => ({ ...p, [key]: !p[key] }))
   const reset = () => {
@@ -149,21 +133,16 @@ export default function AccessibilityFloat() {
       {open && (
         <div className="a11y-panel" role="dialog" aria-label="Opciones de accesibilidad" aria-modal="false" style={panelStyle}>
           <div className="a11y-panel-header">
-            <strong>Accesibilidad</strong>
-            <button type="button" className="a11y-close" onClick={() => setOpen(false)} aria-label="Cerrar">
-              <Icon name="x" size={18} />
-            </button>
+            <div>
+              <strong>Accesibilidad</strong>
+              <p>Personaliza tu experiencia</p>
+            </div>
           </div>
 
-          <div className="a11y-section">
-            <span className="a11y-section-title">Lector de pantalla</span>
+          <div className="a11y-options">
             <button type="button" className="a11y-option" onClick={() => speakPage()}>
               <span>🔊</span> Leer esta página en voz
             </button>
-          </div>
-
-          <div className="a11y-section">
-            <span className="a11y-section-title">Ajustes visuales</span>
             <button type="button" className={`a11y-option ${prefs.largeText ? 'is-active' : ''}`} onClick={() => toggle('largeText')}>
               <span>A+</span> Texto grande
             </button>
@@ -179,10 +158,6 @@ export default function AccessibilityFloat() {
             <button type="button" className={`a11y-option ${prefs.reducedMotion ? 'is-active' : ''}`} onClick={() => toggle('reducedMotion')}>
               <span>◎</span> Pausar animaciones
             </button>
-          </div>
-
-          <div className="a11y-section">
-            <span className="a11y-section-title">Subtítulos y audio</span>
             <button type="button" className={`a11y-option ${prefs.subtitles ? 'is-active' : ''}`} onClick={() => toggle('subtitles')}>
               <span>CC</span> Subtítulos visibles
             </button>
@@ -190,6 +165,9 @@ export default function AccessibilityFloat() {
 
           <button type="button" className="a11y-reset" onClick={reset}>
             Restablecer todo
+          </button>
+          <button type="button" className="a11y-close-bottom" onClick={() => setOpen(false)}>
+            <Icon name="x" size={14} /> Cerrar
           </button>
         </div>
       )}
