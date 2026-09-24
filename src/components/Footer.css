@@ -1,7 +1,19 @@
 .footer {
-  background: var(--ink);
+  background: linear-gradient(180deg, #0f172a 0%, #0b1e33 100%);
   color: #cbd5e1;
-  padding: 64px 0 28px;
+  padding: 72px 0 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--accent-bright));
 }
 
 .footer-top {
