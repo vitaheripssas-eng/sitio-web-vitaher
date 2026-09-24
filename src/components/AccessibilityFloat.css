@@ -157,12 +157,52 @@
   }
 }
 
+.a11y-section {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.a11y-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 8px;
+}
+.a11y-section-title {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.a11y-help {
+  margin: 6px 0 0;
+  font-size: 0.73rem;
+  line-height: 1.4;
+  color: #64748b;
+}
+.a11y-help kbd {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 1px 4px;
+  font-size: 0.7rem;
+  font-family: inherit;
+}
+
 /* High contrast mode */
 .a11y-high-contrast {
   filter: contrast(1.15);
 }
 .a11y-high-contrast body {
   background: #fff;
+}
+.a11y-invert-colors {
+  filter: invert(1) hue-rotate(180deg);
+}
+.a11y-invert-colors img,
+.a11y-invert-colors video {
+  filter: invert(1) hue-rotate(180deg);
 }
 .a11y-underline-links a {
   text-decoration: underline !important;
@@ -174,6 +214,10 @@
   animation: none !important;
   transition: none !important;
   scroll-behavior: auto !important;
+}
+.a11y-subtitles video::cue {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
 }
 
 .a11y-float.dragging {

@@ -9,8 +9,26 @@ function applyPrefs(prefs) {
   const html = document.documentElement
   html.style.fontSize = prefs.largeText ? '112.5%' : ''
   html.classList.toggle('a11y-high-contrast', !!prefs.highContrast)
+  html.classList.toggle('a11y-invert-colors', !!prefs.invertColors)
   html.classList.toggle('a11y-underline-links', !!prefs.underlineLinks)
   html.classList.toggle('a11y-reduced-motion', !!prefs.reducedMotion)
+  html.classList.toggle('a11y-subtitles', !!prefs.subtitles)
+}
+
+function speakPage(toggle) {
+  if (!('speechSynthesis' in window)) {
+    alert('Tu navegador no soporta lectura por voz. Activa TalkBack (Android: Ajustes > Accesibilidad > TalkBack) o VoiceOver (iPhone: Ajustes > Accesibilidad > VoiceOver).')
+    return
+  }
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel()
+    return
+  }
+  const text = document.querySelector('main')?.innerText?.slice(0, 4000) || document.body.innerText.slice(0, 4000)
+  const utter = new SpeechSynthesisUtterance(text)
+  utter.lang = 'es-CO'
+  utter.rate = 0.9
+  window.speechSynthesis.speak(utter)
 }
 
 export default function AccessibilityFloat() {
@@ -51,7 +69,10 @@ export default function AccessibilityFloat() {
   }, [pos])
 
   const toggle = (key) => setPrefs((p) => ({ ...p, [key]: !p[key] }))
-  const reset = () => setPrefs({})
+  const reset = () => {
+    window.speechSynthesis?.cancel()
+    setPrefs({})
+  }
 
   const handlePointerDown = (e) => {
     const btn = btnRef.current
@@ -91,7 +112,6 @@ export default function AccessibilityFloat() {
     if (wasMoved) {
       e.preventDefault()
       e.stopPropagation()
-      // evitar abrir panel si se arrastró
       return
     }
     setOpen((v) => !v)
@@ -101,7 +121,7 @@ export default function AccessibilityFloat() {
   const panelStyle = pos
     ? {
         left: Math.min(pos.x, window.innerWidth - 296),
-        top: pos.y > 120 ? pos.y - 260 : pos.y + 64,
+        top: pos.y > 140 ? pos.y - 360 : pos.y + 64,
         right: 'auto',
         bottom: 'auto',
       }
@@ -133,12 +153,24 @@ export default function AccessibilityFloat() {
             </button>
           </div>
 
-          <div className="a11y-options">
+          <div className="a11y-section">
+            <span className="a11y-section-title">Lector de pantalla</span>
+            <button type="button" className="a11y-option" onClick={() => speakPage()}>
+              <span>🔊</span> Leer esta página en voz
+            </button>
+            <p className="a11y-help">Para TalkBack: Android Ajustes {'>'} Accesibilidad {'>'} TalkBack. iPhone: Ajustes {'>'} Accesibilidad {'>'} VoiceOver.</p>
+          </div>
+
+          <div className="a11y-section">
+            <span className="a11y-section-title">Ajustes visuales</span>
             <button type="button" className={`a11y-option ${prefs.largeText ? 'is-active' : ''}`} onClick={() => toggle('largeText')}>
               <span>A+</span> Texto grande
             </button>
             <button type="button" className={`a11y-option ${prefs.highContrast ? 'is-active' : ''}`} onClick={() => toggle('highContrast')}>
               <span>◐</span> Alto contraste
+            </button>
+            <button type="button" className={`a11y-option ${prefs.invertColors ? 'is-active' : ''}`} onClick={() => toggle('invertColors')}>
+              <span>◑</span> Invertir colores
             </button>
             <button type="button" className={`a11y-option ${prefs.underlineLinks ? 'is-active' : ''}`} onClick={() => toggle('underlineLinks')}>
               <span>U</span> Subrayar enlaces
@@ -148,10 +180,23 @@ export default function AccessibilityFloat() {
             </button>
           </div>
 
+          <div className="a11y-section">
+            <span className="a11y-section-title">Control por gestos</span>
+            <p className="a11y-help">Usa <kbd>Tab</kbd> para navegar, <kbd>Enter</kbd> para activar. En móvil, desliza con 2 dedos. El botón es arrastrable.</p>
+          </div>
+
+          <div className="a11y-section">
+            <span className="a11y-section-title">Subtítulos y audio</span>
+            <button type="button" className={`a11y-option ${prefs.subtitles ? 'is-active' : ''}`} onClick={() => toggle('subtitles')}>
+              <span>CC</span> Subtítulos visibles
+            </button>
+            <p className="a11y-help">Videos mostrarán subtítulos si están disponibles. Alertas de sonido: activa en Ajustes del sistema.</p>
+          </div>
+
           <button type="button" className="a11y-reset" onClick={reset}>
-            Restablecer
+            Restablecer todo
           </button>
-          <p className="a11y-note">Arrastra el botón para moverlo. Ajustes guardados. Ley 1581.</p>
+          <p className="a11y-note">Funciones del sistema (TalkBack/VoiceOver) se activan en el celular. Lo visual se guarda aquí. Ley 1581.</p>
         </div>
       )}
     </>
