@@ -9,8 +9,6 @@ function applyPrefs(prefs) {
   const html = document.documentElement
   html.style.fontSize = prefs.largeText ? '112.5%' : ''
   html.classList.toggle('a11y-high-contrast', !!prefs.highContrast)
-  html.classList.toggle('a11y-dark-mode', !!prefs.darkMode)
-  html.classList.toggle('a11y-daltonism', !!prefs.daltonism)
   html.classList.toggle('a11y-invert-colors', !!prefs.invertColors)
   html.classList.toggle('a11y-underline-links', !!prefs.underlineLinks)
   html.classList.toggle('a11y-reduced-motion', !!prefs.reducedMotion)
@@ -169,12 +167,6 @@ export default function AccessibilityFloat() {
             </button>
             <button type="button" className={`a11y-option ${prefs.highContrast ? 'is-active' : ''}`} onClick={() => toggle('highContrast')}>
               <span>◐</span> Alto contraste
-            </button>
-            <button type="button" className={`a11y-option ${prefs.darkMode ? 'is-active' : ''}`} onClick={() => toggle('darkMode')}>
-              <span>🌙</span> Modo oscuro
-            </button>
-            <button type="button" className={`a11y-option ${prefs.daltonism ? 'is-active' : ''}`} onClick={() => toggle('daltonism')}>
-              <span>🎨</span> Daltonismo
             </button>
             <button type="button" className={`a11y-option ${prefs.invertColors ? 'is-active' : ''}`} onClick={() => toggle('invertColors')}>
               <span>◑</span> Invertir colores

@@ -215,23 +215,6 @@
 .a11y-high-contrast body {
   background: #fff;
 }
-.a11y-dark-mode {
-  background: #0f172a !important;
-  color: #e2e8f0 !important;
-}
-.a11y-dark-mode body,
-.a11y-dark-mode .section,
-.a11y-dark-mode .navbar,
-.a11y-dark-mode .footer {
-  background: #0f172a !important;
-  color: #e2e8f0 !important;
-}
-.a11y-dark-mode .section:nth-of-type(even) {
-  background: #1e293b !important;
-}
-.a11y-daltonism {
-  filter: saturate(1.4) contrast(1.05) hue-rotate(4deg);
-}
 .a11y-invert-colors {
   filter: invert(1) hue-rotate(180deg);
 }
