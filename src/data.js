@@ -7,6 +7,7 @@ export const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT ?? 'https://vita
 const BASE = import.meta.env.BASE_URL
 
 export const NAV_LINKS = [
+  { label: 'Inicio', href: '#inicio' },
   { label: 'Nosotros', href: '#nosotros' },
   { label: 'Servicios', href: '#servicios' },
   { label: 'PQRS', href: '#pqrs' },
