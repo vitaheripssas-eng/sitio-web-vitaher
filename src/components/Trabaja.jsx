@@ -13,22 +13,22 @@ const BASE = import.meta.env.BASE_URL
 
 const FORMATOS = [
   {
-    label: 'Lista de Chequeo - Cuidador',
+    label: 'Cuidador',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_CUIDADOR.pdf`,
     icon: 'user-check',
   },
   {
-    label: 'Lista de Chequeo - Profesional',
+    label: 'Profesional',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_PROFESIONAL.pdf`,
     icon: 'brain',
   },
   {
-    label: 'Lista de Chequeo - Aux. Enfermería',
+    label: 'Aux. Enfermería',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_AUX_ENFERMERIA.pdf`,
     icon: 'user',
   },
   {
-    label: 'Lista de Chequeo - Administrativo',
+    label: 'Administrativo',
     href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUO_ADMINISTRATIVO.pdf`,
     icon: 'home',
   },
@@ -131,7 +131,13 @@ export default function Trabaja() {
                   rel="noopener noreferrer"
                   key={formato.label}
                 >
+                  <span className="formato-icon">
+                    <Icon name={formato.icon} size={28} />
+                  </span>
                   <h4>{formato.label}</h4>
+                  <small>
+                    <Icon name="download" size={14} /> Descargar lista
+                  </small>
                 </a>
               ))}
             </div>
