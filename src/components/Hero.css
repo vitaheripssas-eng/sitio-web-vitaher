@@ -213,6 +213,10 @@
 }
 
 @media (max-width: 900px) {
+  .hero {
+    padding-top: 80px;
+    min-height: auto;
+  }
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 48px;

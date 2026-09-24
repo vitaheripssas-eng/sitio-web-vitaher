@@ -16,22 +16,6 @@ function applyPrefs(prefs) {
   html.classList.toggle('a11y-subtitles', !!prefs.subtitles)
 }
 
-function speakPage(toggle) {
-  if (!('speechSynthesis' in window)) {
-    alert('Tu navegador no soporta lectura por voz. Activa TalkBack (Android: Ajustes > Accesibilidad > TalkBack) o VoiceOver (iPhone: Ajustes > Accesibilidad > VoiceOver).')
-    return
-  }
-  if (window.speechSynthesis.speaking) {
-    window.speechSynthesis.cancel()
-    return
-  }
-  const text = document.querySelector('main')?.innerText?.slice(0, 4000) || document.body.innerText.slice(0, 4000)
-  const utter = new SpeechSynthesisUtterance(text)
-  utter.lang = 'es-CO'
-  utter.rate = 0.9
-  window.speechSynthesis.speak(utter)
-}
-
 export default function AccessibilityFloat() {
   const [open, setOpen] = useState(false)
   const [prefs, setPrefs] = useState(() => {
@@ -42,6 +26,7 @@ export default function AccessibilityFloat() {
       return {}
     }
   })
+  const [isSpeaking, setIsSpeaking] = useState(false)
   const [pos, setPos] = useState(null)
   const [dragging, setDragging] = useState(false)
   const dragRef = useRef({ startX: 0, startY: 0, origX: 0, origY: 0, moved: false })
@@ -57,6 +42,7 @@ export default function AccessibilityFloat() {
   const toggle = (key) => setPrefs((p) => ({ ...p, [key]: !p[key] }))
   const reset = () => {
     window.speechSynthesis?.cancel()
+    setIsSpeaking(false)
     setPrefs({})
   }
 
@@ -103,6 +89,22 @@ export default function AccessibilityFloat() {
     setOpen((v) => !v)
   }
 
+  const speakPage = () => {
+    if (isSpeaking) {
+      window.speechSynthesis?.cancel()
+      setIsSpeaking(false)
+      return
+    }
+    setIsSpeaking(true)
+    const text = document.querySelector('main')?.innerText?.slice(0, 4000) || document.body.innerText.slice(0, 4000)
+    const utter = new SpeechSynthesisUtterance(text)
+    utter.lang = 'es-CO'
+    utter.rate = 0.9
+    utter.onend = () => setIsSpeaking(false)
+    utter.onerror = () => setIsSpeaking(false)
+    window.speechSynthesis.speak(utter)
+  }
+
   const btnStyle = pos ? { left: pos.x, top: pos.y, right: 'auto', bottom: 'auto' } : undefined
   const panelStyle = pos
     ? {
@@ -112,6 +114,8 @@ export default function AccessibilityFloat() {
         bottom: 'auto',
       }
     : undefined
+
+  const animStyle = prefs.reducedMotion ? { animation: 'none' } : undefined
 
   return (
     <>
@@ -131,15 +135,21 @@ export default function AccessibilityFloat() {
       </button>
 
       {open && (
-        <div className="a11y-panel a11y-panel--compact" role="dialog" aria-label="Opciones de accesibilidad" aria-modal="false" style={panelStyle}>
+        <div
+          className="a11y-panel a11y-panel--compact"
+          role="dialog"
+          aria-label="Opciones de accesibilidad"
+          aria-modal="false"
+          style={{ ...panelStyle, ...animStyle }}
+        >
           <div className="a11y-title-box">
             <strong>Accesibilidad</strong>
             <p>Personaliza tu experiencia</p>
           </div>
 
           <div className="a11y-options">
-            <button type="button" className="a11y-option" onClick={() => speakPage()}>
-              <span>🔊</span> Leer esta página en voz
+            <button type="button" className={`a11y-option ${isSpeaking ? 'is-active' : ''}`} onClick={speakPage}>
+              <span>{isSpeaking ? '⏹' : '🔊'}</span> {isSpeaking ? 'Detener' : 'Leer esta página en voz'}
             </button>
             <button type="button" className={`a11y-option ${prefs.largeText ? 'is-active' : ''}`} onClick={() => toggle('largeText')}>
               <span>A+</span> Texto grande
