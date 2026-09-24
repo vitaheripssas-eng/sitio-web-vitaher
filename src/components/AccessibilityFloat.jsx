@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from 'react'
-import { Accessibility } from 'lucide-react'
 import { Icon } from './Icons.jsx'
 import './AccessibilityFloat.css'
 
@@ -142,7 +141,7 @@ export default function AccessibilityFloat() {
         onPointerUp={handlePointerUp}
         style={btnStyle}
       >
-        <Accessibility size={32} strokeWidth={2.2} />
+        <Icon name="accessibility" size={52} />
       </button>
 
       {open && (
