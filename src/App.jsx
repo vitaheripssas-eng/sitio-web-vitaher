@@ -3,6 +3,7 @@ import Navbar from './components/Navbar.jsx'
 import Hero from './components/Hero.jsx'
 import Footer from './components/Footer.jsx'
 import Modal from './components/Modal.jsx'
+import AccessibilityFloat from './components/AccessibilityFloat.jsx'
 import { getLegalPage } from './data/legal.js'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
@@ -42,6 +43,7 @@ export default function App() {
         </Suspense>
       </main>
       <Footer onOpenLegal={(slug) => setOpenDoc(getLegalPage(slug))} />
+      <AccessibilityFloat />
       {openDoc && <Modal doc={openDoc} onClose={() => setOpenDoc(null)} />}
     </ErrorBoundary>
   )
