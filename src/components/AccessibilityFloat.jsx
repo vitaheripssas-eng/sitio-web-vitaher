@@ -131,12 +131,10 @@ export default function AccessibilityFloat() {
       </button>
 
       {open && (
-        <div className="a11y-panel" role="dialog" aria-label="Opciones de accesibilidad" aria-modal="false" style={panelStyle}>
-          <div className="a11y-panel-header">
-            <div>
-              <strong>Accesibilidad</strong>
-              <p>Personaliza tu experiencia</p>
-            </div>
+        <div className="a11y-panel a11y-panel--compact" role="dialog" aria-label="Opciones de accesibilidad" aria-modal="false" style={panelStyle}>
+          <div className="a11y-title-box">
+            <strong>Accesibilidad</strong>
+            <p>Personaliza tu experiencia</p>
           </div>
 
           <div className="a11y-options">
@@ -166,6 +164,7 @@ export default function AccessibilityFloat() {
           <button type="button" className="a11y-reset" onClick={reset}>
             Restablecer todo
           </button>
+          <div className="a11y-divider" />
           <button type="button" className="a11y-close-bottom" onClick={() => setOpen(false)}>
             <Icon name="x" size={14} /> Cerrar
           </button>

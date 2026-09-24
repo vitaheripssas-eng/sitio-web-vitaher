@@ -50,6 +50,69 @@
   scrollbar-color: var(--border) transparent;
 }
 
+.a11y-panel--compact {
+  width: 260px;
+  padding: 12px;
+  gap: 0;
+}
+
+.a11y-panel--compact .a11y-title-box {
+  background: var(--primary-tint);
+  border: 1px solid #b8dcf0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.a11y-panel--compact .a11y-title-box strong {
+  font-size: 0.9rem;
+  color: var(--primary-dark);
+  display: block;
+  line-height: 1.2;
+}
+
+.a11y-panel--compact .a11y-title-box p {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin: 2px 0 0;
+}
+
+.a11y-panel--compact .a11y-options {
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.a11y-panel--compact .a11y-option {
+  padding: 8px 10px;
+  font-size: 0.82rem;
+  gap: 8px;
+  border-radius: 9px;
+}
+
+.a11y-panel--compact .a11y-option span {
+  width: 24px;
+  height: 24px;
+  font-size: 0.78rem;
+  border-radius: 7px;
+}
+
+.a11y-panel--compact .a11y-reset {
+  padding: 8px;
+  font-size: 0.82rem;
+  margin-bottom: 0;
+}
+
+.a11y-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 10px 0;
+}
+
+.a11y-panel--compact .a11y-close-bottom {
+  margin-top: 0;
+}
+
 .a11y-panel::-webkit-scrollbar {
   width: 6px;
 }
