@@ -19,7 +19,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
 $PARA_DEFAULT = 'coordinacionarauca2026@gmail.com';
 $PARA_TALENTO = 'talentohumanovitaher@gmail.com';
 $DE     = 'info@vitaherips.com';
-$MAX_MB = 10;
+$MAX_MB = 20;
 
 /* Honeypot */
 if (!empty($_POST['website'])) { echo json_encode(['ok' => true]); exit; }
@@ -34,7 +34,7 @@ $extra    = trim((string)($_POST['extra'] ?? ''));
 $dest = trim((string)($_POST['destinatario'] ?? $_POST['para'] ?? ''));
 if ($dest !== '' && filter_var($dest, FILTER_VALIDATE_EMAIL)) {
     $PARA = $dest;
-} elseif (stripos($tipo, 'Postulación') !== false) {
+} elseif (stripos($tipo, 'Postulaci├│n') !== false || stripos($tipo, 'PQRS') !== false) {
     $PARA = $PARA_TALENTO;
 } else {
     $PARA = $PARA_DEFAULT;
