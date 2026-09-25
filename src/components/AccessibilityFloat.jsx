@@ -114,7 +114,7 @@ export default function AccessibilityFloat() {
       }
     : undefined
 
-  const animStyle = prefs.reducedMotion ? { animation: 'none' } : undefined
+
 
   const options = [
     { key: 'speak', icon: isSpeaking ? '⏹' : '🔊', label: isSpeaking ? 'Detener' : 'Leer esta página en voz', active: isSpeaking },
@@ -149,7 +149,7 @@ export default function AccessibilityFloat() {
           role="dialog"
           aria-label="Opciones de accesibilidad"
           aria-modal="false"
-          style={{ ...panelStyle, ...animStyle }}
+          style={panelStyle}
         >
           <div className="a11y-header">
             <FontAwesomeIcon icon={faUniversalAccess} className="a11y-header-icon" />

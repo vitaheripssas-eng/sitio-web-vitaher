@@ -42,6 +42,9 @@
   border-radius: 16px;
   box-shadow: var(--shadow-lg);
   padding: 16px;
+  /* Estado base explícito: evita parpadeo cuando animation:none cancela a11y-in */
+  opacity: 1;
+  transform: translateY(0) scale(1);
   animation: a11y-in 0.22s ease;
 }
 

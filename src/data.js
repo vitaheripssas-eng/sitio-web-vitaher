@@ -254,6 +254,7 @@ export const PERFILES = [
   'Regente/Auxiliar de Farmacia',
   'Cuidadores',
   'Personal Administrativo',
+  'Servicios Generales',
   'Sistemas',
   'Dermatología',
   'Medicina Interna',
