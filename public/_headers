@@ -1,0 +1,21 @@
+# index.html → NUNCA cachear: el browser siempre pide la versión fresca al servidor
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+# Assets con hash de contenido → cachear 1 año (Vite genera nombres únicos por versión)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Imágenes y fuentes públicas → cachear 7 días
+/img/*
+  Cache-Control: public, max-age=604800
+/*.png
+  Cache-Control: public, max-age=604800
+/*.jpg
+  Cache-Control: public, max-age=604800
+/*.webp
+  Cache-Control: public, max-age=604800
+/*.svg
+  Cache-Control: public, max-age=604800
