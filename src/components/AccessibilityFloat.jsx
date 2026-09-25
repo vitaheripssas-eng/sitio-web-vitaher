@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUniversalAccess } from '@fortawesome/free-solid-svg-icons'
+import { Icon } from './Icons.jsx'
 import './AccessibilityFloat.css'
 
 const STORAGE_KEY = 'vitaher-a11y'
@@ -118,7 +119,7 @@ export default function AccessibilityFloat() {
 
 
   const options = [
-    { key: 'darkMode', icon: prefs.darkMode ? '☀️' : '🌙', label: prefs.darkMode ? 'Modo claro' : 'Modo oscuro', active: prefs.darkMode },
+    { key: 'darkMode', icon: <Icon name={prefs.darkMode ? 'sun' : 'moon'} size={16} />, label: prefs.darkMode ? 'Modo claro' : 'Modo oscuro', active: prefs.darkMode },
     { key: 'speak', icon: isSpeaking ? '⏹' : '🔊', label: isSpeaking ? 'Detener' : 'Leer esta página en voz', active: isSpeaking },
     { key: 'largeText', icon: 'A+', label: 'Texto grande', active: prefs.largeText },
     { key: 'highContrast', icon: '◐', label: 'Alto contraste', active: prefs.highContrast },

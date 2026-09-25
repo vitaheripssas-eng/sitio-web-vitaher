@@ -35,10 +35,10 @@ export default function App() {
         <Suspense fallback={<div style={{ minHeight: 320 }} aria-hidden />}>
           <Destacados />
           <RutaCuidado />
-          <Nosotros />
           <Servicios />
-          <PQRS />
+          <Nosotros />
           <Trabaja />
+          <PQRS />
           <Contacto />
         </Suspense>
       </main>

@@ -8,10 +8,10 @@ const BASE = import.meta.env.BASE_URL
 
 export const NAV_LINKS = [
   { label: 'Inicio', href: '#inicio' },
-  { label: 'Nosotros', href: '#nosotros' },
   { label: 'Servicios', href: '#servicios' },
-  { label: 'PQRS', href: '#pqrs' },
+  { label: 'Nosotros', href: '#nosotros' },
   { label: 'Trabaja Con Nosotros', href: '#trabaja' },
+  { label: 'PQRS', href: '#pqrs' },
   { label: 'Contáctanos', href: '#contacto' },
 ]
 
