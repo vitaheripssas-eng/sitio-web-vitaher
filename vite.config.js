@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   base: process.env.GITHUB_PAGES === 'true' ? '/sitio-web-vitaher/' : '/',
   build: {
+    cssMinify: false,
     rollupOptions: {
       output: {
         manualChunks(id) {

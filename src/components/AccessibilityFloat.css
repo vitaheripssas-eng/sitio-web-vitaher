@@ -239,7 +239,7 @@
   border-color: #000 !important;
 }
 .a11y-invert-colors {
-  filter: invert(1) hue-rotate(180deg);
+  filter: invert(100%) hue-rotate(180deg);
 }
 .a11y-underline-links a {
   text-decoration: underline !important;
