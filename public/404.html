@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0;url=/sitio-web-vitaher/" />
+    <title>VITAHER IPS S.A.S.</title>
+    <script>
+      // Truco para SPAs en GitHub Pages:
+      // Cuando GH Pages sirve este 404.html, redirigimos al index.html
+      // preservando la URL original para que React Router la maneje.
+      var segmentCount = 1; // número de segmentos del repo name (1 para /sitio-web-vitaher)
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
