@@ -8,6 +8,7 @@ const STORAGE_KEY = 'vitaher-a11y'
 function applyPrefs(prefs) {
   const html = document.documentElement
   html.style.fontSize = prefs.largeText ? '112.5%' : ''
+  html.classList.toggle('dark-theme', !!prefs.darkMode)
   html.classList.toggle('a11y-high-contrast', !!prefs.highContrast)
   html.classList.toggle('a11y-invert-colors', !!prefs.invertColors)
   html.classList.toggle('a11y-underline-links', !!prefs.underlineLinks)
@@ -117,6 +118,7 @@ export default function AccessibilityFloat() {
 
 
   const options = [
+    { key: 'darkMode', icon: prefs.darkMode ? '☀️' : '🌙', label: prefs.darkMode ? 'Modo claro' : 'Modo oscuro', active: prefs.darkMode },
     { key: 'speak', icon: isSpeaking ? '⏹' : '🔊', label: isSpeaking ? 'Detener' : 'Leer esta página en voz', active: isSpeaking },
     { key: 'largeText', icon: 'A+', label: 'Texto grande', active: prefs.largeText },
     { key: 'highContrast', icon: '◐', label: 'Alto contraste', active: prefs.highContrast },

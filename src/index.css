@@ -275,3 +275,118 @@ button {
     padding: 64px 0;
   }
 }
+
+/* ==========================================================================
+   MODO OSCURO (Paleta corporativa adaptada con alto contraste)
+   ========================================================================== */
+html.dark-theme {
+  --bg: #090f1f;
+  --bg-soft: #0e1834;
+  --white: #132247;
+  --ink: #f8fafc;
+  --ink-soft: #94a3b8;
+  --border: #1e3158;
+  --tint-border: #23457a;
+  --primary-tint: #0f2747;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 10px 30px -8px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.7);
+  --shadow-xl: 0 32px 80px -16px rgba(0, 75, 135, 0.45);
+}
+
+html.dark-theme body {
+  background: var(--bg);
+  color: var(--ink-soft);
+}
+
+html.dark-theme .navbar {
+  background: rgba(9, 15, 31, 0.9);
+  border-bottom-color: rgba(30, 49, 88, 0.8);
+}
+
+html.dark-theme .navbar.scrolled {
+  background: rgba(9, 15, 31, 0.98);
+  border-bottom-color: var(--border);
+}
+
+html.dark-theme .navbar .logo-text strong {
+  color: #ffffff;
+}
+
+html.dark-theme .section:nth-of-type(even) {
+  background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+}
+
+html.dark-theme .section-label {
+  background: rgba(0, 75, 135, 0.35);
+  border-color: rgba(0, 163, 224, 0.4);
+  color: var(--primary-light);
+}
+
+html.dark-theme .btn-ghost {
+  background: transparent;
+  color: var(--primary-light);
+  border-color: var(--primary-light);
+}
+
+html.dark-theme .btn-ghost:hover {
+  background: var(--primary-tint);
+}
+
+html.dark-theme .form-input,
+html.dark-theme .form-select,
+html.dark-theme .form-textarea {
+  background: #0e1834;
+  color: var(--ink);
+  border-color: var(--border);
+}
+
+html.dark-theme .form-input:focus,
+html.dark-theme .form-select:focus,
+html.dark-theme .form-textarea:focus {
+  background: #132247;
+  border-color: var(--primary-light);
+}
+
+html.dark-theme .a11y-header {
+  background: #0e1834;
+  border-bottom-color: var(--border);
+}
+
+html.dark-theme .a11y-header-text strong {
+  color: var(--primary-light);
+}
+
+html.dark-theme .a11y-option {
+  background: #0e1834;
+  border-color: var(--border);
+  color: var(--ink);
+}
+
+html.dark-theme .a11y-option span {
+  background: #132247;
+  border-color: var(--border);
+  color: var(--ink);
+}
+
+html.dark-theme .a11y-option:hover {
+  background: var(--primary-tint);
+  border-color: var(--primary-light);
+}
+
+html.dark-theme .a11y-option.is-active {
+  background: var(--primary-tint);
+  border-color: var(--primary-light);
+  color: var(--primary-light);
+}
+
+html.dark-theme .a11y-reset {
+  background: #0e1834;
+  border-color: var(--border);
+  color: var(--ink-soft);
+}
+
+html.dark-theme .a11y-reset:hover {
+  background: #132247;
+  color: var(--ink);
+}
