@@ -89,8 +89,8 @@ export default function AccessibilityFloat() {
   }
 
   const speakPage = () => {
-    if (isSpeaking) {
-      window.speechSynthesis?.cancel()
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel()
       setIsSpeaking(false)
       return
     }
