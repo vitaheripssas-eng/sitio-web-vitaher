@@ -1,0 +1,91 @@
+.contacto {
+  background: var(--bg);
+}
+
+.contacto-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.contacto-info {
+  display: grid;
+  gap: 16px;
+}
+
+.contacto-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.contacto-item:hover {
+  transform: translateX(6px);
+  border-color: var(--primary-light);
+  background: var(--primary-tint);
+}
+
+.contacto-item-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--primary-tint);
+  border: 1px solid #b8dcf0;
+  color: var(--primary);
+}
+
+.contacto-item h3 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.contacto-item p {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.contacto-item a {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.contacto-item a:hover {
+  color: var(--primary);
+}
+
+.contacto-form {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 36px;
+  scroll-margin-top: 100px;
+}
+
+.contacto-form h3 {
+  font-size: 1.3rem;
+  margin-bottom: 26px;
+}
+
+@media (max-width: 960px) {
+  .contacto-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .contacto-form {
+    padding: 24px 18px;
+  }
+}

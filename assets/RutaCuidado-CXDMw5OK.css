@@ -1,0 +1,79 @@
+.ruta {
+  background: var(--bg-soft);
+}
+
+.ruta-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  position: relative;
+}
+
+.ruta-step {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 28px 24px;
+}
+
+.ruta-num {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--white);
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 8px 18px -6px rgba(0, 75, 135, 0.55);
+  margin-bottom: 18px;
+}
+
+.ruta-step h3 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+.ruta-step p {
+  font-size: 0.9rem;
+}
+
+.ruta-arrow {
+  position: absolute;
+  top: 50%;
+  right: -28px;
+  width: 28px;
+  height: 2px;
+  background: var(--primary-light);
+}
+
+.ruta-arrow::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: -4px;
+  border: 5px solid transparent;
+  border-left-color: var(--primary-light);
+}
+
+@media (max-width: 960px) {
+  .ruta-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ruta-arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .ruta-list {
+    grid-template-columns: 1fr;
+  }
+}
