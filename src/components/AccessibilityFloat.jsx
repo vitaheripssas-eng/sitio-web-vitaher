@@ -116,6 +116,16 @@ export default function AccessibilityFloat() {
 
   const animStyle = prefs.reducedMotion ? { animation: 'none' } : undefined
 
+  const options = [
+    { key: 'speak', icon: isSpeaking ? '⏹' : '🔊', label: isSpeaking ? 'Detener' : 'Leer esta página en voz', active: isSpeaking },
+    { key: 'largeText', icon: 'A+', label: 'Texto grande', active: prefs.largeText },
+    { key: 'highContrast', icon: '◐', label: 'Alto contraste', active: prefs.highContrast },
+    { key: 'invertColors', icon: '◑', label: 'Invertir colores', active: prefs.invertColors },
+    { key: 'underlineLinks', icon: 'U', label: 'Subrayar enlaces', active: prefs.underlineLinks },
+    { key: 'reducedMotion', icon: '◎', label: 'Pausar animaciones', active: prefs.reducedMotion },
+    { key: 'subtitles', icon: 'CC', label: 'Subtítulos visibles', active: prefs.subtitles },
+  ]
+
   return (
     <>
       <button
@@ -141,31 +151,29 @@ export default function AccessibilityFloat() {
           aria-modal="false"
           style={{ ...panelStyle, ...animStyle }}
         >
-          <div className="a11y-options">
-            <button type="button" className={`a11y-option ${isSpeaking ? 'is-active' : ''}`} onClick={speakPage}>
-              <span>{isSpeaking ? '⏹' : '🔊'}</span> {isSpeaking ? 'Detener' : 'Leer esta página en voz'}
-            </button>
-            <button type="button" className={`a11y-option ${prefs.largeText ? 'is-active' : ''}`} onClick={() => toggle('largeText')}>
-              <span>A+</span> Texto grande
-            </button>
-            <button type="button" className={`a11y-option ${prefs.highContrast ? 'is-active' : ''}`} onClick={() => toggle('highContrast')}>
-              <span>◐</span> Alto contraste
-            </button>
-            <button type="button" className={`a11y-option ${prefs.invertColors ? 'is-active' : ''}`} onClick={() => toggle('invertColors')}>
-              <span>◑</span> Invertir colores
-            </button>
-            <button type="button" className={`a11y-option ${prefs.underlineLinks ? 'is-active' : ''}`} onClick={() => toggle('underlineLinks')}>
-              <span>U</span> Subrayar enlaces
-            </button>
-            <button type="button" className={`a11y-option ${prefs.reducedMotion ? 'is-active' : ''}`} onClick={() => toggle('reducedMotion')}>
-              <span>◎</span> Pausar animaciones
-            </button>
-            <button type="button" className={`a11y-option ${prefs.subtitles ? 'is-active' : ''}`} onClick={() => toggle('subtitles')}>
-              <span>CC</span> Subtítulos visibles
-            </button>
+          <div className="a11y-header">
+            <FontAwesomeIcon icon={faUniversalAccess} className="a11y-header-icon" />
+            <div className="a11y-header-text">
+              <strong>Accesibilidad</strong>
+              <p>Personaliza tu experiencia</p>
+            </div>
           </div>
 
-          <button type="button" className="a11y-option" style={{ paddingLeft: '42px', background: 'var(--white)', border: '1px solid var(--border)' }} onClick={reset}>Restablecer</button>
+          <div className="a11y-options">
+            {options.map((opt) => (
+              <button
+                key={opt.key}
+                type="button"
+                className={`a11y-option ${opt.active ? 'is-active' : ''}`}
+                onClick={opt.key === 'speak' ? speakPage : () => toggle(opt.key)}
+              >
+                <span>{opt.icon}</span>
+                {opt.label}
+              </button>
+            ))}
+          </div>
+
+          <button type="button" className="a11y-reset" onClick={reset}>Restablecer todo</button>
         </div>
       )}
     </>
