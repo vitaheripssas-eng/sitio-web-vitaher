@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: process.env.GITHUB_PAGES === 'true' ? '/sitio-web-vitaher/' : '/',
+  base: '/', // Cloudflare Pages con dominio propio vitaherips.com → siempre raíz
   build: {
     cssMinify: false,
     rollupOptions: {
