@@ -266,15 +266,17 @@
    ========================================================================== */
 .a11y-hint {
   position: fixed;
-  left: 78px;
+  left: 80px;
   bottom: 18px;
+  height: 52px; /* Altura exacta idéntica al botón para alineación perfecta */
+  box-sizing: border-box;
   z-index: 59;
-  width: 270px;
+  width: auto;
   max-width: calc(100vw - 92px);
   background: linear-gradient(135deg, #003a68 0%, #002244 100%);
   border: 1.5px solid rgba(0, 163, 224, 0.45);
   border-radius: 14px;
-  padding: 11px 14px;
+  padding: 0 16px 0 12px;
   box-shadow: 0 14px 34px -4px rgba(0, 35, 75, 0.42), 0 0 0 1px rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
@@ -291,8 +293,8 @@
 }
 
 .a11y-hint-icon {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 10px;
   background: rgba(0, 163, 224, 0.16);
   border: 1px solid rgba(0, 163, 224, 0.35);
@@ -304,26 +306,28 @@
 }
 
 .a11y-hint-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  justify-content: center;
+  gap: 1px;
   text-align: left;
 }
 
 .a11y-hint-content strong {
   display: block;
-  font-size: 0.83rem;
+  font-size: 0.81rem;
   font-weight: 700;
   color: #ffffff;
-  line-height: 1.25;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .a11y-hint-content p {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: #cbd5e1;
-  line-height: 1.35;
+  line-height: 1.2;
   margin: 0;
+  white-space: nowrap;
 }
 
 @keyframes a11y-hint-in {
@@ -339,16 +343,25 @@
 
 @media (max-width: 640px) {
   .a11y-hint {
-    left: 72px;
+    left: 74px;
     bottom: 14px;
-    width: 250px;
-    padding: 10px 12px;
+    height: 52px;
+    padding: 0 12px 0 10px;
     gap: 10px;
+    max-width: calc(100vw - 86px);
   }
 
   .a11y-hint-icon {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .a11y-hint-content strong {
+    font-size: 0.76rem;
+  }
+
+  .a11y-hint-content p {
+    font-size: 0.68rem;
   }
 }
 

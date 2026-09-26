@@ -191,11 +191,11 @@ export default function AccessibilityFloat() {
           }}
         >
           <div className="a11y-hint-icon" aria-hidden="true">
-            <Icon name="accessibility" size={20} />
+            <Icon name="hand" size={18} />
           </div>
           <div className="a11y-hint-content">
-            <strong>Asistente de lectura</strong>
-            <p>Ábreme para cambiar opciones o muéveme si te estorbo.</p>
+            <strong>Asistente de Accesibilidad</strong>
+            <p>Puedes arrastrarme a cualquier posición</p>
           </div>
         </div>
       )}
