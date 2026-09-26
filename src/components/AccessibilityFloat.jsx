@@ -40,12 +40,12 @@ export default function AccessibilityFloat() {
   const dragRef = useRef({ startX: 0, startY: 0, origX: 0, origY: 0, moved: false })
   const btnRef = useRef(null)
 
-  // Desvanecer el aviso automáticamente después de 9 segundos
+  // Desvanecer el aviso automáticamente después de 8 segundos
   useEffect(() => {
     if (!showHint) return
     const timer = setTimeout(() => {
       setShowHint(false)
-    }, 9000)
+    }, 8000)
     return () => clearTimeout(timer)
   }, [showHint])
 
@@ -178,7 +178,7 @@ export default function AccessibilityFloat() {
         <FontAwesomeIcon icon={faUniversalAccess} style={{ fontSize: '44px', width: '44px', height: '44px' }} />
       </button>
 
-      {/* Cartelito amigable en primera persona (Estilo 4) */}
+      {/* Cartelito amigable con icono profesional centrado y sin botón X */}
       {showHint && !open && !dragging && (
         <div
           className="a11y-hint"
@@ -190,18 +190,13 @@ export default function AccessibilityFloat() {
             dismissHint()
           }}
         >
+          <div className="a11y-hint-icon" aria-hidden="true">
+            <Icon name="accessibility" size={20} />
+          </div>
           <div className="a11y-hint-content">
-            <strong>👋 ¡Hola! Soy tu asistente de lectura:</strong>
+            <strong>Asistente de lectura</strong>
             <p>Ábreme para cambiar opciones o muéveme si te estorbo.</p>
           </div>
-          <button
-            type="button"
-            className="a11y-hint-close"
-            aria-label="Cerrar aviso"
-            onClick={dismissHint}
-          >
-            <Icon name="x" size={13} />
-          </button>
         </div>
       )}
 
