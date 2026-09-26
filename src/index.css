@@ -493,4 +493,175 @@ html.dark-theme .a11y-reset {
 html.dark-theme .a11y-reset:hover {
   background: #132247;
   color: var(--ink);
-}
+}
+
+/* ==========================================================================
+   MODO OSCURO — Componentes con colores hardcoded
+   ========================================================================== */
+
+/* Hero badge */
+html.dark-theme .hero-badge {
+  background: rgba(15, 39, 71, 0.9);
+  border-color: rgba(96, 186, 236, 0.35);
+  color: var(--primary-light);
+}
+
+/* Hero stats (barra de estadísticas) */
+html.dark-theme .hero-stats {
+  background: linear-gradient(135deg, #090f1f 0%, #0e1834 100%);
+  border-color: rgba(30, 49, 88, 0.8);
+}
+
+html.dark-theme .hero-stat strong {
+  color: var(--accent-bright);
+}
+
+html.dark-theme .hero-stat span {
+  color: #94a3b8;
+}
+
+/* Hero: fondo decorativo detrás de la card */
+html.dark-theme .hero-card-wrap-bg {
+  background: linear-gradient(135deg, rgba(59, 158, 222, 0.15), rgba(0, 75, 135, 0.1));
+}
+
+/* Destacados: fondo de la sección */
+html.dark-theme .destacados {
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+}
+
+/* Nosotros — card misión/visión */
+html.dark-theme .card-mv {
+  background: #0e1834;
+  border-color: #1e3158;
+  color: var(--ink);
+}
+
+html.dark-theme .card-mv h2,
+html.dark-theme .card-mv h3,
+html.dark-theme .card-mv p {
+  color: var(--ink);
+}
+
+html.dark-theme .card-mv .card-tag {
+  color: var(--primary-light);
+}
+
+/* Nosotros — cards de valores */
+html.dark-theme .valor {
+  background: #0e1834;
+  border-color: #1e3158;
+}
+
+html.dark-theme .valor h3,
+html.dark-theme .valor p {
+  color: var(--ink);
+}
+
+html.dark-theme .valor .num {
+  color: var(--primary-light);
+}
+
+/* Nosotros — sección "¿Por qué VITAHER?" */
+html.dark-theme .porque {
+  background: linear-gradient(135deg, #090f1f 0%, #0e1834 100%);
+  color: #cbd5e1;
+  border: 1px solid #1e3158;
+}
+
+html.dark-theme .porque h2 {
+  color: #f8fafc;
+}
+
+html.dark-theme .badge {
+  background: rgba(59, 158, 222, 0.08);
+  border-color: rgba(59, 158, 222, 0.2);
+  color: #e2e8f0;
+}
+
+html.dark-theme .badge svg {
+  color: var(--primary-light);
+}
+
+/* Servicios — página interna */
+html.dark-theme .servicios-grid .servicio {
+  background: #0e1834;
+  border-color: #1e3158;
+}
+
+/* Formularios */
+html.dark-theme input,
+html.dark-theme select,
+html.dark-theme textarea {
+  background: #0e1834;
+  border-color: #1e3158;
+  color: var(--ink);
+}
+
+html.dark-theme input::placeholder,
+html.dark-theme textarea::placeholder {
+  color: #64748b;
+}
+
+html.dark-theme input:focus,
+html.dark-theme select:focus,
+html.dark-theme textarea:focus {
+  border-color: var(--primary-light);
+  background: #132247;
+}
+
+/* Footer */
+html.dark-theme footer {
+  background: #04080f;
+  color: #94a3b8;
+}
+
+html.dark-theme footer h3,
+html.dark-theme footer strong {
+  color: #f8fafc;
+}
+
+html.dark-theme footer a {
+  color: #94a3b8;
+}
+
+html.dark-theme footer a:hover {
+  color: var(--primary-light);
+}
+
+/* WhatsApp Preview */
+html.dark-theme .wa-preview {
+  background: #0e1834;
+  border-color: #1e3158;
+}
+
+html.dark-theme .wa-bubble {
+  background: #132247;
+  color: var(--ink);
+}
+
+/* RutaCuidado / pasos de atención */
+html.dark-theme .paso {
+  background: #0e1834;
+  border-color: #1e3158;
+  color: var(--ink);
+}
+
+html.dark-theme .paso h3,
+html.dark-theme .paso p {
+  color: var(--ink);
+}
+
+/* Sección label (etiqueta de categoría) */
+html.dark-theme .section-label {
+  background: rgba(0, 75, 135, 0.35);
+  border-color: rgba(96, 186, 236, 0.4);
+  color: var(--primary-light);
+}
+
+/* Section headings */
+html.dark-theme .section-heading,
+html.dark-theme .section-sub {
+  color: var(--ink);
+}
+
