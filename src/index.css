@@ -28,6 +28,9 @@
   --radius-lg: 20px;
   --radius-xl: 28px;
 
+  /* Declarar esquema claro para evitar forzamiento automático del navegador */
+  color-scheme: light;
+
   font-family: var(--font);
   color: var(--ink);
   background: var(--bg);
@@ -35,6 +38,103 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   MODO OSCURO REAL — Diseñado con la paleta del logo VITAHER
+   Se activa cuando el sistema operativo del usuario tiene
+   el tema oscuro activado (Windows, Android, iOS, macOS)
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    /* Fondo: azul marino muy profundo (tono del logo) */
+    --bg:             #0a1628;
+    --bg-soft:        #0f1e38;
+
+    /* Primario: azul más luminoso para destacar en fondo oscuro */
+    --primary:        #3b9ede;
+    --primary-dark:   #1e6faa;
+    --primary-light:  #60baec;
+    --primary-tint:   #0d2540;
+
+    /* Acento: verde más luminoso del logo en fondo oscuro */
+    --accent:         #22c55e;
+    --accent-dark:    #16a34a;
+    --accent-bright:  #4ade80;
+    --accent-tint:    #052e16;
+
+    /* Texto: blanco y gris claro para máxima legibilidad */
+    --ink:            #f1f5f9;
+    --ink-soft:       #94a3b8;
+
+    /* Bordes y sombras */
+    --border:         #1e3254;
+    --tint-border:    #1e4d7a;
+    --white:          #ffffff;
+    --success:        #22c55e;
+
+    /* Sombras adaptadas al fondo oscuro */
+    --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md:  0 10px 30px -8px rgba(0, 0, 0, 0.5);
+    --shadow-lg:  0 24px 60px -12px rgba(0, 0, 0, 0.6);
+    --shadow-xl:  0 32px 80px -16px rgba(0, 30, 80, 0.7);
+  }
+
+  /* Refuerzos específicos para componentes que usan colores hardcoded */
+  body {
+    background: var(--bg) !important;
+    color: var(--ink-soft) !important;
+  }
+
+  /* Cards y tarjetas de servicios */
+  .servicio,
+  .hero-card,
+  .nosotros-card,
+  .valor,
+  .faq-item,
+  .modal {
+    background: #0f1e38 !important;
+    border-color: #1e3254 !important;
+    color: var(--ink) !important;
+  }
+
+  /* Inputs y formularios */
+  input, select, textarea {
+    background: #0f1e38 !important;
+    border-color: #1e3254 !important;
+    color: var(--ink) !important;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #64748b !important;
+  }
+
+  /* Navbar */
+  .navbar {
+    background: rgba(10, 22, 40, 0.95) !important;
+    border-color: #1e3254 !important;
+  }
+
+  /* Sección hero fondo claro */
+  .hero {
+    background:
+      radial-gradient(1100px 560px at 85% -10%, rgba(59, 158, 222, 0.12), transparent 60%),
+      radial-gradient(900px 480px at -10% 20%, rgba(0, 40, 100, 0.2), transparent 60%),
+      linear-gradient(180deg, #0a1628 0%, #0f1e38 100%) !important;
+  }
+
+  /* Secciones de fondo suave */
+  .servicios,
+  .nosotros-section {
+    background: var(--bg-soft) !important;
+  }
+
+  /* Texto h1, h2, h3 legibles */
+  h1, h2, h3, h4 {
+    color: var(--ink) !important;
+  }
 }
 
 *,
@@ -46,6 +146,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 88px;
+  /* Prevenir que Chrome fuerce inversión de colores automática */
+  forced-color-adjust: none;
 }
 
 body {
