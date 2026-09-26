@@ -29,7 +29,7 @@ const FORMATOS = [
   },
   {
     label: 'Administrativo',
-    href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUO_ADMINISTRATIVO.pdf`,
+    href: `${BASE}formatos/FORMATO_LISTA_DE_CHEQUEO_ADMINISTRATIVO.pdf`,
     icon: 'file',
   },
 ]

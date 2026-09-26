@@ -1,11 +1,13 @@
 :root {
-  --primary: #004b87;
-  --primary-dark: #003a68;
-  --primary-light: #00a3e0;
-  --primary-tint: #eef7fc;
-  --accent: #2e7d32;
-  --accent-dark: #1b5e20;
-  --accent-bright: #a3e53b;
+  /* Paleta oficial extraída directamente del logo VITAHER IPS */
+  --primary: #004b87;          /* Azul corporativo base (cinta V) */
+  --primary-dark: #003366;     /* Azul marino profundo */
+  --primary-light: #00a3e0;    /* Azul cian / celeste (borde superior de cinta V) */
+  --primary-tint: #eef7fc;     /* Tono suave de fondo */
+  --accent: #16a34a;           /* Verde hoja natural del logo (cinta H) */
+  --accent-dark: #15803d;      /* Verde sombra de la hoja */
+  --accent-bright: #22c55e;    /* Verde vivo del destello de la hoja */
+  --accent-tint: #f0fdf4;      /* Tono suave verde de fondo */
   --ink: #0f172a;
   --ink-soft: #475569;
   --bg: #ffffff;
@@ -13,7 +15,7 @@
   --border: #e2e8f0;
   --tint-border: #b8dcf0;
   --white: #ffffff;
-  --success: #2e7d32;
+  --success: #16a34a;
   --danger: #dc2626;
 
   --font: 'Plus Jakarta Sans', system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -180,9 +182,9 @@ button {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--accent-bright) 0%, #8bc34a 100%);
-  color: var(--primary-dark);
-  box-shadow: 0 18px 36px -12px rgba(163, 229, 59, 0.4);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+  color: var(--white);
+  box-shadow: 0 18px 36px -12px rgba(22, 163, 74, 0.45);
 }
 
 .btn-ghost {
