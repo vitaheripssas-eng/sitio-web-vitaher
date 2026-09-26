@@ -28,9 +28,6 @@
   --radius-lg: 20px;
   --radius-xl: 28px;
 
-  /* Declarar esquema claro para evitar forzamiento automático del navegador */
-  color-scheme: light;
-
   font-family: var(--font);
   color: var(--ink);
   background: var(--bg);
@@ -40,102 +37,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ============================================================
-   MODO OSCURO REAL — Diseñado con la paleta del logo VITAHER
-   Se activa cuando el sistema operativo del usuario tiene
-   el tema oscuro activado (Windows, Android, iOS, macOS)
-   ============================================================ */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
 
-    /* Fondo: azul marino muy profundo (tono del logo) */
-    --bg:             #0a1628;
-    --bg-soft:        #0f1e38;
-
-    /* Primario: azul más luminoso para destacar en fondo oscuro */
-    --primary:        #3b9ede;
-    --primary-dark:   #1e6faa;
-    --primary-light:  #60baec;
-    --primary-tint:   #0d2540;
-
-    /* Acento: verde más luminoso del logo en fondo oscuro */
-    --accent:         #22c55e;
-    --accent-dark:    #16a34a;
-    --accent-bright:  #4ade80;
-    --accent-tint:    #052e16;
-
-    /* Texto: blanco y gris claro para máxima legibilidad */
-    --ink:            #f1f5f9;
-    --ink-soft:       #94a3b8;
-
-    /* Bordes y sombras */
-    --border:         #1e3254;
-    --tint-border:    #1e4d7a;
-    --white:          #ffffff;
-    --success:        #22c55e;
-
-    /* Sombras adaptadas al fondo oscuro */
-    --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.4);
-    --shadow-md:  0 10px 30px -8px rgba(0, 0, 0, 0.5);
-    --shadow-lg:  0 24px 60px -12px rgba(0, 0, 0, 0.6);
-    --shadow-xl:  0 32px 80px -16px rgba(0, 30, 80, 0.7);
-  }
-
-  /* Refuerzos específicos para componentes que usan colores hardcoded */
-  body {
-    background: var(--bg) !important;
-    color: var(--ink-soft) !important;
-  }
-
-  /* Cards y tarjetas de servicios */
-  .servicio,
-  .hero-card,
-  .nosotros-card,
-  .valor,
-  .faq-item,
-  .modal {
-    background: #0f1e38 !important;
-    border-color: #1e3254 !important;
-    color: var(--ink) !important;
-  }
-
-  /* Inputs y formularios */
-  input, select, textarea {
-    background: #0f1e38 !important;
-    border-color: #1e3254 !important;
-    color: var(--ink) !important;
-  }
-
-  input::placeholder, textarea::placeholder {
-    color: #64748b !important;
-  }
-
-  /* Navbar */
-  .navbar {
-    background: rgba(10, 22, 40, 0.95) !important;
-    border-color: #1e3254 !important;
-  }
-
-  /* Sección hero fondo claro */
-  .hero {
-    background:
-      radial-gradient(1100px 560px at 85% -10%, rgba(59, 158, 222, 0.12), transparent 60%),
-      radial-gradient(900px 480px at -10% 20%, rgba(0, 40, 100, 0.2), transparent 60%),
-      linear-gradient(180deg, #0a1628 0%, #0f1e38 100%) !important;
-  }
-
-  /* Secciones de fondo suave */
-  .servicios,
-  .nosotros-section {
-    background: var(--bg-soft) !important;
-  }
-
-  /* Texto h1, h2, h3 legibles */
-  h1, h2, h3, h4 {
-    color: var(--ink) !important;
-  }
-}
 
 *,
 *::before,
@@ -381,21 +283,119 @@ button {
 }
 
 /* ==========================================================================
-   MODO OSCURO (Paleta corporativa adaptada con alto contraste)
+   MODO OSCURO — Solo se activa con el panel de accesibilidad (.dark-theme)
+   Paleta corporativa del logo VITAHER IPS con alto contraste y legibilidad
    ========================================================================== */
 html.dark-theme {
-  --bg: #090f1f;
-  --bg-soft: #0e1834;
-  --white: #132247;
-  --ink: #f8fafc;
-  --ink-soft: #94a3b8;
-  --border: #1e3158;
-  --tint-border: #23457a;
-  --primary-tint: #0f2747;
+  color-scheme: dark;
+
+  /* Fondos: azul marino profundo del logo */
+  --bg:             #090f1f;
+  --bg-soft:        #0e1834;
+  --white:          #132247;
+
+  /* Azul primario más luminoso (visible sobre fondo oscuro) */
+  --primary:        #3b9ede;
+  --primary-dark:   #1e6faa;
+  --primary-light:  #60baec;
+  --primary-tint:   #0f2747;
+
+  /* Verde acento más vivo (visible sobre fondo oscuro) */
+  --accent:         #22c55e;
+  --accent-dark:    #16a34a;
+  --accent-bright:  #4ade80;
+  --accent-tint:    #052e16;
+
+  /* Texto blanco/gris claro — máxima legibilidad */
+  --ink:            #f8fafc;
+  --ink-soft:       #94a3b8;
+
+  /* Bordes */
+  --border:         #1e3158;
+  --tint-border:    #23457a;
+
+  /* Sombras */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 10px 30px -8px rgba(0, 0, 0, 0.55);
   --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.7);
   --shadow-xl: 0 32px 80px -16px rgba(0, 75, 135, 0.45);
+}
+
+/* Tarjetas de servicios en modo oscuro — fondo y texto legible */
+html.dark-theme .servicio,
+html.dark-theme .hero-card,
+html.dark-theme .nosotros-card,
+html.dark-theme .valor,
+html.dark-theme .faq-item {
+  background: #0e1834;
+  border-color: #1e3158;
+  color: var(--ink);
+}
+
+html.dark-theme .servicio h3,
+html.dark-theme .servicio p,
+html.dark-theme .servicio li {
+  color: var(--ink);
+}
+
+/* Iconos de servicios — visibles en modo oscuro */
+html.dark-theme .servicio-icon {
+  background: #0f2747;
+  border-color: #1e4d7a;
+  color: var(--primary-light);
+}
+
+html.dark-theme .servicio li svg {
+  color: var(--accent-bright);
+}
+
+/* Hero en modo oscuro */
+html.dark-theme .hero {
+  background:
+    radial-gradient(1100px 560px at 85% -10%, rgba(59, 158, 222, 0.1), transparent 60%),
+    radial-gradient(900px 480px at -10% 20%, rgba(0, 40, 100, 0.18), transparent 60%),
+    linear-gradient(180deg, #090f1f 0%, #0e1834 100%);
+}
+
+html.dark-theme .hero h1,
+html.dark-theme .hero p,
+html.dark-theme h1,
+html.dark-theme h2,
+html.dark-theme h3,
+html.dark-theme h4 {
+  color: var(--ink);
+}
+
+/* Hero card flotante */
+html.dark-theme .hero-card {
+  background: #0e1834;
+  border-color: #1e3158;
+}
+
+html.dark-theme .hero-card h3,
+html.dark-theme .hero-card p {
+  color: var(--ink);
+}
+
+html.dark-theme .hero-card-list li {
+  color: var(--ink);
+}
+
+html.dark-theme .hero-card-list svg {
+  color: var(--primary-light);
+}
+
+/* Secciones alternas */
+html.dark-theme .section:nth-of-type(even),
+html.dark-theme .servicios {
+  background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+}
+
+/* Modal en modo oscuro */
+html.dark-theme .modal {
+  background: #0e1834;
+  border-color: #1e3158;
+  color: var(--ink);
 }
 
 html.dark-theme body {

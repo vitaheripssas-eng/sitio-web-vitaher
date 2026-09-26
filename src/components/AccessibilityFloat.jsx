@@ -22,7 +22,10 @@ export default function AccessibilityFloat() {
   const [prefs, setPrefs] = useState(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
-      return raw ? JSON.parse(raw) : {}
+      if (raw) return JSON.parse(raw)
+      // Sin preferencia guardada: detectar modo oscuro del sistema operativo
+      const osDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false
+      return osDark ? { darkMode: true } : {}
     } catch {
       return {}
     }
