@@ -175,17 +175,19 @@ export default function PQRS() {
                   <label htmlFor={input('tipoSolicitud').id}>
                     Tipo de solicitud <span className="req">*</span>
                   </label>
-                  <select className="form-select" id={input('tipoSolicitud').id} name="tipoSolicitud" defaultValue="Petición" required>
+                  <select className="form-select" id={input('tipoSolicitud').id} name="tipoSolicitud" defaultValue="" required>
+                    <option value="">Seleccione un tipo...</option>
                     {PQRS_TIPOS.map((t) => (
-                      <option key={t}>{t}</option>
+                      <option key={t} value={t}>{t}</option>
                     ))}
                   </select>
                 </div>
                 <div className="form-field">
                   <label htmlFor={input('servicio').id}>Servicio relacionado</label>
-                  <select className="form-select" id={input('servicio').id} name="servicio" defaultValue="Otro">
+                  <select className="form-select" id={input('servicio').id} name="servicio" defaultValue="">
+                    <option value="">Seleccione un servicio...</option>
                     {SERVICIOS_SELECCION.map((s) => (
-                      <option key={s}>{s}</option>
+                      <option key={s} value={s}>{s}</option>
                     ))}
                   </select>
                 </div>

@@ -198,9 +198,10 @@ export default function Trabaja() {
                   </div>
                   <div className="form-field">
                     <label htmlFor="trabaja-formacion">Nivel de formación</label>
-                    <select className="form-select" id="trabaja-formacion" name="formacion" defaultValue="Profesional">
+                    <select className="form-select" id="trabaja-formacion" name="formacion" defaultValue="">
+                      <option value="">Seleccione un nivel...</option>
                       {FORMACION_OPCIONES.map((f) => (
-                        <option key={f}>{f}</option>
+                        <option key={f} value={f}>{f}</option>
                       ))}
                     </select>
                   </div>

@@ -111,9 +111,10 @@ export default function Contacto() {
                 </div>
                 <div className="form-field full">
                   <label htmlFor="contacto-servicio">Servicio de interés</label>
-                  <select className="form-select" id="contacto-servicio" name="servicio" defaultValue="Medicina Domiciliaria">
+                  <select className="form-select" id="contacto-servicio" name="servicio" defaultValue="">
+                    <option value="">Seleccione un servicio...</option>
                     {SERVICIOS_SELECCION.map((s) => (
-                      <option key={s}>{s}</option>
+                      <option key={s} value={s}>{s}</option>
                     ))}
                   </select>
                 </div>
