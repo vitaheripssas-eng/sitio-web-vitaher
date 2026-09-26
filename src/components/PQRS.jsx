@@ -228,7 +228,7 @@ export default function PQRS() {
                   <label className="form-check">
                     <input type="checkbox" name="tratamientoDatos" value="on" required aria-invalid={!!fieldErrors.tratamientoDatos} />
                     <span>
-                      Autorizo el tratamiento de mis datos personales por <strong>IPS VITAHER S.A.S.</strong> conforme a la{' '}
+                      Autorizo de manera previa, expresa e informada el tratamiento de mis datos personales a <strong>IPS VITAHER S.A.S. ZOMAC</strong>, conforme a su{' '}
                       <button
                         type="button"
                         className="form-check-link"
@@ -236,7 +236,7 @@ export default function PQRS() {
                       >
                         Política de Tratamiento de Datos
                       </button>{' '}
-                      y la Ley 1581 de 2012 <span className="req">*</span>
+                      y la Ley Estatutaria 1581 de 2012. <span className="req">*</span>
                     </span>
                   </label>
                   {fieldErrors.tratamientoDatos && <span className="form-field-error">{fieldErrors.tratamientoDatos}</span>}
