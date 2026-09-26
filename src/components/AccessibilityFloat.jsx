@@ -30,8 +30,32 @@ export default function AccessibilityFloat() {
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [pos, setPos] = useState(null)
   const [dragging, setDragging] = useState(false)
+  const [showHint, setShowHint] = useState(() => {
+    try {
+      return !sessionStorage.getItem('vitaher-a11y-hint-dismissed')
+    } catch {
+      return true
+    }
+  })
   const dragRef = useRef({ startX: 0, startY: 0, origX: 0, origY: 0, moved: false })
   const btnRef = useRef(null)
+
+  // Desvanecer el aviso automáticamente después de 9 segundos
+  useEffect(() => {
+    if (!showHint) return
+    const timer = setTimeout(() => {
+      setShowHint(false)
+    }, 9000)
+    return () => clearTimeout(timer)
+  }, [showHint])
+
+  const dismissHint = (e) => {
+    if (e && e.stopPropagation) e.stopPropagation()
+    setShowHint(false)
+    try {
+      sessionStorage.setItem('vitaher-a11y-hint-dismissed', 'true')
+    } catch {}
+  }
 
   useEffect(() => {
     applyPrefs(prefs)
@@ -82,6 +106,7 @@ export default function AccessibilityFloat() {
     if (btn) btn.releasePointerCapture(e.pointerId)
     const wasMoved = dragRef.current.moved
     setDragging(false)
+    if (showHint) dismissHint()
     if (wasMoved) {
       e.preventDefault()
       e.stopPropagation()
@@ -116,7 +141,14 @@ export default function AccessibilityFloat() {
       }
     : undefined
 
-
+  const hintStyle = pos
+    ? {
+        left: pos.x > window.innerWidth / 2 ? 'auto' : pos.x + 64,
+        right: pos.x > window.innerWidth / 2 ? Math.max(12, window.innerWidth - pos.x + 8) : 'auto',
+        top: Math.max(12, Math.min(pos.y, window.innerHeight - 80)),
+        bottom: 'auto',
+      }
+    : undefined
 
   const options = [
     { key: 'darkMode', icon: <Icon name={prefs.darkMode ? 'sun' : 'moon'} size={16} />, label: prefs.darkMode ? 'Modo claro' : 'Modo oscuro', active: prefs.darkMode },
@@ -145,6 +177,33 @@ export default function AccessibilityFloat() {
       >
         <FontAwesomeIcon icon={faUniversalAccess} style={{ fontSize: '44px', width: '44px', height: '44px' }} />
       </button>
+
+      {/* Cartelito amigable en primera persona (Estilo 4) */}
+      {showHint && !open && !dragging && (
+        <div
+          className="a11y-hint"
+          style={hintStyle}
+          role="status"
+          aria-live="polite"
+          onClick={() => {
+            setOpen(true)
+            dismissHint()
+          }}
+        >
+          <div className="a11y-hint-content">
+            <strong>👋 ¡Hola! Soy tu asistente de lectura:</strong>
+            <p>Ábreme para cambiar opciones o muéveme si te estorbo.</p>
+          </div>
+          <button
+            type="button"
+            className="a11y-hint-close"
+            aria-label="Cerrar aviso"
+            onClick={dismissHint}
+          >
+            <Icon name="x" size={13} />
+          </button>
+        </div>
+      )}
 
       {open && (
         <div
