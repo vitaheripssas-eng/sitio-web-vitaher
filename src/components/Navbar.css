@@ -118,12 +118,44 @@
   border: none;
   color: var(--ink);
   cursor: pointer;
-  padding: 6px;
+  padding: 8px;
+  border-radius: 10px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.nav-toggle:hover {
+  background-color: var(--primary-tint);
+  color: var(--primary);
+}
+
+.nav-backdrop {
+  display: none;
 }
 
 @media (max-width: 960px) {
   .nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Fondo oscuro interactivo (Backdrop) */
+  .nav-backdrop {
     display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 45;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .nav-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .nav-links {
@@ -134,28 +166,45 @@
     gap: 0;
     background: var(--white);
     border-bottom: 1px solid var(--border);
-    box-shadow: var(--shadow-md);
+    border-radius: 0 0 20px 20px;
+    box-shadow: var(--shadow-lg);
     padding: 12px 5%;
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transition: max-height 0.25s ease, opacity 0.25s ease, padding 0.25s ease;
+    z-index: 50;
+    transition: max-height 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.22s ease,
+                padding 0.22s ease;
   }
 
   .nav-links.is-open {
-    max-height: 70vh;
+    max-height: 75vh;
     opacity: 1;
-    padding: 12px 5% 20px;
+    padding: 14px 5% 24px;
     overflow-y: auto;
   }
 
   .nav-links a:not(.nav-cta) {
-    padding: 13px 6px;
+    padding: 13px 12px;
     border-bottom: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+
+  .nav-links a:not(.nav-cta):hover {
+    background: var(--primary-tint);
+    color: var(--primary);
   }
 
   .nav-cta {
-    margin-top: 14px;
+    margin-top: 16px;
     justify-content: center;
+    padding: 13px 20px;
+    font-size: 0.95rem;
   }
+}
+
+html.dark-theme .nav-backdrop {
+  background: rgba(0, 0, 0, 0.72);
 }

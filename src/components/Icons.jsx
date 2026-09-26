@@ -117,9 +117,9 @@ export function Icon({ name, size = 24, ...props }) {
     ),
     menu: (
       <>
-        <circle cx="12" cy="5" r="1.8" fill="currentColor" stroke="none" />
-        <circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none" />
-        <circle cx="12" cy="19" r="1.8" fill="currentColor" stroke="none" />
+        <line x1="4" x2="20" y1="6" y2="6" />
+        <line x1="4" x2="20" y1="12" y2="12" />
+        <line x1="4" x2="20" y1="18" y2="18" />
       </>
     ),
     arrowDown: (
