@@ -229,8 +229,8 @@ export default function Trabaja() {
                           onClick={() => window.dispatchEvent(new CustomEvent('open-legal', { detail: 'datos' }))}
                         >
                           Política de Tratamiento de Datos
-                        </button>{' '}
-                        y la Ley Estatutaria 1581 de 2012. <span className="req">*</span>
+                        </button>
+                        . <span className="req">*</span>
                       </span>
                     </label>
                     {fieldErrors.tratamientoDatos && <span className="form-field-error">{fieldErrors.tratamientoDatos}</span>}
