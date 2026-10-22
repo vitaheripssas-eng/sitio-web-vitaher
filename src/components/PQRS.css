@@ -5,23 +5,23 @@
 .pqrs-layout {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: 56px;
+  gap: 36px;
   align-items: start;
 }
 
 .pqrs-cards {
   display: grid;
-  gap: 14px;
+  gap: 10px;
 }
 
 .pqrs-card {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px;
   background: var(--bg-soft);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 18px 20px;
+  padding: 14px 16px;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
@@ -34,15 +34,144 @@
 .pqrs-card-letra {
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   border-radius: 12px;
   background: var(--primary-tint);
-  border: 1px solid #b8dcf0;
+  border: 1px solid var(--tint-border);
   color: var(--primary);
   font-weight: 800;
   font-size: 1.05rem;
+}
+
+/* Selector de tipo de solicitud como tarjetas */
+.pqrs-field-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.pqrs-field-label .req {
+  color: var(--danger);
+}
+
+.pqrs-type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pqrs-type-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 15px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  background: var(--white);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.pqrs-type-card:hover {
+  border-color: var(--primary-light);
+  background: var(--primary-tint);
+  transform: translateY(-1px);
+}
+
+.pqrs-type-card.selected {
+  border-color: var(--primary);
+  background: var(--primary-tint);
+  box-shadow: 0 0 0 3px rgba(0, 163, 224, 0.14);
+}
+
+.pqrs-type-grid .pqrs-type-card:last-child {
+  grid-column: 1 / -1;
+}
+
+.pqrs-type-card:focus-within {
+  outline: 3px solid rgba(0, 163, 224, 0.28);
+  outline-offset: 2px;
+}
+
+.pqrs-type-card input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pqrs-type-letter {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: var(--bg-soft);
+  border: 1px solid var(--tint-border);
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 800;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.pqrs-type-card.selected .pqrs-type-letter {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--white);
+}
+
+.pqrs-type-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pqrs-type-text strong {
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+
+.pqrs-type-text > span {
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.pqrs-type-grid.invalid .pqrs-type-card:not(.selected) {
+  border-color: rgba(220, 38, 38, 0.32);
+}
+
+.pqrs-fecha-field {
+  max-width: 280px;
+}
+
+@media (max-width: 640px) {
+  .pqrs-type-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pqrs-type-card:last-child {
+    grid-column: auto;
+  }
+
+  .pqrs-fecha-field {
+    max-width: none;
+  }
 }
 
 .pqrs-card h3 {
@@ -59,28 +188,12 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-md);
-  padding: 36px;
+  padding: 24px;
   scroll-margin-top: 100px;
 }
 
 .pqrs-form-card h3 {
   font-size: 1.3rem;
-  margin-bottom: 6px;
-}
-
-.pqrs-form-card > p {
-  font-size: 0.92rem;
-  margin-bottom: 26px;
-}
-
-.form-section-title {
-  grid-column: 1 / -1;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--primary);
-  margin-top: 6px;
 }
 
 @media (max-width: 960px) {

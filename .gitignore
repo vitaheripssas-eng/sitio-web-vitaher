@@ -16,6 +16,17 @@ public/storage/submissions.log
 public/storage/submissions.csv
 public/storage/smtp_pass.txt
 public/storage/uploads/
+public/storage/admin_email.txt
+public/storage/admin_pass.txt
+public/storage/admin_hash.txt
+public/storage/admin_reset.json
+public/storage/radicados.log
+public/storage/estados.log
+public/storage/rate-limits.json
+public/storage/radicado-counter-*.json
+
+# Archivos generados localmente
+estructura.txt
 
 # Editor directories and files
 .vscode/*

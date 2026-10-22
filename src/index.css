@@ -1,22 +1,67 @@
+/* ==========================================================================
+   SISTEMA DE COLOR VITAHER IPS
+   Base oficial: #004B87 · #00A3E0 · #2E7D32 · #A3E53B
+   Reglas de uso:
+   - Los cuatro colores base viven en las variables de marca.
+   - Los neutros, estados y superficies oscuras se centralizan aquí.
+   - No introducir hex nuevos en componentes; usar la variable semántica.
+   - #A3E53B es para fondos/acentos, no para texto pequeño sobre blanco.
+   ========================================================================== */
 :root {
-  /* Paleta oficial extraída directamente del logo VITAHER IPS */
-  --primary: #004b87;          /* Azul corporativo base (cinta V) */
-  --primary-dark: #003366;     /* Azul marino profundo */
-  --primary-light: #00a3e0;    /* Azul cian / celeste (borde superior de cinta V) */
-  --primary-tint: #eef7fc;     /* Tono suave de fondo */
-  --accent: #16a34a;           /* Verde hoja natural del logo (cinta H) */
-  --accent-dark: #15803d;      /* Verde sombra de la hoja */
-  --accent-bright: #22c55e;    /* Verde vivo del destello de la hoja */
-  --accent-tint: #f0fdf4;      /* Tono suave verde de fondo */
-  --ink: #0f172a;
-  --ink-soft: #475569;
+  /* Paleta oficial VITAHER IPS */
+  --primary: #004b87;          /* Azul Vitaher Principal */
+  --primary-dark: #003a6a;     /* Azul profundo derivado */
+  --primary-light: #00a3e0;    /* Azul Celeste Salud */
+  --primary-tint: #eaf6fc;     /* Tono suave del azul celeste */
+  --accent: #2e7d32;           /* Verde Vida Institucional */
+  --accent-dark: #1b5e20;      /* Verde profundo derivado */
+  --accent-bright: #a3e53b;    /* Verde Claro Vitalidad */
+  --accent-tint: #f4fbe8;      /* Tono suave del verde vitalidad */
+  --ink: #004b87;              /* Textos principales y encabezados */
+  --ink-soft: #3f5d75;         /* Texto de apoyo azul grisáceo */
   --bg: #ffffff;
-  --bg-soft: #f8fafc;
-  --border: #e2e8f0;
-  --tint-border: #b8dcf0;
+  --bg-soft: #f5fafd;
+  --border: #d9e8f2;
+  --tint-border: #a9d8f0;
   --white: #ffffff;
-  --success: #16a34a;
+  --success: #2e7d32;
   --danger: #dc2626;
+  --danger-strong: #b91c1c;
+
+  /* Estados y avisos */
+  --warning: #fbbf24;
+  --warning-strong: #d97706;
+  --warning-bg: #fef3c7;
+  --warning-ink: #92400e;
+  --warning-deep: #422006;
+  --whatsapp: #25d366;
+  --whatsapp-dark: #128c7e;
+  --field-border: #cbd5e1;
+
+  /* Superficies oscuras: footer, modo oscuro y bloques de contraste */
+  --surface-dark-deep: #06182b;
+  --surface-dark: #091f36;
+  --surface-dark-alt: #0c2740;
+  --surface-dark-elevated: #0b2b47;
+  --line-dark: #143a58;
+  --line-dark-strong: #1f5a7e;
+  --line-dark-faint: rgba(255, 255, 255, 0.1);
+  --line-dark-soft: rgba(255, 255, 255, 0.14);
+  --on-dark-pure: #ffffff;
+  --on-dark: #f8fafc;
+  --on-dark-soft: #e2e8f0;
+  --on-dark-muted: #cbd5e1;
+  --on-dark-subtle: #94a3b8;
+  --on-dark-faint: #64748b;
+  --footer-bg-start: #0f172a;
+  --footer-bg-end: #0b1e33;
+  --footer-bg-deep: #04080f;
+  --primary-deep: #003a68;
+  --primary-deeper: #002244;
+  --slate-800: #1e293b;
+  --slate-900: #0f1c36;
+  --slate-950: #091224;
+  --bg-tint: #eef7fc;
 
   --font: 'Plus Jakarta Sans', system-ui, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
@@ -112,7 +157,7 @@ button {
 }
 
 .section {
-  padding: 96px 0;
+  padding: 72px 0;
   position: relative;
 }
 
@@ -130,7 +175,7 @@ button {
   text-transform: uppercase;
   color: var(--primary);
   background: var(--primary-tint);
-  border: 1px solid #b8dcf0;
+  border: 1px solid var(--tint-border);
   border-radius: 999px;
   padding: 7px 16px;
   margin-bottom: 18px;
@@ -139,7 +184,7 @@ button {
 
 .section-head {
   max-width: 720px;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
 }
 
 .section-head h2 {
@@ -186,9 +231,9 @@ button {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   color: var(--white);
-  box-shadow: 0 18px 36px -12px rgba(22, 163, 74, 0.45);
+  box-shadow: 0 18px 36px -12px rgba(46, 125, 50, 0.45);
 }
 
 .btn-ghost {
@@ -278,7 +323,7 @@ button {
 
 @media (max-width: 640px) {
   .section {
-    padding: 64px 0;
+    padding: 48px 0;
   }
 }
 
@@ -289,30 +334,30 @@ button {
 html.dark-theme {
   color-scheme: dark;
 
-  /* Fondos: azul marino profundo del logo */
-  --bg:             #090f1f;
-  --bg-soft:        #0e1834;
-  --white:          #132247;
+  /* Fondos: azul marino profundo derivado del azul Vitaher */
+  --bg:             var(--surface-dark-deep);
+  --bg-soft:        var(--surface-dark);
+  --white:          var(--surface-dark-alt);
 
   /* Azul primario más luminoso (visible sobre fondo oscuro) */
-  --primary:        #3b9ede;
-  --primary-dark:   #1e6faa;
-  --primary-light:  #60baec;
-  --primary-tint:   #0f2747;
+  --primary:        #4fb3e8;
+  --primary-dark:   #1b7fb5;
+  --primary-light:  #7fd4f5;
+  --primary-tint:   var(--surface-dark-elevated);
 
   /* Verde acento más vivo (visible sobre fondo oscuro) */
-  --accent:         #22c55e;
-  --accent-dark:    #16a34a;
-  --accent-bright:  #4ade80;
-  --accent-tint:    #052e16;
+  --accent:         #5fbf63;
+  --accent-dark:    #2e7d32;
+  --accent-bright:  #a3e53b;
+  --accent-tint:    #122b18;
 
   /* Texto blanco/gris claro — máxima legibilidad */
-  --ink:            #f8fafc;
-  --ink-soft:       #94a3b8;
+  --ink:            #f2f9ff;
+  --ink-soft:       #a7c3d8;
 
   /* Bordes */
-  --border:         #1e3158;
-  --tint-border:    #23457a;
+  --border:         var(--line-dark);
+  --tint-border:    var(--line-dark-strong);
 
   /* Sombras */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
@@ -327,8 +372,8 @@ html.dark-theme .hero-card,
 html.dark-theme .nosotros-card,
 html.dark-theme .valor,
 html.dark-theme .faq-item {
-  background: #0e1834;
-  border-color: #1e3158;
+  background: var(--surface-dark);
+  border-color: var(--line-dark);
   color: var(--ink);
 }
 
@@ -340,8 +385,8 @@ html.dark-theme .servicio li {
 
 /* Iconos de servicios — visibles en modo oscuro */
 html.dark-theme .servicio-icon {
-  background: #0f2747;
-  border-color: #1e4d7a;
+  background: var(--surface-dark-elevated);
+  border-color: var(--line-dark-strong);
   color: var(--primary-light);
 }
 
@@ -354,7 +399,7 @@ html.dark-theme .hero {
   background:
     radial-gradient(1100px 560px at 85% -10%, rgba(59, 158, 222, 0.1), transparent 60%),
     radial-gradient(900px 480px at -10% 20%, rgba(0, 40, 100, 0.18), transparent 60%),
-    linear-gradient(180deg, #090f1f 0%, #0e1834 100%);
+    linear-gradient(180deg, var(--surface-dark-deep) 0%, var(--surface-dark) 100%);
 }
 
 html.dark-theme .hero h1,
@@ -368,8 +413,8 @@ html.dark-theme h4 {
 
 /* Hero card flotante */
 html.dark-theme .hero-card {
-  background: #0e1834;
-  border-color: #1e3158;
+  background: var(--surface-dark);
+  border-color: var(--line-dark);
 }
 
 html.dark-theme .hero-card h3,
@@ -393,8 +438,8 @@ html.dark-theme .servicios {
 
 /* Modal en modo oscuro */
 html.dark-theme .modal {
-  background: #0e1834;
-  border-color: #1e3158;
+  background: var(--surface-dark);
+  border-color: var(--line-dark);
   color: var(--ink);
 }
 
@@ -414,7 +459,7 @@ html.dark-theme .navbar.scrolled {
 }
 
 html.dark-theme .navbar .logo-text strong {
-  color: #ffffff;
+  color: var(--on-dark-pure);
 }
 
 html.dark-theme .section:nth-of-type(even) {
@@ -440,7 +485,7 @@ html.dark-theme .btn-ghost:hover {
 html.dark-theme .form-input,
 html.dark-theme .form-select,
 html.dark-theme .form-textarea {
-  background: #0e1834;
+  background: var(--surface-dark);
   color: var(--ink);
   border-color: var(--border);
 }
@@ -448,12 +493,12 @@ html.dark-theme .form-textarea {
 html.dark-theme .form-input:focus,
 html.dark-theme .form-select:focus,
 html.dark-theme .form-textarea:focus {
-  background: #132247;
+  background: var(--surface-dark-alt);
   border-color: var(--primary-light);
 }
 
 html.dark-theme .a11y-header {
-  background: #0e1834;
+  background: var(--surface-dark);
   border-bottom-color: var(--border);
 }
 
@@ -462,13 +507,13 @@ html.dark-theme .a11y-header-text strong {
 }
 
 html.dark-theme .a11y-option {
-  background: #0e1834;
+  background: var(--surface-dark);
   border-color: var(--border);
   color: var(--ink);
 }
 
 html.dark-theme .a11y-option span {
-  background: #132247;
+  background: var(--surface-dark-alt);
   border-color: var(--border);
   color: var(--ink);
 }
@@ -485,13 +530,13 @@ html.dark-theme .a11y-option.is-active {
 }
 
 html.dark-theme .a11y-reset {
-  background: #0e1834;
+  background: var(--surface-dark);
   border-color: var(--border);
   color: var(--ink-soft);
 }
 
 html.dark-theme .a11y-reset:hover {
-  background: #132247;
+  background: var(--surface-dark-alt);
   color: var(--ink);
 }
 
@@ -508,7 +553,7 @@ html.dark-theme .hero-badge {
 
 /* Hero stats (barra de estadísticas) */
 html.dark-theme .hero-stats {
-  background: linear-gradient(135deg, #090f1f 0%, #0e1834 100%);
+  background: linear-gradient(135deg, var(--surface-dark-deep) 0%, var(--surface-dark) 100%);
   border-color: rgba(30, 49, 88, 0.8);
 }
 
@@ -517,7 +562,7 @@ html.dark-theme .hero-stat strong {
 }
 
 html.dark-theme .hero-stat span {
-  color: #94a3b8;
+  color: var(--on-dark-subtle);
 }
 
 /* Hero: fondo decorativo detrás de la card */
@@ -532,8 +577,8 @@ html.dark-theme .destacados {
 
 /* Nosotros — card misión/visión */
 html.dark-theme .card-mv {
-  background: #0e1834;
-  border-color: #1e3158;
+  background: var(--surface-dark);
+  border-color: var(--line-dark);
   color: var(--ink);
 }
 
@@ -549,8 +594,8 @@ html.dark-theme .card-mv .card-tag {
 
 /* Nosotros — cards de valores */
 html.dark-theme .valor {
-  background: #0e1834;
-  border-color: #1e3158;
+  background: var(--surface-dark);
+  border-color: var(--line-dark);
 }
 
 html.dark-theme .valor h3,
@@ -564,19 +609,19 @@ html.dark-theme .valor .num {
 
 /* Nosotros — sección "¿Por qué VITAHER?" */
 html.dark-theme .porque {
-  background: linear-gradient(135deg, #090f1f 0%, #0e1834 100%);
-  color: #cbd5e1;
-  border: 1px solid #1e3158;
+  background: linear-gradient(135deg, var(--surface-dark-deep) 0%, var(--surface-dark) 100%);
+  color: var(--on-dark-muted);
+  border: 1px solid var(--line-dark);
 }
 
 html.dark-theme .porque h2 {
-  color: #f8fafc;
+  color: var(--on-dark);
 }
 
 html.dark-theme .badge {
   background: rgba(59, 158, 222, 0.08);
   border-color: rgba(59, 158, 222, 0.2);
-  color: #e2e8f0;
+  color: var(--on-dark-soft);
 }
 
 html.dark-theme .badge svg {
@@ -585,44 +630,44 @@ html.dark-theme .badge svg {
 
 /* Servicios — página interna */
 html.dark-theme .servicios-grid .servicio {
-  background: #0e1834;
-  border-color: #1e3158;
+  background: var(--surface-dark);
+  border-color: var(--line-dark);
 }
 
 /* Formularios */
 html.dark-theme input,
 html.dark-theme select,
 html.dark-theme textarea {
-  background: #0e1834;
-  border-color: #1e3158;
+  background: var(--surface-dark);
+  border-color: var(--line-dark);
   color: var(--ink);
 }
 
 html.dark-theme input::placeholder,
 html.dark-theme textarea::placeholder {
-  color: #64748b;
+  color: var(--on-dark-faint);
 }
 
 html.dark-theme input:focus,
 html.dark-theme select:focus,
 html.dark-theme textarea:focus {
   border-color: var(--primary-light);
-  background: #132247;
+  background: var(--surface-dark-alt);
 }
 
 /* Footer */
 html.dark-theme footer {
-  background: #04080f;
-  color: #94a3b8;
+  background: var(--footer-bg-deep);
+  color: var(--on-dark-subtle);
 }
 
 html.dark-theme footer h3,
 html.dark-theme footer strong {
-  color: #f8fafc;
+  color: var(--on-dark);
 }
 
 html.dark-theme footer a {
-  color: #94a3b8;
+  color: var(--on-dark-subtle);
 }
 
 html.dark-theme footer a:hover {
@@ -631,19 +676,19 @@ html.dark-theme footer a:hover {
 
 /* WhatsApp Preview */
 html.dark-theme .wa-preview {
-  background: #0e1834;
-  border-color: #1e3158;
+  background: var(--surface-dark);
+  border-color: var(--line-dark);
 }
 
 html.dark-theme .wa-bubble {
-  background: #132247;
+  background: var(--surface-dark-alt);
   color: var(--ink);
 }
 
 /* RutaCuidado / pasos de atención */
 html.dark-theme .paso {
-  background: #0e1834;
-  border-color: #1e3158;
+  background: var(--surface-dark);
+  border-color: var(--line-dark);
   color: var(--ink);
 }
 
@@ -664,4 +709,4 @@ html.dark-theme .section-heading,
 html.dark-theme .section-sub {
   color: var(--ink);
 }
-
+

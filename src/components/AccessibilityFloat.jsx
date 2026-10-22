@@ -5,6 +5,7 @@ import { Icon } from './Icons.jsx'
 import './AccessibilityFloat.css'
 
 const STORAGE_KEY = 'vitaher-a11y'
+const THEME_VERSION = 2
 
 function applyPrefs(prefs) {
   const html = document.documentElement
@@ -22,12 +23,20 @@ export default function AccessibilityFloat() {
   const [prefs, setPrefs] = useState(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY)
-      if (raw) return JSON.parse(raw)
-      // Sin preferencia guardada: detectar modo oscuro del sistema operativo
-      const osDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false
-      return osDark ? { darkMode: true } : {}
+      if (raw) {
+        const saved = JSON.parse(raw)
+        // La versión anterior activaba el modo oscuro automáticamente.
+        // Al migrar, el sitio queda en claro; si la persona elige oscuro,
+        // la preferencia se conserva en las siguientes visitas.
+        if (saved.themeVersion !== THEME_VERSION) {
+          return { ...saved, darkMode: false, themeVersion: THEME_VERSION }
+        }
+        return saved
+      }
+      // Modo claro por defecto.
+      return { themeVersion: THEME_VERSION }
     } catch {
-      return {}
+      return { themeVersion: THEME_VERSION }
     }
   })
   const [isSpeaking, setIsSpeaking] = useState(false)
@@ -71,7 +80,7 @@ export default function AccessibilityFloat() {
   const reset = () => {
     window.speechSynthesis?.cancel()
     setIsSpeaking(false)
-    setPrefs({})
+    setPrefs({ themeVersion: THEME_VERSION })
   }
 
   const handlePointerDown = (e) => {

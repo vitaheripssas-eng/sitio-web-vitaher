@@ -1,4 +1,3 @@
-import { WHATSAPP_NUMBER } from '../data.js'
 import { waLink } from '../utils.js'
 import { Icon } from './Icons.jsx'
 import './WhatsAppFloat.css'

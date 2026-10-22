@@ -4,6 +4,13 @@ export const EMAIL = import.meta.env.VITE_EMAIL ?? 'coordinacionarauca2026@gmail
 
 export const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT ?? 'https://vitaherips.com/enviar.php'
 
+// Los endpoints de radicado y seguimiento viven junto a enviar.php.
+const FORM_BASE = FORM_ENDPOINT.replace(/[^/]*$/, '')
+export const TRACKING_ENDPOINT =
+  import.meta.env.VITE_TRACKING_ENDPOINT ?? `${FORM_BASE}gestion.php`
+export const REGISTRO_ENDPOINT =
+  import.meta.env.VITE_REGISTRO_ENDPOINT ?? `${FORM_BASE}registrar.php`
+
 const BASE = import.meta.env.BASE_URL
 
 export const NAV_LINKS = [
@@ -239,7 +246,48 @@ export const AGUDO = [
   'Coordinación interdisciplinaria',
 ]
 
-export const PQRS_TIPOS = ['Petición', 'Queja', 'Reclamo', 'Sugerencia', 'Felicitación']
+export const PQRS_TIPOS = [
+  {
+    value: 'Petición',
+    letra: 'P',
+    title: 'Petición',
+    text: 'Solicitud respetuosa o requerimiento de información.',
+  },
+  {
+    value: 'Queja',
+    letra: 'Q',
+    title: 'Queja',
+    text: 'Inconformidad frente a la atención recibida.',
+  },
+  {
+    value: 'Reclamo',
+    letra: 'R',
+    title: 'Reclamo',
+    text: 'Un servicio no fue prestado adecuadamente.',
+  },
+  {
+    value: 'Sugerencia',
+    letra: 'S',
+    title: 'Sugerencia',
+    text: 'Propuesta para mejorar procesos y servicios.',
+  },
+  {
+    value: 'Felicitación',
+    letra: 'F',
+    title: 'Felicitación',
+    text: 'Reconocimiento al buen servicio recibido.',
+  },
+]
+
+export const MUNICIPIOS_ARAUCA = [
+  'Arauca',
+  'Arauquita',
+  'Cravo Norte',
+  'Fortul',
+  'Puerto Rondón',
+  'Saravena',
+  'Tame',
+]
 
 export const PERFILES = [
   'Médico General',
@@ -261,6 +309,37 @@ export const PERFILES = [
   'Pediatría',
   'Intensivista',
 ]
+
+const CARGOS_GRUPOS_BASE = [
+  {
+    label: 'Medicina',
+    cargos: ['Médico General', 'Dermatología', 'Medicina Interna', 'Pediatría', 'Intensivista'],
+  },
+  {
+    label: 'Enfermería',
+    cargos: ['Profesional de Enfermería', 'Auxiliar de Enfermería'],
+  },
+  {
+    label: 'Terapias',
+    cargos: ['Terapeuta Físico', 'Terapeuta Respiratorio', 'Terapeuta Ocupacional'],
+  },
+  {
+    label: 'Apoyo clínico',
+    cargos: ['Psicólogo', 'Nutricionista', 'Trabajador Social', 'Regente/Auxiliar de Farmacia'],
+  },
+  {
+    label: 'Cuidado y administrativo',
+    cargos: ['Cuidadores', 'Personal Administrativo', 'Servicios Generales', 'Sistemas'],
+  },
+]
+
+// Si algún día se agrega un perfil nuevo a PERFILES, aparece automáticamente en "Otros perfiles".
+const cargosAgrupados = CARGOS_GRUPOS_BASE.flatMap((grupo) => grupo.cargos)
+const cargosSinGrupo = PERFILES.filter((perfil) => !cargosAgrupados.includes(perfil))
+
+export const CARGO_GRUPOS = cargosSinGrupo.length
+  ? [...CARGOS_GRUPOS_BASE, { label: 'Otros perfiles', cargos: cargosSinGrupo }]
+  : CARGOS_GRUPOS_BASE
 
 export const SERVICIOS_SELECCION = [
   'Medicina Domiciliaria',

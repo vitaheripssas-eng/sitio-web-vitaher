@@ -1,16 +1,26 @@
 User-agent: *
 Allow: /
+Disallow: /admin.php
+Disallow: /gestion.php
+Disallow: /registrar.php
+Disallow: /enviar.php
+Disallow: /storage/
 
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
+# Asistentes y buscadores de IA
 User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
 Allow: /
+Disallow: /admin.php
+Disallow: /gestion.php
+Disallow: /registrar.php
+Disallow: /enviar.php
+Disallow: /storage/
 
-User-agent: Googlebot
-Allow: /
-
+# Información para asistentes de IA: https://vitaherips.com/llms.txt
 Sitemap: https://vitaherips.com/sitemap.xml

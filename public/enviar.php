@@ -1,8 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+require __DIR__ . '/tracking-lib.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
@@ -18,7 +17,6 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
 /* ========= CONFIGURACION ========= */
 $PARA_DEFAULT = 'coordinacionarauca2026@gmail.com';
 $PARA_TALENTO = 'talentohumanovitaher@gmail.com';
-$DE     = 'info@vitaherips.com';
 $MAX_MB = 20;
 
 /* Honeypot */
@@ -30,6 +28,16 @@ $telefono = trim((string)($_POST['telefono'] ?? ''));
 $correo   = trim((string)($_POST['correo'] ?? ''));
 $mensaje  = trim((string)($_POST['mensaje'] ?? ''));
 $extra    = trim((string)($_POST['extra'] ?? ''));
+
+$categoria = 'GENERAL';
+if (stripos($tipo, 'PQRS') !== false) {
+    $categoria = 'PQRS';
+} elseif (stripos($tipo, 'Postulación') !== false || stripos($tipo, 'Postulacion') !== false) {
+    $categoria = 'POST';
+}
+$radicado = in_array($categoria, ['PQRS', 'POST'], true)
+    ? vitaher_generate_radicado($categoria === 'POST' ? 'POST' : 'PQRS')
+    : null;
 
 $dest = trim((string)($_POST['destinatario'] ?? $_POST['para'] ?? ''));
 if ($dest !== '' && filter_var($dest, FILTER_VALIDATE_EMAIL)) {
@@ -85,6 +93,8 @@ $registro = [
     'fecha' => date('c'),
     'ip' => $_SERVER['REMOTE_ADDR'] ?? '',
     'ua' => $_SERVER['HTTP_USER_AGENT'] ?? '',
+    'radicado' => $radicado,
+    'categoria' => $categoria,
     'tipo' => $tipo,
     'para' => $PARA,
     'nombre' => $nombre,
@@ -118,9 +128,33 @@ if ($uploadsDir) {
     }
 }
 
+$trackingGuardado = false;
+$trackingRecord = null;
+if ($radicado !== null) {
+    $trackingRecord = [
+        'radicado' => $radicado,
+        'categoria' => $categoria,
+        'tipo' => $tipo,
+        'nombre' => $nombre,
+        'telefono' => $telefono,
+        'correo' => $correo,
+        'extra' => $extra,
+        'mensaje' => $mensaje,
+        'archivos' => array_column($adjuntos, 'nombre'),
+        'archivos_guardados' => $savedFiles,
+        'origen' => 'formulario',
+        'ip' => $_SERVER['REMOTE_ADDR'] ?? '',
+        'ua' => substr((string)($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 300),
+        'fecha' => date('c'),
+        'estado' => 'Recibido',
+    ];
+    $trackingGuardado = vitaher_save_record($trackingRecord);
+}
+
 /* ========= ENVIO POR SMTP (PHPMailer) ========= */
 $cuerpoTexto = "Nueva solicitud enviada desde vitaherips.com\r\n"
     . str_repeat('=', 46) . "\r\n"
+    . ($radicado ? "Radicado: $radicado\r\n" : '')
     . "Tipo de formulario: $tipo\r\n"
     . ($extra !== '' ? "$extra\r\n" : '')
     . "Nombre: $nombre\r\n"
@@ -130,49 +164,28 @@ $cuerpoTexto = "Nueva solicitud enviada desde vitaherips.com\r\n"
     . "Fecha: " . date('d/m/Y H:i') . "\r\n\r\n"
     . "Mensaje:\r\n$mensaje\r\n";
 
-$smtpPass = trim((string)@file_get_contents(__DIR__ . '/storage/smtp_pass.txt'));
-if ($smtpPass === '') $smtpPass = (string)getenv('SMTP_PASS');
+$asunto = ($radicado ? "[$radicado] " : '') . "Sitio web VITAHER - $tipo - $nombre";
+$enviado = vitaher_send_mail($PARA, $asunto, $cuerpoTexto, [
+    'reply_to' => $correo,
+    'reply_name' => $nombre,
+    'attachments' => $adjuntos,
+]);
 
-$enviado = false;
-if ($smtpPass !== '') {
-    require __DIR__ . '/PHPMailer/Exception.php';
-    require __DIR__ . '/PHPMailer/PHPMailer.php';
-    require __DIR__ . '/PHPMailer/SMTP.php';
-    $mail = new PHPMailer(true);
-    try {
-        $mail->isSMTP();
-        $mail->Host = 'smtp.hostinger.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = $DE;
-        $mail->Password = $smtpPass;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mail->Port = 465;
-        $mail->setFrom($DE, 'VITAHER Web');
-        $mail->addAddress($PARA);
-        if ($correo !== '' && filter_var($correo, FILTER_VALIDATE_EMAIL)) $mail->addReplyTo($correo, $nombre);
-        $mail->Subject = "Sitio web VITAHER - $tipo - $nombre";
-        $mail->Body = $cuerpoTexto;
-        $mail->CharSet = 'UTF-8';
-        foreach ($adjuntos as $a) {
-            $mail->addAttachment($a['ruta'], $a['nombre']);
-        }
-        $mail->send();
-        $enviado = true;
-    } catch (Exception $e) {
-        error_log('PHPMailer error: ' . $e->getMessage());
-        $enviado = false;
-    }
-} else {
-    // Fallback a mail() si no hay pass configurado
-    $asunto = mb_encode_mimeheader("Sitio web VITAHER - $tipo - $nombre", 'UTF-8', 'B');
-    $cabeceras = "From: VITAHER Web <$DE>\r\n" . ($correo !== '' ? "Reply-To: $correo\r\n" : '') . "MIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\n";
-    $enviado = @mail($PARA, $asunto, $cuerpoTexto, $cabeceras);
+$confirmacionEnviada = false;
+if ($trackingGuardado && $trackingRecord !== null) {
+    $confirmacionEnviada = vitaher_send_confirmation($trackingRecord);
 }
 
-$guardado = !empty($registro) && file_exists($storageDir . '/submissions.log');
+$guardado = $trackingGuardado || (!empty($registro) && file_exists($storageDir . '/submissions.log'));
 
 if ($enviado || $guardado) {
-    echo json_encode(['ok' => true, 'guardado' => $guardado, 'enviado' => $enviado]);
+    echo json_encode([
+        'ok' => true,
+        'guardado' => $guardado,
+        'enviado' => $enviado,
+        'confirmacion' => $confirmacionEnviada,
+        'radicado' => $radicado,
+    ]);
 } else {
     http_response_code(500);
     echo json_encode(['ok' => false, 'error' => 'No se pudo enviar el correo ni guardar el registro. Intenta por WhatsApp.']);

@@ -8,7 +8,6 @@ import { getLegalPage } from './data/legal.js'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 const Destacados = lazy(() => import('./components/Destacados.jsx'))
-const RutaCuidado = lazy(() => import('./components/RutaCuidado.jsx'))
 const Nosotros = lazy(() => import('./components/Nosotros.jsx'))
 const Servicios = lazy(() => import('./components/Servicios.jsx'))
 const PQRS = lazy(() => import('./components/PQRS.jsx'))
@@ -34,7 +33,6 @@ export default function App() {
         <Hero />
         <Suspense fallback={<div style={{ minHeight: 320 }} aria-hidden />}>
           <Destacados />
-          <RutaCuidado />
           <Servicios />
           <Nosotros />
           <Trabaja />

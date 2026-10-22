@@ -3,7 +3,14 @@ import { z } from 'zod'
 const nombreSchema = z.string().trim().min(3, 'Mínimo 3 caracteres').max(80, 'Máximo 80 caracteres')
 const telefonoSchema = z.string().trim().min(7, 'Teléfono inválido').max(20, 'Máximo 20 caracteres')
 const correoSchema = z.string().trim().email('Correo inválido').max(100, 'Máximo 100 caracteres')
-const correoOpcionalSchema = z.string().trim().max(100).optional().or(z.literal(''))
+const correoOpcionalSchema = z
+  .string()
+  .trim()
+  .max(100, 'Máximo 100 caracteres')
+  .refine((value) => !value || z.string().email().safeParse(value).success, {
+    message: 'Correo inválido',
+  })
+  .optional()
 const requerido = (msg = 'Campo requerido') => z.string().trim().min(1, msg)
 const aceptacionTratamiento = z.literal('on', {
   errorMap: () => ({ message: 'Debes aceptar el tratamiento de datos personales' }),
@@ -13,7 +20,7 @@ export const trabajaSchema = z.object({
   nombre: nombreSchema,
   correo: correoSchema,
   telefono: telefonoSchema,
-  ciudad: z.string().trim().max(60).optional().or(z.literal('')),
+  municipio: z.string().trim().max(60).optional().or(z.literal('')),
   cargo: requerido('Selecciona un cargo'),
   formacion: z.string().trim().min(1).optional().or(z.literal('')),
   experiencia: z.string().trim().max(2000).optional().or(z.literal('')),

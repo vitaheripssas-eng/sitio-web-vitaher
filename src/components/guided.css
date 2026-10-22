@@ -1,0 +1,360 @@
+/* Estructura compartida para formularios guiados por pasos */
+.guided-form {
+  scroll-margin-top: 100px;
+}
+
+.guided-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.guided-form .guided-head h3 {
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+}
+
+.guided-form .guided-head p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.guided-form .form-error {
+  margin: 12px 0 0;
+  font-size: 0.88rem;
+}
+
+.guided-pill {
+  flex: none;
+  padding: 6px 11px;
+  border: 1px solid var(--tint-border);
+  border-radius: 999px;
+  background: var(--primary-tint);
+  color: var(--primary);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.guided-stepper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.guided-step-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.guided-step-item:last-child {
+  flex: 0 0 auto;
+}
+
+.guided-step-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: none;
+  white-space: nowrap;
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+}
+
+.guided-step-head.active,
+.guided-step-head.done {
+  opacity: 1;
+}
+
+.guided-step-circle {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.guided-step-head.active .guided-step-circle {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: var(--white);
+}
+
+.guided-step-head.done .guided-step-circle {
+  border-color: var(--success);
+  background: var(--success);
+  color: var(--white);
+}
+
+.guided-step-label {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.guided-step-head.active .guided-step-label,
+.guided-step-head.done .guided-step-label {
+  color: var(--ink);
+}
+
+.guided-step-line {
+  flex: 1;
+  min-width: 14px;
+  height: 2px;
+  margin: 0 10px;
+  background: var(--border);
+}
+
+.guided-progress {
+  height: 4px;
+  margin-bottom: 22px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--border);
+}
+
+.guided-progress span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width 0.3s ease;
+}
+
+.guided-step {
+  animation: guidedRise 0.28s ease;
+}
+
+@keyframes guidedRise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.guided-title {
+  margin: 0 0 4px;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.guided-sub {
+  margin: 0 0 18px;
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.guided-field-hint {
+  margin-top: 2px;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.guided-review {
+  display: grid;
+  gap: 10px;
+}
+
+.guided-review-group {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--bg-soft);
+}
+
+.guided-review-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.guided-review-head > span {
+  color: var(--ink-soft);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.guided-edit {
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.guided-edit:hover {
+  text-decoration: underline;
+}
+
+.guided-review-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 7px 0;
+  border-top: 1px dashed var(--border);
+  font-size: 0.79rem;
+}
+
+.guided-review-head + .guided-review-row {
+  border-top: 0;
+}
+
+.guided-review-row span {
+  flex: none;
+  color: var(--ink-soft);
+}
+
+.guided-review-row b {
+  overflow-wrap: anywhere;
+  color: var(--ink);
+  font-weight: 600;
+  text-align: right;
+  white-space: pre-line;
+}
+
+.guided-consent {
+  margin-top: 14px;
+}
+
+.guided-files {
+  display: grid;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.guided-file-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+  font-size: 0.76rem;
+}
+
+.guided-file-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.guided-file-meta {
+  flex: none;
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+}
+
+.guided-file-remove {
+  flex: none;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  color: var(--danger);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.guided-file-remove:hover {
+  text-decoration: underline;
+}
+
+.guided-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.guided-spacer {
+  flex: 1;
+}
+
+.guided-next {
+  min-width: 150px;
+}
+
+.guided-actions .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  .guided-head {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .guided-pill {
+    align-self: flex-start;
+  }
+
+  .guided-step-label {
+    display: none;
+  }
+
+  .guided-step-line {
+    margin: 0 7px;
+  }
+
+  .guided-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .guided-spacer {
+    display: none;
+  }
+
+  .guided-actions .btn {
+    width: 100%;
+  }
+
+  .guided-review-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .guided-review-row b {
+    text-align: left;
+  }
+
+  .guided-file-item {
+    flex-wrap: wrap;
+  }
+
+  .guided-file-name {
+    flex-basis: calc(100% - 90px);
+  }
+}

@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
-// Service Worker: garantiza que el HTML siempre se carga fresco (sin versión antigua)
-if ('serviceWorker' in navigator) {
+// Service Worker: solo en producción para evitar caché durante el desarrollo
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register(import.meta.env.BASE_URL + 'sw.js', { updateViaCache: 'none' })

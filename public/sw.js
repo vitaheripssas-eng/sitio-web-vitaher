@@ -1,7 +1,7 @@
 // Service Worker — VITAHER IPS S.A.S.
 // Estrategia: network-first para HTML (siempre versión fresca), cache-first para assets
 
-const CACHE_VERSION = 'vitaher-v1'
+const CACHE_VERSION = 'vitaher-v2'
 
 // ── Instalación: activar inmediatamente sin esperar ──────────────────────────
 self.addEventListener('install', () => {

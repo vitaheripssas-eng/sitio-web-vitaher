@@ -21,26 +21,36 @@ export default function Nosotros() {
         <div className="nosotros-grid">
           <Reveal as="div" className="card-mv">
             <span className="card-tag">Misión</span>
-            <p>
+            <p className="card-mv-lead">
               Proveer soluciones integrales de salud domiciliaria y gestión farmacéutica
               especializada, fundamentadas en estándares superiores de calidad, seguridad y
-              humanización. En VITAHER IPS S.A.S. optimizamos la recuperación del paciente mediante
-              un modelo de atención interdisciplinario y una logística de suministros de alta
-              respuesta, orientados a la mitigación de riesgos clínicos, la reducción de
-              hospitalizaciones evitables y el bienestar sostenible del usuario y su entorno
-              familiar.
+              humanización.
             </p>
+            <details className="card-mv-details">
+              <summary>Leer más</summary>
+              <p>
+                En VITAHER IPS S.A.S. optimizamos la recuperación del paciente mediante un modelo
+                de atención interdisciplinario y una logística de suministros de alta respuesta,
+                orientados a la mitigación de riesgos clínicos, la reducción de hospitalizaciones
+                evitables y el bienestar sostenible del usuario y su entorno familiar.
+              </p>
+            </details>
           </Reveal>
           <Reveal as="div" className="card-mv" delay={140}>
             <span className="card-tag">Visión</span>
-            <p>
+            <p className="card-mv-lead">
               Para el año 2029, consolidarnos como la IPS referente en el departamento de Arauca en
-              servicios de salud domiciliaria y gestión farmacéutica integral. Seremos reconocidos
-              por la implementación de un modelo asistencial de alta capacidad resolutiva,
-              apalancado en la transformación digital y la excelencia operativa, garantizando
-              niveles superiores de seguridad del paciente y sostenibilidad, impactando
-              positivamente en los indicadores de salud de nuestra comunidad.
+              servicios de salud domiciliaria y gestión farmacéutica integral.
             </p>
+            <details className="card-mv-details">
+              <summary>Leer más</summary>
+              <p>
+                Seremos reconocidos por la implementación de un modelo asistencial de alta capacidad
+                resolutiva, apalancado en la transformación digital y la excelencia operativa,
+                garantizando niveles superiores de seguridad del paciente y sostenibilidad,
+                impactando positivamente en los indicadores de salud de nuestra comunidad.
+              </p>
+            </details>
           </Reveal>
         </div>
 

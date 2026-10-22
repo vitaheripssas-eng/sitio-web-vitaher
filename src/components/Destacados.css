@@ -1,7 +1,7 @@
 .destacados {
-  background: linear-gradient(180deg, #ffffff 0%, #eef7fc 100%);
-  padding-top: 80px;
-  padding-bottom: 96px;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-tint) 100%);
+  padding-top: 48px;
+  padding-bottom: 56px;
 }
 
 .destacados-carousel {
@@ -29,9 +29,9 @@
   min-width: 0;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 28px;
+  gap: 22px;
   align-items: center;
-  padding: 48px 40px;
+  padding: 36px 32px;
   color: var(--white);
   overflow: hidden;
   outline: none;
@@ -74,20 +74,20 @@
 }
 
 .destacado-copy > p {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   max-width: 560px;
   line-height: 1.5;
 }
 
 .destacado-copy ul {
   list-style: none;
-  margin: 0 0 24px;
+  margin: 0 0 16px;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 10px 22px;
+  gap: 8px 18px;
 }
 
 .destacado-copy li {

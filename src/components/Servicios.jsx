@@ -1,4 +1,4 @@
-import { SERVICIOS, CRONICOS, AGUDO } from '../data.js'
+import { SERVICIOS, CRONICOS, AGUDO, CUIDADO_STEPS } from '../data.js'
 import { Icon } from './Icons.jsx'
 import Reveal from './Reveal.jsx'
 import './Servicios.css'
@@ -19,6 +19,30 @@ export default function Servicios() {
           </div>
         </Reveal>
 
+        <Reveal delay={80}>
+          <div className="ruta-compact">
+            <div className="ruta-compact-intro">
+              <span className="section-label">Proceso</span>
+              <h3>Ruta de un cuidado domiciliario</h3>
+              <p>
+                Acompañamos al paciente en cada etapa de su recuperación, desde la valoración
+                inicial hasta el bienestar sostenible en su hogar.
+              </p>
+            </div>
+            <ol className="ruta-compact-list">
+              {CUIDADO_STEPS.map((step, i) => (
+                <li key={step.title}>
+                  <span className="ruta-compact-num">{i + 1}</span>
+                  <div>
+                    <strong>{step.title}</strong>
+                    <p>{step.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Reveal>
+
         <div className="servicios-grid">
           {SERVICIOS.map((servicio, i) => (
             <Reveal as="article" className="servicio" delay={(i % 3) * 110} key={servicio.title}>
@@ -27,14 +51,17 @@ export default function Servicios() {
               </div>
               <h3>{servicio.title}</h3>
               <p>{servicio.text}</p>
-              <ul>
-                {servicio.items.map((item) => (
-                  <li key={item}>
-                    <Icon name="check" size={14} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <details className="servicio-details">
+                <summary>Ver prestaciones</summary>
+                <ul>
+                  {servicio.items.map((item) => (
+                    <li key={item}>
+                      <Icon name="check" size={14} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </details>
             </Reveal>
           ))}
         </div>

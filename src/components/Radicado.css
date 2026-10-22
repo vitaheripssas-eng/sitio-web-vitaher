@@ -1,0 +1,493 @@
+.radicado-consulta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px 10px;
+  margin-top: 18px;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+
+.radicado-consulta button {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.radicado-consulta button:hover {
+  color: var(--accent);
+}
+
+/* ---------- Aviso flotante con el radicado ---------- */
+
+.radicado-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 96px;
+  z-index: 150;
+  width: min(382px, calc(100vw - 32px));
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 44px 18px 18px;
+  background: var(--white);
+  border: 1px solid var(--tint-border);
+  border-left: 5px solid var(--accent);
+  border-radius: 18px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: radicado-toast-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.radicado-toast-timer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  transform-origin: left;
+  animation: radicado-toast-timer 15s linear forwards;
+}
+
+@keyframes radicado-toast-timer {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes radicado-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.radicado-toast-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.radicado-toast-close:hover {
+  background: var(--primary-tint);
+  color: var(--primary);
+}
+
+.radicado-toast-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: var(--accent-tint);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.radicado-toast-body {
+  min-width: 0;
+}
+
+.radicado-toast-body > strong {
+  display: block;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.radicado-toast-body p {
+  margin-top: 4px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.radicado-number {
+  margin: 9px 0 6px;
+  padding: 9px 12px;
+  border: 1px dashed var(--tint-border);
+  border-radius: 10px;
+  background: var(--primary-tint);
+  color: var(--primary);
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.radicado-toast-status {
+  color: var(--ink-soft);
+}
+
+.radicado-toast-status b {
+  color: var(--accent);
+}
+
+.radicado-toast-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.radicado-toast-actions .btn {
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  border-radius: 11px;
+}
+
+/* ---------- Modal de seguimiento ---------- */
+
+.radicado-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(4, 34, 64, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.radicado-modal {
+  width: min(640px, 100%);
+  max-height: min(86vh, 760px);
+  overflow-y: auto;
+  padding: 28px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+}
+
+.radicado-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.radicado-modal-head h3 {
+  font-size: 1.25rem;
+}
+
+.radicado-modal-head p {
+  margin-top: 5px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.radicado-modal-close {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.radicado-modal-close:hover {
+  border-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.radicado-search {
+  margin-top: 22px;
+}
+
+.radicado-search-label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.radicado-search-row {
+  display: flex;
+  gap: 10px;
+}
+
+.radicado-search-row .form-input {
+  flex: 1;
+  min-width: 0;
+  text-transform: uppercase;
+}
+
+.radicado-search-row .btn {
+  flex-shrink: 0;
+  padding-inline: 20px;
+}
+
+.radicado-error {
+  display: block;
+  margin-top: 10px;
+}
+
+.radicado-result {
+  margin-top: 22px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg-soft);
+}
+
+.radicado-result-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.radicado-result-top > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.radicado-result-top > strong {
+  color: var(--primary);
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.92rem;
+  letter-spacing: 0.03em;
+  overflow-wrap: anywhere;
+}
+
+.radicado-result-tipo {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.radicado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.radicado-badge::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.radicado-badge.recibido {
+  background: var(--primary-tint);
+  color: var(--primary);
+}
+
+.radicado-badge.revision {
+  background: var(--warning-bg);
+  color: var(--warning-ink);
+}
+
+.radicado-badge.resuelto {
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+
+.radicado-badge.cerrado {
+  background: var(--border);
+  color: var(--ink-soft);
+}
+
+.radicado-result-meta {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.radicado-history-wrap {
+  margin-top: 18px;
+}
+
+.radicado-history-title {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.radicado-history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.radicado-history li {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.radicado-history li:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 16px;
+  bottom: -18px;
+  width: 2px;
+  background: var(--border);
+}
+
+.radicado-history li > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.radicado-history strong {
+  color: var(--ink);
+  font-size: 0.88rem;
+}
+
+.radicado-history span {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.radicado-history p {
+  margin-top: 2px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  white-space: pre-wrap;
+}
+
+.radicado-dot {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  border-radius: 999px;
+  background: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-tint);
+}
+
+.radicado-dot.recibido {
+  background: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-tint);
+}
+
+.radicado-dot.revision {
+  background: var(--warning-strong);
+  box-shadow: 0 0 0 4px var(--warning-bg);
+}
+
+.radicado-dot.resuelto {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-tint);
+}
+
+.radicado-dot.cerrado {
+  background: var(--ink-soft);
+  box-shadow: 0 0 0 4px var(--border);
+}
+
+.radicado-result-hint {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+html.dark-theme .radicado-badge.revision {
+  background: var(--warning-deep);
+  color: var(--warning);
+}
+
+html.dark-theme .radicado-dot.revision {
+  background: var(--warning);
+  box-shadow: 0 0 0 4px var(--warning-deep);
+}
+
+@media (max-width: 640px) {
+  .radicado-toast {
+    left: 16px;
+    right: 16px;
+    bottom: 88px;
+    width: auto;
+    padding: 16px 40px 16px 16px;
+  }
+
+  .radicado-overlay {
+    padding: 12px;
+    align-items: start;
+    padding-top: 8vh;
+  }
+
+  .radicado-modal {
+    padding: 22px 18px;
+    max-height: 84vh;
+  }
+
+  .radicado-search-row {
+    flex-direction: column;
+  }
+
+  .radicado-search-row .btn {
+    width: 100%;
+  }
+
+  .radicado-result {
+    padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radicado-toast {
+    animation: none;
+  }
+
+  .radicado-toast-timer {
+    animation: none;
+    opacity: 0;
+  }
+}
