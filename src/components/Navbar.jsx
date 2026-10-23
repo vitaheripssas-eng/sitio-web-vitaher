@@ -18,12 +18,21 @@ function Logo() {
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12)
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12)
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      setScrollProgress(max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0)
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [])
 
   // Punto 4: Bloquear scroll del fondo en celular cuando el menú está abierto
@@ -53,11 +62,27 @@ export default function Navbar() {
         <div className="container navbar-inner">
           <Logo />
           <nav className={`nav-links ${open ? 'is-open' : ''}`} aria-label="Principal">
-            {NAV_LINKS.map((link) => (
-              <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isHome = link.href === '#inicio'
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={isHome ? 'has-progress' : undefined}
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                  {isHome && (
+                    <span className="nav-progress-track" aria-hidden="true">
+                      <span
+                        className="nav-progress-fill"
+                        style={{ transform: `scaleX(${scrollProgress})` }}
+                      />
+                    </span>
+                  )}
+                </a>
+              )
+            })}
             <a className="btn btn-primary nav-cta" href="#contacto" onClick={() => setOpen(false)}>
               Agendar Cita
             </a>

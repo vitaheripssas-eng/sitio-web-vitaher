@@ -16,16 +16,13 @@
   box-shadow: var(--shadow-sm);
 }
 
-.ruta-compact-intro .section-label {
-  margin-bottom: 10px;
-}
-
 .ruta-compact-intro h3 {
   font-size: clamp(1.15rem, 2vw, 1.45rem);
-  margin-bottom: 8px;
+  margin: 0 0 8px;
 }
 
 .ruta-compact-intro p {
+  margin: 0;
   font-size: 0.9rem;
   line-height: 1.55;
   color: var(--ink-soft);

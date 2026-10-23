@@ -365,6 +365,14 @@ if ($action === 'status') {
         vitaher_json_response(['ok' => false, 'error' => 'No encontramos ese radicado.'], 404);
     }
 
+    if ($respuesta === '') {
+        $respuesta = vitaher_default_response(
+            (string)($record['categoria'] ?? ''),
+            $estado,
+            $radicado
+        );
+    }
+
     if (!vitaher_save_status($radicado, $estado, $nota, $respuesta)) {
         vitaher_json_response(['ok' => false, 'error' => 'No pudimos guardar el estado.'], 500);
     }

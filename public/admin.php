@@ -43,10 +43,10 @@
         display: inline-flex; align-items: center; gap: 10px;
         color: var(--primary); font-weight: 800; letter-spacing: -0.02em; text-decoration: none;
       }
-      .brand-mark {
-        display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px;
-        background: linear-gradient(135deg, var(--primary), var(--primary-light));
-        color: #fff; font-size: 1rem; font-weight: 800;
+      .brand-logo {
+        width: 40px; height: 40px; flex: none; object-fit: contain;
+        border-radius: 10px; background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 75, 135, 0.14);
       }
       .login-shell { min-height: 78vh; display: grid; place-items: center; }
       .login-card {
@@ -238,7 +238,7 @@
       <section id="login-view" class="login-shell">
         <div class="login-card">
           <a class="brand" href="/">
-            <span class="brand-mark">V</span>
+            <img class="brand-logo" src="/logo.png" alt="" aria-hidden="true" />
             <span>VITAHER IPS</span>
           </a>
           <h1>Gestión de Talento Humano</h1>
@@ -272,7 +272,7 @@
       <section id="reset-view" class="login-shell" hidden>
         <div class="login-card">
           <a class="brand" href="/">
-            <span class="brand-mark">V</span>
+            <img class="brand-logo" src="/logo.png" alt="" aria-hidden="true" />
             <span>VITAHER IPS</span>
           </a>
           <h1>Nueva contraseña</h1>
@@ -298,7 +298,7 @@
       <section id="force-password-view" class="login-shell" hidden>
         <div class="login-card">
           <a class="brand" href="/">
-            <span class="brand-mark">V</span>
+            <img class="brand-logo" src="/logo.png" alt="" aria-hidden="true" />
             <span>VITAHER IPS</span>
           </a>
           <h1>Cambia tu contraseña inicial</h1>
@@ -328,7 +328,7 @@
         <header class="topbar">
           <div class="topbar-left">
             <a class="brand" href="/">
-              <span class="brand-mark">V</span>
+              <img class="brand-logo" src="/logo.png" alt="" aria-hidden="true" />
               <span>VITAHER IPS</span>
             </a>
             <div class="topbar-title">
@@ -410,6 +410,28 @@
       let stats = null;
       let filters = { q: '', categoria: '', estado: '' };
       let currentRadicado = null;
+
+      const DEFAULT_RESPONSES = {
+        PQRS: {
+          Recibido: (radicado) => `Recibimos tu PQRS${radicado ? ` con radicado ${radicado}` : ''}. Nuestro equipo la revisará y, si necesitamos información adicional, nos pondremos en contacto contigo.`,
+          'En revisión': () => 'Tu PQRS está en revisión por el área correspondiente. Estamos analizando la información y te informaremos cualquier avance por este medio.',
+          Resuelto: () => 'Tu PQRS fue atendida y quedó resuelta. Gracias por comunicarte con VITAHER IPS; tu solicitud nos ayuda a seguir mejorando.',
+          Cerrado: () => 'Tu PQRS fue cerrada. Si necesitas ampliar la información o tienes una nueva solicitud, puedes radicar una nueva PQRS en nuestro sitio web.',
+        },
+        POST: {
+          Recibido: (radicado) => `Recibimos tu postulación${radicado ? ` con radicado ${radicado}` : ''}. El equipo de Talento Humano revisará tu hoja de vida y los documentos enviados.`,
+          'En revisión': () => 'Tu postulación está en revisión por Talento Humano. Estamos verificando el cumplimiento de los requisitos y tu experiencia para la vacante.',
+          Resuelto: () => 'El proceso de revisión de tu postulación quedó resuelto. Si tu perfil coincide con una vacante disponible, el equipo de Talento Humano se pondrá en contacto contigo.',
+          Cerrado: () => 'Tu postulación fue cerrada. Puedes consultar nuevas vacantes y volver a postularte cuando lo desees.',
+        },
+      };
+
+      function defaultResponseFor(estado, record) {
+        const categoria = record?.categoria === 'POST' ? 'POST' : 'PQRS';
+        const templates = DEFAULT_RESPONSES[categoria];
+        const template = templates[estado] || templates.Recibido;
+        return typeof template === 'function' ? template(record?.radicado || '') : template;
+      }
 
       const $ = (selector) => document.querySelector(selector);
       const loginView = $('#login-view');
@@ -737,7 +759,7 @@
               <div class="field">
                 <label for="status-response">Respuesta pública (visible para el ciudadano)</label>
                 <textarea id="status-response" class="textarea" name="respuesta" maxlength="2000" placeholder="Ej: Tu solicitud fue revisada y..."></textarea>
-                <span class="hint">Se muestra en el seguimiento y se envía por correo si activas la notificación.</span>
+                <span class="hint">Se completa automáticamente según el estado; puedes editarla. Se muestra en el seguimiento y se envía por correo si activas la notificación.</span>
               </div>
             </div>
             <div class="field">
@@ -761,6 +783,7 @@
           if (!response) return;
           const required = estado === 'Resuelto';
           response.required = required;
+          response.value = defaultResponseFor(estado, record);
           response.placeholder = required
             ? 'Obligatoria para marcar como Resuelto: explica la decisión al ciudadano...'
             : 'Ej: Estamos revisando tu caso y te contaremos cuando tengamos una respuesta...';

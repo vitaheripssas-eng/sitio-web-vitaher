@@ -353,6 +353,42 @@ function vitaher_statuses(): array
     return ['Recibido', 'En revisión', 'Resuelto', 'Cerrado'];
 }
 
+function vitaher_default_response(string $categoria, string $estado, string $radicado = ''): string
+{
+    $esPostulacion = strtoupper(trim($categoria)) === 'POST';
+    $radicado = trim($radicado);
+    $sufijoRadicado = $radicado !== '' ? " con radicado {$radicado}" : '';
+    $estado = trim($estado);
+
+    if ($esPostulacion) {
+        switch ($estado) {
+            case 'Recibido':
+                return "Recibimos tu postulación{$sufijoRadicado}. El equipo de Talento Humano revisará tu hoja de vida y los documentos enviados.";
+            case 'En revisión':
+                return 'Tu postulación está en revisión por Talento Humano. Estamos verificando el cumplimiento de los requisitos y tu experiencia para la vacante.';
+            case 'Resuelto':
+                return 'El proceso de revisión de tu postulación quedó resuelto. Si tu perfil coincide con una vacante disponible, el equipo de Talento Humano se pondrá en contacto contigo.';
+            case 'Cerrado':
+                return 'Tu postulación fue cerrada. Puedes consultar nuevas vacantes y volver a postularte cuando lo desees.';
+            default:
+                return '';
+        }
+    }
+
+    switch ($estado) {
+        case 'Recibido':
+            return "Recibimos tu PQRS{$sufijoRadicado}. Nuestro equipo la revisará y, si necesitamos información adicional, nos pondremos en contacto contigo.";
+        case 'En revisión':
+            return 'Tu PQRS está en revisión por el área correspondiente. Estamos analizando la información y te informaremos cualquier avance por este medio.';
+        case 'Resuelto':
+            return 'Tu PQRS fue atendida y quedó resuelta. Gracias por comunicarte con VITAHER IPS; tu solicitud nos ayuda a seguir mejorando.';
+        case 'Cerrado':
+            return 'Tu PQRS fue cerrada. Si necesitas ampliar la información o tienes una nueva solicitud, puedes radicar una nueva PQRS en nuestro sitio web.';
+        default:
+            return '';
+    }
+}
+
 function vitaher_get_records(): array
 {
     $records = [];
@@ -727,10 +763,18 @@ function vitaher_public_record(array $record): array
     $historial = [];
     foreach (($record['historial'] ?? []) as $item) {
         // Solo se expone la respuesta pública; las notas internas quedan privadas.
+        $respuesta = trim((string)($item['respuesta'] ?? ''));
+        if ($respuesta === '') {
+            $respuesta = vitaher_default_response(
+                (string)($record['categoria'] ?? ''),
+                (string)($item['estado'] ?? ''),
+                (string)($record['radicado'] ?? '')
+            );
+        }
         $historial[] = [
             'estado' => $item['estado'] ?? '',
             'fecha' => $item['fecha'] ?? '',
-            'respuesta' => $item['respuesta'] ?? '',
+            'respuesta' => $respuesta,
         ];
     }
 

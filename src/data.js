@@ -11,8 +11,6 @@ export const TRACKING_ENDPOINT =
 export const REGISTRO_ENDPOINT =
   import.meta.env.VITE_REGISTRO_ENDPOINT ?? `${FORM_BASE}registrar.php`
 
-const BASE = import.meta.env.BASE_URL
-
 export const NAV_LINKS = [
   { label: 'Inicio', href: '#inicio' },
   { label: 'Servicios', href: '#servicios' },
@@ -26,54 +24,6 @@ export const STATS = [
   { value: '7', label: 'ÁREAS ASISTENCIALES' },
   { value: '2029', label: 'META IPS REFERENTE' },
   { value: 'L–V', label: '8AM–12M / 2PM–6PM' },
-]
-
-export const DESTACADOS = [
-  {
-    icon: 'heartPulse',
-    img: `${BASE}img/cuidado-avanzado.jpg`,
-    alt: 'Equipo de salud cuidando a un paciente en casa',
-    title: 'Cuidado avanzado del paciente',
-    text: 'Modelo interdisciplinario que optimiza la recuperación en casa con logística de suministros de alta respuesta.',
-    items: ['Equipo interdisciplinario calificado', 'Logística de suministros de alta respuesta', 'Seguimiento continuo del paciente'],
-    cta: { label: 'Agendar cita', href: '#contacto' },
-  },
-  {
-    icon: 'stethoscope',
-    img: `${BASE}img/medicina-domiciliaria.jpg`,
-    alt: 'Médico realizando valoración a un paciente',
-    title: 'Medicina domiciliaria',
-    text: 'Valoración, diagnóstico, tratamiento y seguimiento médico sin salir del hogar.',
-    items: ['Consulta médica en casa', 'Formulación y seguimiento', 'Remisiones cuando sean necesarias'],
-    cta: { label: 'Ver servicios', href: '#servicios' },
-  },
-  {
-    icon: 'user-check',
-    img: `${BASE}img/enfermeria.jpg`,
-    alt: 'Profesional de enfermería atendiendo a un paciente',
-    title: 'Enfermería y cuidado diario',
-    text: 'Profesionales y auxiliares que garantizan el cuidado experto de su familiar todos los días.',
-    items: ['Administración de medicamentos', 'Curaciones y manejo de heridas', 'Educación al paciente y familia'],
-    cta: { label: 'Ver servicios', href: '#servicios' },
-  },
-  {
-    icon: 'activity',
-    img: `${BASE}img/cronico.jpg`,
-    alt: 'Acompañamiento a un paciente con enfermedad crónica',
-    title: 'Atención integral al crónico',
-    text: 'Seguimiento continuo a pacientes con enfermedades de larga duración para prevenir complicaciones.',
-    items: ['Hipertensión · Diabetes · EPOC', 'Enfermedad cardiovascular y renal', 'Cuidados paliativos'],
-    cta: { label: 'Ver servicios', href: '#servicios' },
-  },
-  {
-    icon: 'pill',
-    img: `${BASE}img/farmaceutico.jpg`,
-    alt: 'Medicamentos e insumos del servicio farmacéutico',
-    title: 'Servicio farmacéutico',
-    text: 'Acceso seguro y oportuno a medicamentos e insumos, con educación sobre su uso adecuado.',
-    items: ['Dispensación de medicamentos', 'Seguimiento farmacoterapéutico', 'Control de adherencia'],
-    cta: { label: 'Contáctanos', href: '#contacto' },
-  },
 ]
 
 export const CUIDADO_STEPS = [

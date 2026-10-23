@@ -7,7 +7,6 @@ import AccessibilityFloat from './components/AccessibilityFloat.jsx'
 import { getLegalPage } from './data/legal.js'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
-const Destacados = lazy(() => import('./components/Destacados.jsx'))
 const Nosotros = lazy(() => import('./components/Nosotros.jsx'))
 const Servicios = lazy(() => import('./components/Servicios.jsx'))
 const PQRS = lazy(() => import('./components/PQRS.jsx'))
@@ -32,7 +31,6 @@ export default function App() {
       <main>
         <Hero />
         <Suspense fallback={<div style={{ minHeight: 320 }} aria-hidden />}>
-          <Destacados />
           <Servicios />
           <Nosotros />
           <Trabaja />

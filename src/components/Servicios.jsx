@@ -22,7 +22,6 @@ export default function Servicios() {
         <Reveal delay={80}>
           <div className="ruta-compact">
             <div className="ruta-compact-intro">
-              <span className="section-label">Proceso</span>
               <h3>Ruta de un cuidado domiciliario</h3>
               <p>
                 Acompañamos al paciente en cada etapa de su recuperación, desde la valoración
