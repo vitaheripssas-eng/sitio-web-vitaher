@@ -62,27 +62,11 @@ export default function Navbar() {
         <div className="container navbar-inner">
           <Logo />
           <nav className={`nav-links ${open ? 'is-open' : ''}`} aria-label="Principal">
-            {NAV_LINKS.map((link) => {
-              const isHome = link.href === '#inicio'
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className={isHome ? 'has-progress' : undefined}
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                  {isHome && (
-                    <span className="nav-progress-track" aria-hidden="true">
-                      <span
-                        className="nav-progress-fill"
-                        style={{ transform: `scaleX(${scrollProgress})` }}
-                      />
-                    </span>
-                  )}
-                </a>
-              )
-            })}
+            {NAV_LINKS.map((link) => (
+              <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+                {link.label}
+              </a>
+            ))}
             <a className="btn btn-primary nav-cta" href="#contacto" onClick={() => setOpen(false)}>
               Agendar Cita
             </a>
@@ -95,6 +79,9 @@ export default function Navbar() {
           >
             <Icon name={open ? 'x' : 'menu'} size={26} />
           </button>
+        </div>
+        <div className="navbar-progress" aria-hidden="true">
+          <span style={{ transform: `scaleX(${scrollProgress})` }} />
         </div>
       </header>
       {/* Punto 2: Fondo oscuro (Backdrop) que cierra el menú al tocar fuera */}
