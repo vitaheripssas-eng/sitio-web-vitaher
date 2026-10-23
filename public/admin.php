@@ -195,12 +195,19 @@
         line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere;
       }
       .files { margin: 0; padding-left: 18px; font-size: 0.86rem; }
-      .files li + li { margin-top: 4px; }
-      .files a {
+      .files li + li { margin-top: 8px; }
+      .file-row { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; }
+      .file-name { overflow-wrap: anywhere; }
+      .file-actions { display: inline-flex; align-items: center; gap: 12px; flex: none; font-size: 0.8rem; }
+      .files a, .files .file-link {
         color: var(--primary); font-weight: 700; overflow-wrap: anywhere;
         text-decoration: underline; text-underline-offset: 2px;
       }
-      .files a:hover { color: var(--accent); }
+      .files .file-link {
+        padding: 0; border: 0; background: transparent; font: inherit; font-size: 0.8rem;
+        font-weight: 700; cursor: pointer;
+      }
+      .files a:hover, .files .file-link:hover { color: var(--accent); }
       .files .muted { color: var(--ink-soft); font-size: 0.78rem; }
       .history { display: grid; gap: 10px; }
       .history-item { display: flex; gap: 10px; align-items: flex-start; }
@@ -256,6 +263,21 @@
         border-radius: 0 8px 8px 0; font-size: 0.82rem !important;
       }
       .confirm-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+      .preview-overlay { z-index: 60; }
+      .preview-modal {
+        width: min(1040px, 100%); max-height: 92vh; padding: 22px;
+        display: flex; flex-direction: column; overflow: hidden;
+      }
+      .preview-body {
+        display: grid; place-items: center; flex: 1; min-height: 300px; margin-top: 16px;
+        overflow: hidden; background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      }
+      .preview-body iframe { display: block; width: 100%; height: min(68vh, 720px); border: 0; background: #fff; }
+      .preview-body img { display: block; max-width: 100%; max-height: min(68vh, 720px); object-fit: contain; }
+      .preview-empty { padding: 44px 24px; text-align: center; }
+      .preview-empty strong { display: block; color: var(--ink); font-size: 1rem; }
+      .preview-empty span { display: block; margin-top: 6px; color: var(--ink-soft); font-size: 0.86rem; line-height: 1.5; }
+      .preview-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
       .status-msg { margin: 0; font-size: 0.84rem; font-weight: 700; }
       .status-msg.ok { color: var(--accent); }
       .status-msg.warn { color: #92400e; }
@@ -286,6 +308,12 @@
         .danger-zone .btn { width: 100%; }
         .confirm-actions { flex-direction: column-reverse; }
         .confirm-actions .btn { width: 100%; }
+        .preview-modal { padding: 16px; }
+        .preview-body { min-height: 220px; }
+        .preview-body iframe { height: 58vh; }
+        .preview-body img { max-height: 58vh; }
+        .preview-actions { flex-direction: column-reverse; }
+        .preview-actions .btn { width: 100%; }
       }
       @media (prefers-reduced-motion: reduce) {
         .spinner { animation-duration: 1.4s; }
@@ -433,6 +461,23 @@
       </div>
     </div>
 
+    <div id="preview-overlay" class="overlay preview-overlay" hidden>
+      <div class="modal preview-modal" role="dialog" aria-modal="true" aria-labelledby="preview-title">
+        <div class="modal-head">
+          <div>
+            <h2 id="preview-title">Vista previa</h2>
+            <p id="preview-subtitle"></p>
+          </div>
+          <button class="modal-close" type="button" data-action="close-preview" aria-label="Cerrar vista previa">×</button>
+        </div>
+        <div id="preview-body" class="preview-body"></div>
+        <div class="preview-actions">
+          <a id="preview-download" class="btn btn-soft" href="#" download>Descargar archivo</a>
+          <button class="btn btn-ghost" type="button" data-action="close-preview">Cerrar</button>
+        </div>
+      </div>
+    </div>
+
     <div id="confirm-overlay" class="overlay confirm-overlay" hidden>
       <div class="modal confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message">
         <div class="confirm-icon" aria-hidden="true">!</div>
@@ -530,10 +575,16 @@
       const globalMsg = $('#global-msg');
       const detailOverlay = $('#detail-overlay');
       const detailContent = $('#detail-content');
+      const previewOverlay = $('#preview-overlay');
+      const previewBody = $('#preview-body');
+      const previewDownload = $('#preview-download');
       const confirmOverlay = $('#confirm-overlay');
       let confirmResolve = null;
       let confirmTrigger = null;
       let confirmPreviousOverflow = '';
+      let previewTrigger = null;
+      let previewPreviousOverflow = '';
+      const PREVIEWABLE_EXTENSIONS = new Set(['pdf', 'jpg', 'jpeg', 'png', 'webp', 'gif']);
 
       function escapeHtml(value) {
         return String(value ?? '')
@@ -681,6 +732,70 @@
           confirmTrigger.focus();
         }
         confirmTrigger = null;
+      }
+
+      function fileExtension(value) {
+        const clean = String(value ?? '').trim();
+        const dot = clean.lastIndexOf('.');
+        return dot === -1 ? '' : clean.slice(dot + 1).toLowerCase();
+      }
+
+      function fileUrl(radicado, index, inline = false) {
+        return `gestion.php?action=file&radicado=${encodeURIComponent(radicado)}&index=${index}${inline ? '&inline=1' : ''}`;
+      }
+
+      function openPreview(radicado, index, trigger = null) {
+        const record = records.find((item) => item.radicado === radicado);
+        if (!record) return;
+        const stored = Array.isArray(record.archivos_guardados) ? record.archivos_guardados[index] : '';
+        if (typeof stored !== 'string' || !stored) {
+          globalMsg.textContent = 'El archivo no está disponible para vista previa.';
+          return;
+        }
+        const names = Array.isArray(record.archivos) ? record.archivos : [];
+        const name = String(names[index] || stored.split('/').pop() || 'Archivo');
+        const extension = fileExtension(stored) || fileExtension(name);
+        const canPreview = PREVIEWABLE_EXTENSIONS.has(extension);
+
+        previewTrigger = trigger;
+        previewPreviousOverflow = document.body.style.overflow;
+        $('#preview-title').textContent = name;
+        $('#preview-subtitle').textContent = `${record.radicado} · ${categoryLabel(record.categoria)}`;
+        previewDownload.href = fileUrl(record.radicado, index);
+        previewBody.replaceChildren();
+
+        if (canPreview) {
+          let viewer;
+          if (extension === 'pdf') {
+            viewer = document.createElement('iframe');
+            viewer.title = `Vista previa de ${name}`;
+          } else {
+            viewer = document.createElement('img');
+            viewer.alt = name;
+          }
+          viewer.src = fileUrl(record.radicado, index, true);
+          previewBody.append(viewer);
+        } else {
+          const empty = document.createElement('div');
+          empty.className = 'preview-empty';
+          empty.innerHTML = '<strong>Vista previa no disponible</strong><span>Este tipo de archivo no se puede mostrar en el navegador. Descárgalo para abrirlo.</span>';
+          previewBody.append(empty);
+        }
+
+        previewOverlay.hidden = false;
+        document.body.style.overflow = 'hidden';
+        previewOverlay.querySelector('[data-action="close-preview"]')?.focus();
+      }
+
+      function closePreview() {
+        if (previewOverlay.hidden) return;
+        previewOverlay.hidden = true;
+        previewBody.replaceChildren();
+        document.body.style.overflow = previewPreviousOverflow;
+        if (previewTrigger?.isConnected) {
+          previewTrigger.focus();
+        }
+        previewTrigger = null;
       }
 
       function renderStats() {
@@ -833,8 +948,17 @@
               if (!stored) {
                 return `<li>${escapeHtml(name)} <span class="muted">(no disponible para descarga)</span></li>`;
               }
-              const href = `gestion.php?action=file&radicado=${encodeURIComponent(record.radicado)}&index=${index}`;
-              return `<li><a href="${escapeHtml(href)}" target="_blank" rel="noopener">${escapeHtml(name)}</a></li>`;
+              const href = fileUrl(record.radicado, index);
+              const previewable = PREVIEWABLE_EXTENSIONS.has(fileExtension(stored) || fileExtension(name));
+              return `<li>
+                <div class="file-row">
+                  <span class="file-name">${escapeHtml(name)}</span>
+                  <span class="file-actions">
+                    ${previewable ? `<button class="file-link" type="button" data-action="preview-file" data-radicado="${escapeHtml(record.radicado)}" data-index="${index}">Ver</button>` : '<span class="muted">Sin vista previa</span>'}
+                    <a href="${escapeHtml(href)}" download>Descargar</a>
+                  </span>
+                </div>
+              </li>`;
             }).join('')}</ul>`
           : '<p style="margin:0;font-size:.86rem;color:var(--ink-soft)">Sin archivos adjuntos.</p>';
 
@@ -1244,6 +1368,15 @@
       detailOverlay.addEventListener('click', (event) => {
         if (event.target === detailOverlay) closeDetail();
         if (event.target.closest('[data-action="close-detail"]')) closeDetail();
+        const previewButton = event.target.closest('[data-action="preview-file"]');
+        if (previewButton) {
+          openPreview(previewButton.dataset.radicado, Number(previewButton.dataset.index), previewButton);
+        }
+      });
+
+      previewOverlay.addEventListener('click', (event) => {
+        if (event.target === previewOverlay) closePreview();
+        if (event.target.closest('[data-action="close-preview"]')) closePreview();
       });
 
       passwordOverlay.addEventListener('click', (event) => {
@@ -1260,6 +1393,8 @@
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && !confirmOverlay.hidden) {
           closeDeleteConfirmation(false);
+        } else if (event.key === 'Escape' && !previewOverlay.hidden) {
+          closePreview();
         } else if (event.key === 'Escape' && !passwordOverlay.hidden) {
           closePassword();
         } else if (event.key === 'Escape' && !detailOverlay.hidden) {

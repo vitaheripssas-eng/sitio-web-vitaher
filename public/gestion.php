@@ -275,12 +275,26 @@ if ($action === 'file') {
     $name = is_array($names) && isset($names[$index])
         ? (string)$names[$index]
         : basename($path);
-    $name = preg_replace('/[\r\n"]+/', '_', basename($name)) ?: 'archivo';
+    $name = preg_replace('/[\r\n"\\\\]+/', '_', basename($name)) ?: 'archivo';
 
-    header('Content-Type: application/octet-stream');
+    $inline = in_array(strtolower((string)($_GET['inline'] ?? '')), ['1', 'true', 'yes'], true);
+    $previewTypes = [
+        'pdf' => 'application/pdf',
+        'jpg' => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'png' => 'image/png',
+        'webp' => 'image/webp',
+        'gif' => 'image/gif',
+    ];
+    $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    $previewType = $previewTypes[$extension] ?? null;
+    $serveInline = $inline && $previewType !== null;
+
+    header('Content-Type: ' . ($serveInline ? $previewType : 'application/octet-stream'));
     header('Content-Length: ' . (string)filesize($path));
     header(
-        'Content-Disposition: attachment; filename="' . $name
+        'Content-Disposition: ' . ($serveInline ? 'inline' : 'attachment')
+        . '; filename="' . $name
         . '"; filename*=UTF-8\'\'' . rawurlencode($name)
     );
     header('X-Content-Type-Options: nosniff');
