@@ -237,6 +237,25 @@
       .danger-zone strong { display: block; color: #991b1b; font-size: 0.88rem; }
       .danger-zone span { display: block; margin-top: 3px; color: #7f1d1d; font-size: 0.78rem; line-height: 1.45; }
       .danger-zone .btn { flex: none; }
+      .confirm-overlay { z-index: 70; }
+      .confirm-modal { width: min(460px, 100%); padding: 26px; }
+      .confirm-icon {
+        display: grid; place-items: center; width: 48px; height: 48px;
+        border-radius: 14px; background: #fff1f2; border: 1px solid #fecdd3;
+        color: var(--danger); font-size: 1.35rem; font-weight: 800;
+      }
+      .confirm-modal h2 {
+        margin: 16px 0 7px; color: var(--primary);
+        font-size: 1.25rem; letter-spacing: 0.01em;
+      }
+      .confirm-modal p { margin: 0; color: var(--ink-soft); font-size: 0.9rem; line-height: 1.55; }
+      .confirm-modal p strong { color: var(--ink); }
+      .confirm-warning {
+        margin-top: 12px !important; padding: 10px 12px; color: #7f1d1d !important;
+        background: #fff7f7; border-left: 3px solid var(--danger);
+        border-radius: 0 8px 8px 0; font-size: 0.82rem !important;
+      }
+      .confirm-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
       .status-msg { margin: 0; font-size: 0.84rem; font-weight: 700; }
       .status-msg.ok { color: var(--accent); }
       .status-msg.warn { color: #92400e; }
@@ -265,6 +284,8 @@
         .login-card { padding: 26px 20px; }
         .modal { padding: 20px 16px; }
         .danger-zone .btn { width: 100%; }
+        .confirm-actions { flex-direction: column-reverse; }
+        .confirm-actions .btn { width: 100%; }
       }
       @media (prefers-reduced-motion: reduce) {
         .spinner { animation-duration: 1.4s; }
@@ -412,6 +433,23 @@
       </div>
     </div>
 
+    <div id="confirm-overlay" class="overlay confirm-overlay" hidden>
+      <div class="modal confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message">
+        <div class="confirm-icon" aria-hidden="true">!</div>
+        <h2 id="confirm-title">Eliminar radicado</h2>
+        <p id="confirm-message">
+          ¿Seguro que quieres eliminar el radicado
+          <strong id="confirm-radicado"></strong> de
+          <strong id="confirm-nombre"></strong>?
+        </p>
+        <p class="confirm-warning">Se borrarán su historial y sus archivos adjuntos. Esta acción no se puede deshacer.</p>
+        <div class="confirm-actions">
+          <button type="button" class="btn btn-ghost" id="confirm-cancel">Cancelar</button>
+          <button type="button" class="btn btn-danger-solid" id="confirm-delete">Sí, eliminar</button>
+        </div>
+      </div>
+    </div>
+
     <div id="password-overlay" class="overlay" hidden>
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="password-title">
         <div class="modal-head">
@@ -492,6 +530,10 @@
       const globalMsg = $('#global-msg');
       const detailOverlay = $('#detail-overlay');
       const detailContent = $('#detail-content');
+      const confirmOverlay = $('#confirm-overlay');
+      let confirmResolve = null;
+      let confirmTrigger = null;
+      let confirmPreviousOverflow = '';
 
       function escapeHtml(value) {
         return String(value ?? '')
@@ -608,6 +650,37 @@
         passwordMsg.textContent = '';
         passwordMsg.className = 'status-msg';
         passwordForm.reset();
+      }
+
+      function askDeleteConfirmation(record, trigger = null) {
+        if (confirmResolve) {
+          confirmResolve(false);
+          confirmResolve = null;
+        }
+        confirmTrigger = trigger;
+        confirmPreviousOverflow = document.body.style.overflow;
+        $('#confirm-radicado').textContent = record.radicado || '';
+        $('#confirm-nombre').textContent = record.nombre || 'Anónimo';
+        confirmOverlay.hidden = false;
+        document.body.style.overflow = 'hidden';
+        $('#confirm-cancel').focus();
+
+        return new Promise((resolve) => {
+          confirmResolve = resolve;
+        });
+      }
+
+      function closeDeleteConfirmation(result = false) {
+        if (confirmOverlay.hidden) return;
+        confirmOverlay.hidden = true;
+        document.body.style.overflow = confirmPreviousOverflow;
+        const resolve = confirmResolve;
+        confirmResolve = null;
+        if (resolve) resolve(result);
+        if (confirmTrigger?.isConnected) {
+          confirmTrigger.focus();
+        }
+        confirmTrigger = null;
       }
 
       function renderStats() {
@@ -929,10 +1002,7 @@
       async function deleteRecord(radicado, button = null) {
         const record = records.find((item) => item.radicado === radicado);
         if (!record) return;
-        const nombre = record.nombre || 'Anónimo';
-        const confirmed = window.confirm(
-          `¿Eliminar definitivamente el radicado ${radicado}?\n\nSolicitante: ${nombre}\nSe borrarán su historial y sus archivos adjuntos. Esta acción no se puede deshacer.`
-        );
+        const confirmed = await askDeleteConfirmation(record, button);
         if (!confirmed) return;
 
         const originalHtml = button ? button.innerHTML : '';
@@ -1181,8 +1251,16 @@
         if (event.target.closest('[data-action="close-password"]')) closePassword();
       });
 
+      confirmOverlay.addEventListener('click', (event) => {
+        if (event.target === confirmOverlay) closeDeleteConfirmation(false);
+      });
+      $('#confirm-cancel').addEventListener('click', () => closeDeleteConfirmation(false));
+      $('#confirm-delete').addEventListener('click', () => closeDeleteConfirmation(true));
+
       document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && !passwordOverlay.hidden) {
+        if (event.key === 'Escape' && !confirmOverlay.hidden) {
+          closeDeleteConfirmation(false);
+        } else if (event.key === 'Escape' && !passwordOverlay.hidden) {
           closePassword();
         } else if (event.key === 'Escape' && !detailOverlay.hidden) {
           closeDetail();
