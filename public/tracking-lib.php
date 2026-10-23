@@ -111,6 +111,136 @@ function vitaher_save_status(
     ]);
 }
 
+/**
+ * Reescribe un log JSONL sin las líneas del radicado indicado.
+ * Devuelve [éxito, cantidad_de_líneas_eliminadas].
+ */
+function vitaher_rewrite_log_without_radicado(string $file, string $radicado): array
+{
+    if (!is_file($file)) {
+        return [true, 0];
+    }
+
+    $key = strtoupper(trim($radicado));
+    $lines = @file($file, FILE_IGNORE_NEW_LINES);
+    if ($lines === false) {
+        return [false, 0];
+    }
+
+    $kept = [];
+    $removed = 0;
+    foreach ($lines as $line) {
+        $data = json_decode($line, true);
+        $lineRadicado = is_array($data)
+            ? strtoupper(trim((string)($data['radicado'] ?? '')))
+            : '';
+        if ($lineRadicado === $key) {
+            $removed++;
+            continue;
+        }
+        $kept[] = rtrim($line, "\r\n");
+    }
+
+    if ($removed === 0) {
+        return [true, 0];
+    }
+
+    $contents = $kept !== [] ? implode(PHP_EOL, $kept) . PHP_EOL : '';
+    $tmp = $file . '.tmp-' . bin2hex(random_bytes(6));
+    if (@file_put_contents($tmp, $contents, LOCK_EX) === false) {
+        return [false, 0];
+    }
+    if (!@rename($tmp, $file)) {
+        // En algunos sistemas Windows rename no reemplaza un archivo existente.
+        if (@file_put_contents($file, $contents, LOCK_EX) === false) {
+            @unlink($tmp);
+            return [false, 0];
+        }
+        @unlink($tmp);
+    }
+
+    return [true, $removed];
+}
+
+/**
+ * Elimina un radicado del panel, su historial, sus eventos y sus adjuntos.
+ * Los archivos compartidos con otro radicado se conservan.
+ */
+function vitaher_delete_record(string $radicado): array
+{
+    $record = vitaher_find_record($radicado);
+    if ($record === null) {
+        return ['ok' => false, 'error' => 'No encontramos ese radicado.'];
+    }
+
+    $key = (string)($record['radicado'] ?? $radicado);
+    $logs = [
+        '/radicados.log' => 0,
+        '/estados.log' => 0,
+        '/submissions.log' => 0,
+    ];
+
+    foreach ($logs as $name => &$removed) {
+        [$ok, $count] = vitaher_rewrite_log_without_radicado(vitaher_storage_dir() . $name, $key);
+        if (!$ok) {
+            return ['ok' => false, 'error' => 'No pudimos actualizar los registros. Intenta de nuevo.'];
+        }
+        $removed = $count;
+    }
+    unset($removed);
+
+    // Los adjuntos se eliminan solo si ningún radicado activo los sigue usando.
+    $stillUsed = [];
+    foreach (vitaher_get_records() as $item) {
+        $paths = $item['archivos_guardados'] ?? [];
+        if (!is_array($paths)) {
+            continue;
+        }
+        foreach ($paths as $path) {
+            $relative = ltrim(str_replace('\\', '/', (string)$path), '/');
+            if ($relative !== '') {
+                $stillUsed[$relative] = true;
+            }
+        }
+    }
+
+    $uploadsRoot = realpath(vitaher_storage_dir() . '/uploads');
+    $deletedFiles = 0;
+    $paths = $record['archivos_guardados'] ?? [];
+    if ($uploadsRoot !== false && is_array($paths)) {
+        foreach ($paths as $path) {
+            $relative = ltrim(str_replace('\\', '/', (string)$path), '/');
+            if (
+                $relative === ''
+                || isset($stillUsed[$relative])
+                || !preg_match('#^uploads/\d{4}-\d{2}/[A-Za-z0-9._-]+$#', $relative)
+            ) {
+                continue;
+            }
+            $absolute = realpath(vitaher_storage_dir() . '/' . $relative);
+            if (
+                $absolute === false
+                || strpos($absolute, $uploadsRoot . DIRECTORY_SEPARATOR) !== 0
+                || !is_file($absolute)
+            ) {
+                continue;
+            }
+            if (@unlink($absolute)) {
+                $deletedFiles++;
+            }
+        }
+    }
+
+    return [
+        'ok' => true,
+        'radicado' => $key,
+        'registros_eliminados' => $logs['/radicados.log'],
+        'eventos_eliminados' => $logs['/estados.log'],
+        'envios_eliminados' => $logs['/submissions.log'],
+        'archivos_eliminados' => $deletedFiles,
+    ];
+}
+
 function vitaher_smtp_password(): string
 {
     $pass = trim((string)@file_get_contents(vitaher_storage_dir() . '/smtp_pass.txt'));

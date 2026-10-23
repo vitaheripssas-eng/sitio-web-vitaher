@@ -288,6 +288,31 @@ if ($action === 'file') {
     exit;
 }
 
+if ($action === 'delete') {
+    vitaher_require_admin();
+    if ($method !== 'POST') {
+        vitaher_json_response(['ok' => false, 'error' => 'Método no permitido.'], 405);
+    }
+
+    $csrf = (string)($_POST['csrf'] ?? '');
+    if ($csrf === '' || !hash_equals((string)($_SESSION['csrf'] ?? ''), $csrf)) {
+        vitaher_json_response(['ok' => false, 'error' => 'Sesión inválida. Recarga la página.'], 403);
+    }
+
+    $radicado = trim((string)($_POST['radicado'] ?? ''));
+    if ($radicado === '') {
+        vitaher_json_response(['ok' => false, 'error' => 'Falta el número de radicado.'], 422);
+    }
+
+    $result = vitaher_delete_record($radicado);
+    if (empty($result['ok'])) {
+        $status = ($result['error'] ?? '') === 'No encontramos ese radicado.' ? 404 : 500;
+        vitaher_json_response($result, $status);
+    }
+
+    vitaher_json_response($result);
+}
+
 if ($action === 'list') {
     vitaher_require_admin();
     $records = vitaher_get_records();

@@ -77,6 +77,31 @@
       .btn-ghost { background: transparent; color: var(--ink-soft); border-color: var(--border); }
       .btn-ghost:hover { background: var(--primary-tint); color: var(--primary); }
       .btn-block { width: 100%; margin-top: 18px; }
+      .btn-danger { background: #fff1f2; color: var(--danger); border-color: #fecdd3; }
+      .btn-danger:hover { background: var(--danger); color: #fff; }
+      .btn-danger-solid { background: var(--danger); color: #fff; }
+      .btn-danger-solid:hover { background: #991b1b; }
+      .spinner {
+        display: inline-block; width: 14px; height: 14px; flex: none;
+        border: 2px solid currentColor; border-right-color: transparent;
+        border-radius: 999px; animation: spin 0.65s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .refresh-progress {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+        height: 3px; overflow: hidden; pointer-events: none;
+      }
+      .refresh-progress span {
+        display: block; width: 42%; height: 100%;
+        background: linear-gradient(90deg, var(--primary-light), var(--accent-bright));
+        animation: refresh-slide 1.05s ease-in-out infinite;
+      }
+      @keyframes refresh-slide {
+        from { transform: translateX(-120%); }
+        to { transform: translateX(340%); }
+      }
+      .list.is-loading { opacity: 0.45; pointer-events: none; transition: opacity 0.18s ease; }
+      .stats.is-loading { opacity: 0.55; transition: opacity 0.18s ease; }
       .form-msg { min-height: 1.2em; margin: 12px 0 0; color: var(--danger); font-size: 0.84rem; font-weight: 600; }
       .form-msg.ok { color: var(--accent); }
       .topbar {
@@ -122,7 +147,7 @@
       .record .meta { margin-top: 3px; font-size: 0.8rem; color: var(--ink-soft); }
       .record .preview { margin-top: 8px; font-size: 0.86rem; line-height: 1.5; color: var(--ink-soft); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
       .record .code { font-family: ui-monospace, Consolas, monospace; font-size: 0.8rem; font-weight: 800; color: var(--primary); letter-spacing: 0.03em; overflow-wrap: anywhere; }
-      .record-actions { display: flex; flex-direction: column; gap: 7px; align-items: stretch; min-width: 138px; }
+      .record-actions { display: flex; flex-direction: column; gap: 7px; align-items: stretch; flex-wrap: wrap; min-width: 138px; }
       .record-actions .btn { padding: 8px 12px; font-size: 0.8rem; }
       .badge {
         display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px;
@@ -204,6 +229,14 @@
       .check-field input { width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--primary); flex-shrink: 0; }
       .textarea { min-height: 74px; resize: vertical; }
       .status-actions { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+      .danger-zone {
+        display: flex; align-items: center; justify-content: space-between; gap: 16px;
+        margin-top: 24px; padding: 16px; background: #fff7f7;
+        border: 1px solid #fecdd3; border-radius: 12px;
+      }
+      .danger-zone strong { display: block; color: #991b1b; font-size: 0.88rem; }
+      .danger-zone span { display: block; margin-top: 3px; color: #7f1d1d; font-size: 0.78rem; line-height: 1.45; }
+      .danger-zone .btn { flex: none; }
       .status-msg { margin: 0; font-size: 0.84rem; font-weight: 700; }
       .status-msg.ok { color: var(--accent); }
       .status-msg.warn { color: #92400e; }
@@ -223,6 +256,7 @@
         .record-actions { flex-direction: row; }
         .detail-grid { grid-template-columns: 1fr; }
         .status-form .row { grid-template-columns: 1fr; }
+        .danger-zone { align-items: flex-start; flex-direction: column; }
       }
       @media (max-width: 520px) {
         .wrap { width: 92%; padding-top: 20px; }
@@ -230,10 +264,16 @@
         .stats { grid-template-columns: 1fr 1fr; }
         .login-card { padding: 26px 20px; }
         .modal { padding: 20px 16px; }
+        .danger-zone .btn { width: 100%; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .spinner { animation-duration: 1.4s; }
+        .refresh-progress span { animation: none; width: 100%; opacity: 0.7; }
       }
     </style>
   </head>
   <body>
+    <div id="refresh-progress" class="refresh-progress" hidden aria-hidden="true"><span></span></div>
     <main class="wrap">
       <section id="login-view" class="login-shell">
         <div class="login-card">
@@ -633,6 +673,7 @@
                 <div class="record-actions">
                   <button type="button" class="btn" data-action="detail" data-radicado="${escapeHtml(record.radicado)}">Ver detalle</button>
                   <button type="button" class="btn btn-soft" data-action="copy" data-radicado="${escapeHtml(record.radicado)}">Copiar radicado</button>
+                  <button type="button" class="btn btn-danger" data-action="delete" data-radicado="${escapeHtml(record.radicado)}">Eliminar</button>
                 </div>
               </article>
             `;
@@ -640,8 +681,27 @@
           .join('');
       }
 
-      async function load() {
+      function setLoading(active) {
+        const refreshBtn = $('#refresh-btn');
+        if (refreshBtn) {
+          refreshBtn.disabled = active;
+          refreshBtn.classList.toggle('is-loading', active);
+          refreshBtn.innerHTML = active
+            ? '<span class="spinner" aria-hidden="true"></span> Actualizando…'
+            : 'Actualizar';
+        }
+        const progress = $('#refresh-progress');
+        if (progress) progress.hidden = !active;
+        statsEl.classList.toggle('is-loading', active);
+        listEl.classList.toggle('is-loading', active);
+        listEl.setAttribute('aria-busy', active ? 'true' : 'false');
+      }
+
+      async function load({ animate = false } = {}) {
+        if (animate) setLoading(true);
         globalMsg.textContent = '';
+        globalMsg.className = 'form-msg';
+        globalMsg.style.color = '';
         try {
           const data = await api('list');
           records = data.registros || [];
@@ -649,8 +709,12 @@
           csrf = data.csrf || csrf;
           renderStats();
           renderList();
+          return true;
         } catch (error) {
           globalMsg.textContent = error.message;
+          return false;
+        } finally {
+          if (animate) setLoading(false);
         }
       }
 
@@ -775,6 +839,14 @@
               <p id="status-msg" class="status-msg" role="status"></p>
             </div>
           </form>
+
+          <div class="danger-zone">
+            <div>
+              <strong>Eliminar radicado</strong>
+              <span>Borra este registro, su historial y sus archivos adjuntos. Úsalo solo con radicados de prueba. Esta acción no se puede deshacer.</span>
+            </div>
+            <button class="btn btn-danger-solid" type="button" id="delete-record-btn">Eliminar radicado</button>
+          </div>
         `;
 
         const syncResponseRequirement = () => {
@@ -848,6 +920,50 @@
             button.disabled = false;
           }
         });
+
+        $('#delete-record-btn')?.addEventListener('click', (event) => {
+          deleteRecord(record.radicado, event.currentTarget);
+        });
+      }
+
+      async function deleteRecord(radicado, button = null) {
+        const record = records.find((item) => item.radicado === radicado);
+        if (!record) return;
+        const nombre = record.nombre || 'Anónimo';
+        const confirmed = window.confirm(
+          `¿Eliminar definitivamente el radicado ${radicado}?\n\nSolicitante: ${nombre}\nSe borrarán su historial y sus archivos adjuntos. Esta acción no se puede deshacer.`
+        );
+        if (!confirmed) return;
+
+        const originalHtml = button ? button.innerHTML : '';
+        if (button) {
+          button.disabled = true;
+          button.innerHTML = '<span class="spinner" aria-hidden="true"></span> Eliminando…';
+        }
+        globalMsg.className = 'form-msg';
+        globalMsg.style.color = '';
+        globalMsg.textContent = 'Eliminando radicado…';
+
+        try {
+          await api('delete', {
+            method: 'POST',
+            body: { csrf, radicado },
+          });
+          if (currentRadicado === radicado) closeDetail();
+          const refreshed = await load({ animate: true });
+          if (refreshed) {
+            globalMsg.className = 'form-msg ok';
+            globalMsg.textContent = `Radicado ${radicado} eliminado correctamente.`;
+          }
+        } catch (error) {
+          globalMsg.className = 'form-msg';
+          globalMsg.textContent = error.message;
+        } finally {
+          if (button?.isConnected) {
+            button.disabled = false;
+            button.innerHTML = originalHtml;
+          }
+        }
       }
 
       function openDetail(radicado) {
@@ -1025,7 +1141,7 @@
         showLogin();
       });
 
-      $('#refresh-btn').addEventListener('click', load);
+      $('#refresh-btn').addEventListener('click', () => load({ animate: true }));
 
       $('#search').addEventListener('input', (event) => {
         filters.q = event.target.value;
@@ -1052,6 +1168,7 @@
         const radicado = button.dataset.radicado;
         if (button.dataset.action === 'detail') openDetail(radicado);
         if (button.dataset.action === 'copy') copyRadicado(radicado);
+        if (button.dataset.action === 'delete') deleteRecord(radicado, button);
       });
 
       detailOverlay.addEventListener('click', (event) => {
